@@ -1,0 +1,862 @@
+# 企业智能助手平台详细设计文档
+
+## 1. 产品概述
+
+### 1.1 产品定位和目标
+- 项目定位：企业级智能体工作平台
+- 目标用户：制造业、零售业等企业客户
+- 核心功能：通过RAG+大模型提供多种智能体服务
+  * 产品创意设计
+  * 营销文案生成
+  * 人力资源助手等
+
+### 1.2 用户角色定义
+
+1. 平台管理角色
+   - 超级管理员
+     * 管理平台所有功能和配置
+     * 管理其他管理员账号
+     * 查看平台运营数据
+   
+   - 运营管理员
+     * 管理和发布智能体
+     * 管理企业账号
+     * 查看使用统计
+
+2. 企业用户角色
+   - 企业用户
+     * 归属于特定企业
+     * 使用平台提供的智能体服务
+     * 查看个人使用历史
+
+### 1.3 核心价值主张
+- 提供企业级智能体服务
+- 支持多企业多用户架构
+- 灵活的智能体配置和管理
+- 安全可靠的数据隔离
+
+### 1.4 系统整体架构
+
+1. 前端层 (Frontend Layer)
+   - Vue 3 + TypeScript
+   - Element Plus UI组件库
+   - Vite构建工具
+   - 统一的用户界面
+
+2. 后端应用层 (Backend Layer)
+   - Python + FastAPI
+   - MySQL数据持久化
+   - Redis缓存服务
+   - 业务逻辑处理
+
+3. 智能体服务层 (Agent Service Layer)
+   - 集成在FastAPI工程内
+   - 独立的代码目录结构
+   - 统一的接口规范
+   - 可扩展的适配器模式
+
+4. 模型平台层 (Model Platform Layer)
+   - Dify平台集成
+   - 支持云端/本地部署
+   - 统一的API调用
+   - 可扩展的模型支持
+
+## 2. 功能模块设计
+
+### 2.0 平台支持说明
+- 当前阶段: PC Web端实现
+- 后续规划: 移动端适配（iOS/Android）
+- 技术准备: 采用响应式设计，预留移动端扩展接口
+
+### 2.1 功能模块清单
+
+#### 2.1.1 用户认证模块
+1. 企业用户功能
+   - 用户注册：企业用户填写基本信息和企业信息完成注册
+   - 用户登录：邮箱+密码登录系统
+   - 找回/重置密码：通过邮箱验证重置密码
+   - 修改密码：登录状态下修改个人密码
+   - 个人信息维护：更新个人基本资料和偏好设置
+
+2. 管理用户功能
+   - 管理员登录：管理员账号系统登录
+   - 重置密码：管理员密码重置流程
+   - 个人信息维护：管理员个人信息更新
+
+#### 2.1.2 智能体市场模块
+1. 智能体浏览
+   - 智能体列表展示：卡片式展示所有可用智能体
+   - 分类筛选：按功能类别筛选智能体
+   - 关键词搜索：通过关键词查找智能体
+   - 智能体详情查看：查看智能体详细说明和使用指南
+   - 使用频率排序：按使用热度排序展示
+
+2. 智能体推荐
+   - 个性化推荐：基于用户使用历史推荐相关智能体
+   - 企业特征推荐：根据企业所属行业推荐相关智能体
+   - 热门推荐：展示平台使用率最高的智能体
+
+[继续...]
+
+# 企业智能助手平台详细设计文档
+
+[前面的 1.1 到 2.1.2 内容与之前相同，继续补充后续内容]
+
+#### 2.1.3 智能体使用模块
+1. 对话界面
+   - 智能体对话：与选定智能体进行对话交互
+   - 历史消息：展示当前会话的历史消息
+   - 文件处理：支持文件上传和下载
+   - 记录保存：自动保存对话记录供后续查看
+
+2. 全局Chat助手
+   - 自由对话：随时可用的通用对话助手
+   - 智能推荐：基于对话内容推荐合适的智能体
+   - 使用指导：提供平台功能使用帮助
+   - 问题反馈：收集用户使用问题和建议
+
+#### 2.1.4 企业管理模块
+1. 企业信息管理
+   - 基本信息：维护企业基础资料
+   - 品牌设置：上传企业logo和定制界面
+   - 配置管理：管理企业级使用配置
+
+2. 团队管理
+   - 成员管理：添加和管理团队成员
+   - 权限设置：设置成员使用权限
+   - 使用统计：查看成员使用情况
+
+#### 2.1.5 平台管理模块
+1. 智能体管理
+   - 智能体创建：创建新的智能体服务
+   - 参数配置：设置智能体的行为参数
+   - 发布管理：控制智能体的上线状态
+   - 性能监控：监控智能体的运行状态
+
+2. 用户管理
+   - 企业管理：管理平台企业账号
+   - 用户管理：管理所有用户账号
+   - 权限管理：设置用户角色权限
+
+3. 系统配置
+   - 平台配置：配置模型服务接口
+   - 参数设置：调整系统运行参数
+   - 基础数据：维护系统基础数据
+
+4. 数据分析
+   - 用户分析：分析用户使用行为
+   - 智能体分析：分析智能体使用情况
+   - 性能分析：分析系统运行性能
+
+### 2.2 功能模块关系
+
+1. 模块依赖关系
+   - 用户认证是所有功能的基础
+   - 智能体市场依赖平台管理中的智能体配置
+   - 企业管理影响用户的权限和访问范围
+
+2. 数据流转关系
+   - 用户认证信息贯穿所有模块
+   - 智能体配置数据影响市场展示和使用
+   - 使用数据反馈到数据分析模块
+
+### 2.3 功能实现优先级
+
+1. 第一阶段（基础功能）
+   - 用户认证（注册、登录）
+   - 智能体市场（浏览、搜索）
+   - 基础对话功能
+   - 全局Chat助手
+
+2. 第二阶段（核心功能）
+   - 智能体创建和配置
+   - 企业信息管理
+   - 团队基础管理
+   - 使用数据统计
+
+3. 第三阶段（完善功能）
+   - 高级权限管理
+   - 深度数据分析
+   - 系统配置优化
+   - 性能监控体系
+
+
+
+## 3. 页面设计
+
+### 3.1 页面清单
+
+#### 3.1.1 公共页面
+1. 登录页 (login)
+   - 用户登录表单
+   - 忘记密码入口
+   - 注册入口
+
+2. 注册页 (register)
+   - 用户注册表单
+   - 企业信息填写
+   - 登录入口
+
+3. 忘记密码页 (forgot-password)
+   - 邮箱验证
+   - 密码重置
+
+#### 3.1.2 企业用户页面
+1. 工作台首页 (dashboard)
+   - 常用智能体快捷入口
+   - 最近使用记录
+   - 全局Chat入口
+   - 智能体推荐区
+
+2. 智能体市场页 (agent-market)
+   - 智能体分类展示
+   - 搜索筛选区
+   - 智能体卡片列表
+   - 排序和筛选功能
+
+[继续输出剩余内容...] 
+
+
+[前面内容保持不变，从3.1.2继续]
+
+3. 智能体详情页 (agent-detail)
+   - 智能体介绍
+   - 功能说明
+   - 使用指南
+   - 开始使用按钮
+
+4. 对话页面 (chat)
+   - 对话主界面
+   - 历史记录侧栏
+   - 文件处理区
+   - 功能工具栏
+
+5. 个人中心 (profile)
+   - 个人信息设置
+   - 密码修改
+   - 使用记录查看
+   - 偏好设置
+
+6. 企业管理页 (enterprise)
+   - 企业信息设置
+   - 成员管理
+   - 使用统计
+   - 配置管理
+
+#### 3.1.3 管理员页面
+1. 管理控制台 (admin-dashboard)
+   - 系统概览
+   - 快捷功能入口
+   - 数据统计展示
+
+2. 智能体管理页 (admin-agents)
+   - 智能体列表
+   - 创建/编辑智能体
+   - 发布管理
+   - 性能监控
+
+3. 用户管理页 (admin-users)
+   - 企业账号管理
+   - 用户账号管理
+   - 权限设置
+
+4. 系统设置页 (admin-settings)
+   - 平台配置
+   - 参数设置
+   - 基础数据维护
+
+### 3.2 导航关系
+
+#### 3.2.1 主要导航流程
+1. 登录流程
+   - 登录页 -> 工作台首页/管理控制台(根据角色)
+   - 注册页 -> 登录页
+   - 忘记密码页 -> 登录页
+
+2. 企业用户导航
+   - 工作台首页 -> 智能体市场页 -> 智能体详情页 -> 对话页面
+   - 工作台首页 -> 个人中心
+   - 工作台首页 -> 企业管理页
+
+3. 管理员导航
+   - 管理控制台 -> 智能体管理页
+   - 管理控制台 -> 用户管理页
+   - 管理控制台 -> 系统设置页
+
+### 3.3 页面详细设计
+
+#### 3.3.1 注册页面 (register)
+1. 页面结构
+   - Logo和标题区
+   - 第三方登录区（Google/Apple/GitHub）
+   - 分隔符（"或者"）
+   - 主注册表单
+   - 底部链接区
+
+2. 表单字段
+
+
+
+    typescript
+interface RegisterForm {
+firstName: string; // 名字
+lastName: string; // 姓氏
+username: string; // 用户名
+email: string; // 电子邮件
+password: string; // 密码
+enterpriseName: string; // 企业名称
+industry: string; // 所属行业
+scale: string; // 企业规模
+}
+
+
+3. 视觉设计
+   - 背景：深色渐变星空背景
+   - 主体：白色圆角卡片（带轻微阴影）
+   - 点缀：悬浮动画元素
+   - 按钮：深色主按钮
+   - 字体：系统默认字体，标题加粗
+
+#### 3.3.2 工作台首页 (dashboard)
+1. 页面布局
++------------------------+
+| 顶部导航栏 |
++------------------------+
+|侧边栏| 内容区 |
+| | +----------+ |
+| | |快捷操作区| |
+| | +----------+ |
+| | |智能体推荐| |
+| | +----------+ |
+| | |使用统计 | |
++------+--+----------+--+
+
+
+2. 组件设计
+
+typescript
+// 快捷操作组件
+interface QuickAction {
+id: string;
+icon: string;
+title: string;
+description: string;
+action: () => void;
+}
+// 智能体推荐组件
+interface RecommendedAgent {
+id: string;
+name: string;
+description: string;
+icon: string;
+tags: string[];
+usageCount: number;
+}
+// 使用统计组件
+interface UsageMetrics {
+totalChats: number;
+activeAgents: number;
+recentAgents: {
+agentId: string;
+lastUsed: Date;
+chatCount: number;
+}[];
+}
+
+
+## 4. 数据设计
+
+### 4.1 数据库表结构
+
+#### 4.1.1 用户相关表
+1. 企业表 (enterprises)
+CREATE TABLE enterprises (
+id VARCHAR(36) PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+industry VARCHAR(50),
+scale VARCHAR(20),
+status ENUM('active', 'inactive') DEFAULT 'active',
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+2. 用户表 (users)
+CREATE TABLE users (
+id VARCHAR(36) PRIMARY KEY,
+enterprise_id VARCHAR(36),
+username VARCHAR(50) NOT NULL,
+email VARCHAR(100) NOT NULL,
+password_hash VARCHAR(255) NOT NULL,
+first_name VARCHAR(50),
+last_name VARCHAR(50),
+role ENUM('admin', 'operator', 'enterprise_user') NOT NULL,
+status ENUM('active', 'inactive') DEFAULT 'active',
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (enterprise_id) REFERENCES enterprises(id)
+);
+
+
+
+#### 4.1.2 智能体相关表
+1. 智能体表 (agents)
+CREATE TABLE agents (
+id VARCHAR(36) PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+description TEXT,
+category VARCHAR(50),
+config JSON,
+status ENUM('draft', 'published', 'archived') DEFAULT 'draft',
+created_by VARCHAR(36),
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (created_by) REFERENCES users(id)
+);
+
+
+2. 对话历史表 (chat_history)
+CREATE TABLE chat_history (
+id VARCHAR(36) PRIMARY KEY,
+user_id VARCHAR(36) NOT NULL,
+agent_id VARCHAR(36) NOT NULL,
+message TEXT NOT NULL,
+role ENUM('user', 'assistant') NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (user_id) REFERENCES users(id),
+FOREIGN KEY (agent_id) REFERENCES agents(id)
+);
+
+
+### 4.2 数据关系图
+Enterprises] 1 --- [Users]
+[Users] 1 --- [ChatHistory]
+[Agents] 1 --- [ChatHistory]
+[Users] 1 --- [Agents] (created_by)
+
+
+### 4.3 缓存策略
+
+1. Redis缓存设计
+ 用户会话缓存
+user:session:{session_id} -> {user_info}
+TTL: 24小时
+智能体配置缓存
+agent:config:{agent_id} -> {agent_config}
+TTL: 1小时
+对话上下文缓存
+chat:context:{chat_id} -> {context_data}
+TTL: 30分钟
+
+. 缓存更新策略
+   - 用户信息：登录时更新，修改时失效
+   - 智能体配置：发布时更新，修改时失效
+   - 对话上下文：实时更新，会话结束时失效
+
+### 4.4 数据流转图
+
+1. 用户认证流程
+Browser -> API Gateway -> Auth Service -> Redis -> MySQL
+
+2. 智能体对话流程
+Browser -> API Gateway -> Chat Service -> Agent Service -> Model Platform
+-> Redis (context)
+-> MySQL (history)
+
+
+## 5. 接口设计
+## 5.1 API接口清单
+
+#### 5.1.1 用户认证接口
+1. 用户注册
+
+POST /api/v1/auth/register
+Request: {
+email: string,
+password: string,
+username: string,
+enterprise: {
+name: string,
+industry: string,
+scale: string
+}
+}
+Response: {
+code: number,
+message: string,
+data: {
+userId: string,
+token: string
+}
+}
+
+
+[接着前面的接口设计继续]
+
+2. 用户登录 
+POST /api/v1/auth/login
+Request: {
+email: string,
+password: string
+}
+Response: {
+code: number,
+message: string,
+data: {
+userId: string,
+token: string,
+role: string
+}
+}
+
+3. 密码重置
+POST /api/v1/auth/reset-password
+Request: {
+email: string,
+verificationCode: string,
+newPassword: string
+}
+Response: {
+code: number,
+message: string
+}
+
+
+#### 5.1.2 智能体接口
+1. 获取智能体列表
+
+GET /api/v1/agents
+Query: {
+category?: string,
+keyword?: string,
+page: number,
+pageSize: number
+}
+Response: {
+code: number,
+message: string,
+data: {
+total: number,
+items: Array<{
+id: string,
+name: string,
+description: string,
+category: string,
+status: string
+}>
+}
+}
+
+
+2， 创建对话
+
+POST /api/v1/agents/{agentId}/chat
+Request: {
+message: string,
+context?: {
+history: Array<{
+role: string,
+content: string
+}>
+}
+}
+Response: {
+code: number,
+message: string,
+data: {
+chatId: string,
+reply: string
+}
+}
+
+5.2 错误处理机制
+1. 错误码定义
+{
+SUCCESS: 200,
+BAD_REQUEST: 400,
+UNAUTHORIZED: 401,
+FORBIDDEN: 403,
+NOT_FOUND: 404,
+INTERNAL_ERROR: 500
+}
+
+2. 错误响应格式
+{
+code: number, // 错误码
+message: string, // 错误描述
+details?: any // 详细信息
+}
+
+6. 技术实现方案
+
+6。1 开发框架和工具
+
+. 前端技术栈
+- Vue 3.x
+- TypeScript 4.x
+- Vite 2.x
+- Element Plus
+- Pinia 状态管理
+- Vue Router 4.x
+
+2. 后端技术栈
+- Python 3.10+
+- FastAPI
+- SQLAlchemy ORM
+- Redis
+- MySQL 8.0
+
+3. 开发工具
+- VS Code
+- Git
+- Docker
+- Nginx
+
+### 6.2 第三方服务集成
+
+1. Dify平台集成
+python
+class DifyService:
+def init(self, api_key: str, base_url: str):
+self.api_key = api_key
+self.base_url = base_url
+async def create_chat(self, message: str) -> dict:
+headers = {
+"Authorization": f"Bearer {self.api_key}",
+"Content-Type": "application/json"
+}
+data = {
+"message": message
+}
+async with httpx.AsyncClient() as client:
+response = await client.post(
+f"{self.base_url}/chat",
+headers=headers,
+json=data
+)
+return response.json()
+
+### 6.3 部署架构
+1. 容器化部署
+yaml
+version: '3'
+services:
+frontend:
+build: ./frontend
+ports:
+"80:80"
+depends_on:
+backend
+backend:
+build: ./backend
+ports:
+"8000:8000"
+depends_on:
+mysql
+redis
+mysql:
+image: mysql:8.0
+volumes:
+mysql_data:/var/lib/mysql
+redis:
+image: redis:6.2
+volumes:
+redis_data:/data
+
+2，负载均衡
+nginx
+upstream backend {
+server backend1:8000;
+server backend2:8000;
+server backend3:8000;
+}
+server {
+listen 80;
+server_name example.com;
+location /api {
+proxy_pass http://backend;
+}
+location / {
+root /usr/share/nginx/html;
+try_files $uri $uri/ /index.html;
+}
+}
+
+
+### 6.4 性能考虑
+
+1. 前端性能优化
+   - 路由懒加载
+   - 组件按需加载
+   - 静态资源CDN加速
+   - 图片懒加载
+   - 本地缓存策略
+
+2. 后端性能优化
+   - 数据库索引优化
+   - 查询缓存
+   - 异步处理
+   - 连接池管理
+   - 分页查询
+
+3. 智能体服务优化
+   - 对话上下文管理
+   - 模型响应缓存
+   - 并发请求控制
+   - 超时处理机制
+
+## 7. 安全设计
+
+### 7.1 用户认证授权
+
+1. 认证机制
+   - JWT Token认证
+     token_payload = {
+         "user_id": "uuid",
+         "role": "enterprise_user",
+         "enterprise_id": "uuid",
+         "exp": timestamp
+     }
+   
+   - Token刷新机制
+     refresh_token_expires = 7 days
+     access_token_expires = 2 hours
+
+2. 权限控制
+   - 基于角色的访问控制(RBAC)
+     role_permissions = {
+         "admin": ["all"],
+         "operator": ["agent_manage", "user_manage"],
+         "enterprise_user": ["agent_use", "profile_manage"]
+     }
+
+### 7.2 数据安全
+
+1. 数据加密
+   - 密码加密：使用bcrypt算法
+   - 敏感数据加密：AES-256
+   - HTTPS传输加密
+
+2. 数据隔离
+   - 企业级数据隔离
+   - 用户级数据隔离
+   - 对话历史隔离
+
+3. 数据备份
+   - 定时全量备份
+   - 实时增量备份
+   - 多地域备份
+
+### 7.3 API安全
+
+1. 接口防护
+   - 请求频率限制
+     rate_limit = {
+         "default": "100/minute",
+         "chat": "60/minute",
+         "login": "5/minute"
+     }
+   
+   - 参数验证
+   - SQL注入防护
+   - XSS防护
+
+2. 日志记录
+   - 访问日志
+   - 操作日志
+   - 错误日志
+   - 安全事件日志
+
+## 8. 开发计划
+
+### 8.1 开发阶段划分
+
+1. 第一阶段（基础功能）- 2周
+   - 用户认证系统
+   - 基础页面框架
+   - 智能体对话功能
+   - 数据库基础结构
+
+2. 第二阶段（核心功能）- 3周
+   - 智能体市场
+   - 企业管理功能
+   - 对话历史管理
+   - 基础数据分析
+
+3. 第三阶段（完善功能）- 2周
+   - 高级管理功能
+   - 数据分析报表
+   - 系统监控
+   - 性能优化
+
+### 8.2 具体任务清单
+
+1. 第一阶段任务
+   Week 1:
+   - 搭建前端项目框架
+   - 实现登录注册页面
+   - 设计并创建数据库
+   - 实现基础API接口
+
+   Week 2:
+   - 完成智能体对话界面
+   - 实现对话基础功能
+   - 集成Dify平台
+   - 单元测试和联调
+
+2. 第二阶段任务
+   Week 3:
+   - 智能体市场页面开发
+   - 智能体推荐功能
+   - 企业信息管理
+   - 团队管理功能
+
+   Week 4:
+   - 对话历史功能
+   - 数据统计基础功能
+   - 用户管理功能
+   - 系统配置功能
+
+   Week 5:
+   - 完善企业管理功能
+   - 实现数据分析
+   - 优化用户体验
+   - 集成测试
+
+3. 第三阶段任务
+   Week 6:
+   - 高级管理功能开发
+   - 完善数据分析报表
+   - 实现系统监控
+   - 性能测试和优化
+
+   Week 7:
+   - 系统集成测试
+   - 性能优化
+   - 文档完善
+   - 部署准备
+
+### 8.3 验收标准
+
+1. 功能验收
+   - 所有核心功能正常运行
+   - 用户界面符合设计规范
+   - 数据处理准确无误
+   - 系统响应时间达标
+
+2. 性能验收
+   - 并发用户数：100+
+   - 页面加载时间：<2s
+   - API响应时间：<500ms
+   - CPU使用率：<70%
+
+3. 安全验收
+   - 通过安全扫描测试
+   - 敏感数据加密存储
+   - 权限控制有效
+   - 日志记录完整
+
+4. 文档验收
+   - 完整的技术文档
+   - 详细的API文档
+   - 部署文档
+   - 用户使用手册

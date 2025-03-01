@@ -1,0 +1,49 @@
+@use 'variables' as *;
+
+// 主题变量
+:root {
+  // 颜色
+  --color-primary: #1E1E1E;
+  --color-secondary: #2D2D2D;
+  --color-accent: #6B7280;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #9CA3AF;
+  --color-button-primary: #3B82F6;
+  --color-button-primary-hover: #2563EB;
+  
+  // 间距
+  --spacing-base: 16px;
+  --spacing-large: 24px;
+  
+  // 圆角
+  --border-radius-small: 8px;
+  --border-radius-medium: 12px;
+  --border-radius-large: 16px;
+}
+
+// 全局背景
+body {
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+}
+
+// 装饰元素动画
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+// Element Plus 主题覆盖
+:root {
+  --el-color-primary: var(--color-accent);
+}
+
+.el-button--primary {
+  --el-button-bg-color: var(--color-button-primary);
+} 

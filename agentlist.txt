@@ -1,0 +1,175 @@
+# 产品创意助手 - 智能体清单
+
+## 1. 文档分析智能体 (Document Analysis Agent)
+
+用途: A1-A2阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+- 解析上传的产品文档
+- 提取核心功能特性
+- 建立功能关系图谱
+- 生成结构化分析报告
+
+知识库要求:
+- 用户上传的产品文档
+- 产品分析框架文档
+
+关键提示词方向:
+- 文档内容理解和结构化提取
+- 产品功能分类和关系识别
+- 核心特性权重分析
+- 功能依赖关系推导
+
+输出格式:
+{
+  "core_features": [Feature],
+  "feature_relations": [Relation],
+  "key_insights": [Insight],
+  "function_map": Graph
+}
+
+## 2. 市场分析智能体 (Market Analysis Agent)
+
+用途: A3阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+- 分析市场趋势
+- 识别市场机会
+- 评估竞争态势
+- 生成市场洞察
+
+知识库要求:
+- 用户上传的市场文档
+- 行业报告库
+- 竞品分析资料
+
+关键提示词方向:
+- 市场趋势识别和预测
+- 竞品分析和对标
+- 市场机会点发现
+- 创新空间评估
+
+输出格式:
+{
+  "market_trends": [Trend],
+  "opportunities": [Opportunity],
+  "competitor_analysis": [Competitor],
+  "market_insights": [Insight]
+}
+
+## 3. 需求分析智能体 (Requirement Analysis Agent)
+
+用途: A4-A5阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+- 需求提取和分类
+- 需求优先级排序
+- 需求关联性分析
+- 需求可行性评估
+
+知识库要求:
+- 前序分析结果
+- 需求工程最佳实践
+- 用户研究数据
+
+关键提示词方向:
+- 需求提取和分类标准
+- 优先级评估框架
+- 需求依赖关系分析
+- 可行性评估标准
+
+输出格式:
+{
+  "requirements": [Requirement],
+  "priority_matrix": Matrix,
+  "requirement_clusters": [Cluster],
+  "feasibility_analysis": [Analysis]
+}
+
+## 4. 创意生成智能体 (Creative Generation Agent)
+
+用途: A6-A7阶段
+类型: Completion
+模型: Claude
+
+功能职责:
+- 产品创意生成
+- 特性组合优化
+- 创意描述生成
+- 创新点提炼
+
+知识库要求:
+- 创新方法论
+- 设计思维案例
+- 前序分析结果
+
+关键提示词方向:
+- 创意发散思维引导
+- 特性组合策略
+- 创新点描述规范
+- 用户价值提炼
+
+输出格式:
+{
+  "creative_ideas": [Idea],
+  "feature_combinations": [Combination],
+  "value_propositions": [Value],
+  "innovation_points": [Point]
+}
+
+## 5. 方案设计智能体 (Solution Design Agent)
+
+用途: A8-A9阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+- 技术方案设计
+- 可行性分析
+- 实现路径规划
+- 优化建议生成
+
+知识库要求:
+- 产品设计规范
+- 技术实现文档
+- 行业最佳实践
+
+关键提示词方向:
+- 技术可行性分析框架
+- 实现方案设计规范
+- 优化建议生成标准
+- 资源评估方法
+
+输出格式:
+{
+  "technical_solution": Solution,
+  "feasibility_study": Study,
+  "implementation_path": Path,
+  "optimization_suggestions": [Suggestion]
+}
+
+## 智能体协作关系
+
+1. 数据流转:
+   文档分析 -> 市场分析 -> 需求分析 -> 创意生成 -> 方案设计
+
+2. 上下文共享:
+   - 所有智能体共享基础知识库
+   - 前序分析结果作为后续输入
+   - 保持分析链路完整性
+
+3. 结果验证:
+   - 每个环节输出需要符合预定格式
+   - 支持人工确认和调整
+   - 保留调整记录供后续优化
+
+4. 协同规则:
+   - 统一的数据格式标准
+   - 明确的职责边界
+   - 清晰的交互协议 

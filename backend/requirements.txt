@@ -1,0 +1,39 @@
+# Web 框架及其依赖
+fastapi==0.88.0
+starlette==0.22.0
+uvicorn==0.20.0
+
+# 数据库相关
+SQLAlchemy==1.4.41
+mysqlclient==2.1.1
+pymysql==1.1.0
+alembic==1.9.2
+
+# 认证和安全
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==3.2.0
+python-multipart==0.0.5
+cryptography==39.0.0
+
+# 缓存
+redis==4.4.2
+aioredis==2.0.1
+
+# 数据验证和设置
+pydantic[email]==1.10.4
+python-dotenv==0.21.1
+email-validator==2.0.0
+
+# 异步支持
+aiohttp==3.8.3
+websockets==10.4
+
+# 工具和类型
+typing-extensions==4.4.0
+httpx==0.25.2
+
+# PDF生成
+reportlab==4.0.8
+Pillow==10.2.0  # 用于处理图片
+requests==2.31.0  # 用于下载图片 

@@ -1,0 +1,52 @@
+// 颜色变量
+$primary-color: #409EFF;
+$success-color: #67C23A;
+$warning-color: #E6A23C;
+$danger-color: #F56C6C;
+$info-color: #909399;
+
+// 文字颜色
+$text-primary: #303133;
+$text-regular: #606266;
+$text-secondary: #909399;
+
+// 边框颜色
+$border-color: #DCDFE6;
+
+// 背景颜色
+$background-color: #F5F7FA;
+
+// 间距
+$spacing-mini: 4px;
+$spacing-small: 8px;
+$spacing-base: 16px;
+$spacing-large: 24px;
+$spacing-huge: 32px;
+
+// 圆角
+$border-radius-small: 2px;
+$border-radius-base: 4px;
+$border-radius-large: 8px;
+
+// 阴影
+$box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+// 变量定义
+:root {
+  // 颜色
+  --color-primary: #1a1a1a;
+  --color-secondary: #242424;
+  --color-accent: #4a9eff;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-button-primary: var(--color-accent);
+  --color-button-danger: #ff4d4f;
+
+  // 间距
+  --spacing-base: 24px;
+  --spacing-large: 32px;
+
+  // 圆角
+  --border-radius-small: 4px;
+  --border-radius-large: 8px;
+} 

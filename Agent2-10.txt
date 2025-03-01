@@ -1,0 +1,379 @@
+# 产品创意助手 - A2-A10页面技术设计规范
+
+## A2. 核心功能分析页面
+
+### 1. 类型定义
+interface FunctionNode {
+  id: string;
+  name: string;
+  category: string;
+  weight: number;
+  relations: string[];
+}
+
+interface FunctionAnalysis {
+  nodes: FunctionNode[];
+  categories: string[];
+  insights: string[];
+}
+
+### 2. 组件结构
+<template>
+  <div class="analysis-container">
+    <header class="analysis-header">
+      <h1>核心功能分析</h1>
+      <ProgressIndicator :step="2" :total="10" />
+    </header>
+
+    <div class="function-map">
+      <FunctionGraph
+        :data="functionData"
+        @node-click="handleNodeClick"
+      />
+    </div>
+
+    <div class="insights-panel">
+      <InsightsList :insights="insights" />
+    </div>
+
+    <ActionBar>
+      <Button @click="handleBack">返回</Button>
+      <Button type="primary" @click="handleNext">
+        继续市场分析
+      </Button>
+    </ActionBar>
+  </div>
+</template>
+
+### 3. 状态管理
+export const analysisStore = defineStore('analysis', {
+  state: () => ({
+    functionData: null as FunctionAnalysis | null,
+    selectedNode: null as string | null,
+    analysisStatus: 'idle'
+  }),
+
+  actions: {
+    async analyzeFunctions() {
+      this.analysisStatus = 'loading';
+      try {
+        const response = await api.analyzeFunctions();
+        this.functionData = response.data;
+        this.analysisStatus = 'success';
+      } catch (error) {
+        this.analysisStatus = 'error';
+      }
+    }
+  }
+});
+
+## A3. 市场趋势分析页面
+
+### 1. 类型定义
+interface TrendData {
+  timestamp: string;
+  value: number;
+  category: string;
+}
+
+interface MarketInsight {
+  id: string;
+  title: string;
+  description: string;
+  confidence: number;
+  source: string[];
+}
+
+### 2. 组件结构
+<template>
+  <div class="market-analysis">
+    <TrendChart
+      :data="trendData"
+      :options="chartOptions"
+    />
+    
+    <MarketInsights
+      :insights="marketInsights"
+      @insight-click="handleInsightClick"
+    />
+  </div>
+</template>
+
+[继续A4-A10的详细设计...]
+
+## A4. 产品需求分析页面
+
+### 1. 类型定义
+interface Requirement {
+  id: string;
+  title: string;
+  description: string;
+  priority: 'high' | 'medium' | 'low';
+  category: string;
+  source: string[];
+}
+
+interface RequirementCluster {
+  id: string;
+  name: string;
+  requirements: Requirement[];
+}
+
+### 2. 组件结构
+<template>
+  <div class="requirements-analysis">
+    <RequirementClusters
+      :clusters="requirementClusters"
+      @cluster-select="handleClusterSelect"
+    />
+    
+    <RequirementList
+      :requirements="selectedRequirements"
+      @requirement-select="handleRequirementSelect"
+    />
+  </div>
+</template>
+
+[继续详细设计...]
+
+## A5. 需求选择页面
+
+### 1. 类型定义
+interface PrioritizedRequirement extends Requirement {
+  order: number;
+  selected: boolean;
+}
+
+### 2. 组件结构
+<template>
+  <div class="requirement-selection">
+    <DraggableList
+      v-model="prioritizedRequirements"
+      @reorder="handleReorder"
+    />
+    
+    <SelectionSummary
+      :selected="selectedRequirements"
+      @remove="handleRemove"
+    />
+  </div>
+</template>
+
+[继续详细设计...]
+
+## A6. 创意生成页面
+
+### 1. 类型定义
+interface CreativeIdea {
+  id: string;
+  title: string;
+  description: string;
+  features: string[];
+  targetUsers: string[];
+  score: number;
+}
+
+### 2. 组件结构
+<template>
+  <div class="idea-generation">
+    <IdeaGrid
+      :ideas="generatedIdeas"
+      @idea-select="handleIdeaSelect"
+    />
+    
+    <GenerationControls
+      @regenerate="handleRegenerate"
+      @optimize="handleOptimize"
+    />
+  </div>
+</template>
+
+[继续详细设计...]
+
+## A7. 创意可视化页面
+
+### 1. 类型定义
+interface VisualIdea {
+  id: string;
+  textDescription: string;
+  images: {
+    url: string;
+    alt: string;
+    style: string;
+  }[];
+}
+
+### 2. 组件结构
+<template>
+  <div class="idea-visualization">
+    <TextEditor
+      v-model="selectedIdea.description"
+      @update="handleDescriptionUpdate"
+    />
+    
+    <ImageGenerator
+      :prompt="generationPrompt"
+      @generate="handleGenerateImage"
+    />
+  </div>
+</template>
+
+[继续详细设计...]
+
+## A8. 方案构思页面
+
+### 1. 类型定义
+interface Solution {
+  id: string;
+  overview: string;
+  technical: string;
+  implementation: string;
+  references: Reference[];
+}
+
+interface Reference {
+  id: string;
+  title: string;
+  source: string;
+  relevance: number;
+}
+
+### 2. 组件结构
+<template>
+  <div class="solution-design">
+    <MultiColumnEditor
+      :sections="solutionSections"
+      @section-update="handleSectionUpdate"
+    />
+    
+    <ReferencePanel
+      :references="relevantReferences"
+      @reference-click="handleReferenceClick"
+    />
+  </div>
+</template>
+
+[继续详细设计...]
+
+## A9. 方案优化页面
+
+### 1. 类型定义
+interface Optimization {
+  id: string;
+  type: 'suggestion' | 'improvement' | 'warning';
+  content: string;
+  impact: 'high' | 'medium' | 'low';
+}
+
+### 2. 组件结构
+<template>
+  <div class="solution-optimization">
+    <RichTextEditor
+      v-model="currentSolution"
+      :suggestions="aiSuggestions"
+      @apply-suggestion="handleApplySuggestion"
+    />
+    
+    <OptimizationPanel
+      :optimizations="optimizations"
+      @optimize="handleOptimize"
+    />
+  </div>
+</template>
+
+[继续详细设计...]
+
+## A10. 方案分享页面
+
+### 1. 类型定义
+interface ShareTarget {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+interface ShareOptions {
+  format: 'email' | 'link' | 'document';
+  expiration?: Date;
+  permissions: string[];
+}
+
+### 2. 组件结构
+<template>
+  <div class="solution-share">
+    <ShareOptionsPanel
+      v-model="shareOptions"
+      @option-change="handleOptionChange"
+    />
+    
+    <RecipientSelector
+      :team-members="teamMembers"
+      @selection-change="handleSelectionChange"
+    />
+    
+    <PreviewPanel
+      :content="sharePreview"
+      @edit="handleEdit"
+    />
+  </div>
+</template>
+
+### 3. 共享组件和工具
+
+// 进度指示器组件
+export const ProgressIndicator = defineComponent({
+  props: {
+    step: Number,
+    total: Number
+  },
+  setup(props) {
+    const progress = computed(() => 
+      (props.step / props.total) * 100
+    );
+    
+    return () => (
+      <div class="progress-bar">
+        <div 
+          class="progress-fill"
+          style={`width: ${progress.value}%`}
+        />
+      </div>
+    );
+  }
+});
+
+// 全局样式定义
+:root {
+  --primary-color: #4A90E2;
+  --secondary-color: #81C7F5;
+  --success-color: #4CAF50;
+  --warning-color: #FFC107;
+  --error-color: #F44336;
+  --text-primary: #2C3E50;
+  --text-secondary: #7F8C8D;
+  --background-light: #F8FAFC;
+  --background-dark: #1A1A1A;
+}
+
+// 共享动画
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); }
+  to { transform: translateY(0); }
+}
+
+// 响应式布局混入
+@mixin responsive($breakpoint) {
+  @if $breakpoint == tablet {
+    @media (min-width: 768px) { @content; }
+  } @else if $breakpoint == desktop {
+    @media (min-width: 1024px) { @content; }
+  } @else if $breakpoint == wide {
+    @media (min-width: 1280px) { @content; }
+  }
+} 

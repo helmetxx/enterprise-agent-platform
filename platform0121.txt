@@ -1,0 +1,3145 @@
+# 企业智能助手平台详细设计文档
+
+## 1. 产品概述
+
+### 1.1 产品定位和目标
+- 项目定位：企业级智能体工作平台
+- 目标用户：制造业、零售业等企业客户
+- 核心功能：通过RAG+大模型提供多种智能体服务
+  * 产品创意设计
+  * 营销文案生成
+  * 人力资源助手等
+  这些智能体可以通过类似产品插件的方式由平台运营者发布到平台上供企业用户使用
+
+### 1.2 用户角色定义
+
+1. 平台管理角色
+   - 超级管理员
+     * 管理平台所有功能和配置
+     * 管理其他管理员账号
+     * 查看平台运营数据
+   
+   - 运营管理员
+     * 管理和发布智能体
+     * 管理企业账号
+     * 查看使用统计
+
+2. 企业用户角色
+   - 企业用户
+     * 归属于特定企业
+     * 使用平台提供的智能体服务
+     * 查看个人使用历史
+
+### 1.3 核心价值主张
+- 提供企业级智能体服务
+- 支持多企业多用户架构
+- 灵活的智能体配置和管理
+- 安全可靠的数据隔离
+
+### 1.4 系统整体架构
+
+1.	前端层 (Frontend Layer)，工程目录frontend
+   - Vue 3 + TypeScript
+   - Element Plus UI组件库
+   - Vite构建工具
+   - 统一的用户界面
+
+2. 后端应用层 (Backend Layer), 工程目录backend
+   - Python + FastAPI
+   - MySQL数据持久化
+   - Redis缓存服务
+   - 业务逻辑处理
+
+3. 智能体集成层 (Agent Service Layer) 工程目录包含在后端应用backend的子目录下
+   需要注意的是智能体集成层可能会集成不同的大模型应用平台，比如dify或ragflow等，可以根据需要扩展，因此每增加一个集成平台建议增加不同的子目录，方便开发管理
+   - 集成在FastAPI工程内
+   - 独立的代码目录结构
+   - 统一的接口规范
+   - 可扩展的适配器模式
+
+4. 模型平台层 (Model Platform Layer)
+   - 目前版本通过Dify平台集成，因此暂时不用开发,通过独立部署的dify平台实现
+   - 支持云端/本地部署
+   - 统一的API调用
+   - 可扩展的模型支持
+
+## 2. 功能模块设计
+
+### 2.0 平台支持说明
+- 当前阶段: PC Web端实现
+- 后续规划: 移动端适配（iOS/Android）
+- 技术准备: 采用响应式设计，预留移动端扩展接口
+
+### 2.1 功能模块清单
+
+#### 2.1.1 用户认证模块
+1. 企业用户功能
+   - 用户注册：企业用户填写基本信息和企业信息完成注册
+   - 用户登录：邮箱+密码登录系统
+   - 找回/重置密码：通过邮箱验证重置密码
+   - 修改密码：登录状态下修改个人密码
+   - 个人信息维护：更新个人基本资料和偏好设置
+
+2. 管理用户功能
+   - 管理员登录：管理员账号系统登录
+   - 重置密码：管理员密码重置流程
+   - 个人信息维护：管理员个人信息更新
+
+#### 2.1.2 智能体市场模块
+1. 智能体浏览
+   - 智能体列表展示：卡片式展示所有可用智能体
+   - 分类筛选：按功能类别筛选智能体
+   - 关键词搜索：通过关键词查找智能体
+   - 智能体详情查看：查看智能体详细说明和使用指南
+   - 使用频率排序：按使用热度排序展示
+
+2. 智能体推荐
+   - 个性化推荐：基于用户使用历史推荐相关智能体
+   - 企业特征推荐：根据企业所属行业推荐相关智能体
+   - 热门推荐：展示平台使用率最高的智能体
+
+#### 2.1.3 智能体使用模块
+1.	统一入口
+-	每个智能体均从统一的智能体浏览或搜索结果页面点击链接进入
+-	不同的智能体有不同的使用流程
+
+2.	本期先实现产品创意智能助手
+具体功能实现参见## 8. 产品创意智能助手功能实现, 其中包括:
+8.1 产品创意智能助手功能实现  
+8.2 产品创意智能助手UI设计
+
+
+#### 2.1.4 企业管理模块
+1. 企业信息管理
+   - 基本信息：维护企业基础资料
+   - 品牌设置：上传企业logo和定制界面
+   - 配置管理：管理企业级使用配置
+
+2. 团队管理
+   - 成员管理：添加和管理团队成员
+   - 权限设置：设置成员使用权限
+   - 使用统计：查看成员使用情况
+
+#### 2.1.5 平台管理模块
+1. 智能体管理
+   - 智能体创建：创建新的智能体服务
+   - 参数配置：设置智能体的行为参数
+   - 发布管理：控制智能体的上线状态
+   - 性能监控：监控智能体的运行状态
+
+2. 用户管理
+   - 企业管理：管理平台企业账号
+   - 用户管理：管理所有用户账号
+   - 权限管理：设置用户角色权限
+
+3. 系统配置
+   - 平台配置：配置模型服务接口
+   - 参数设置：调整系统运行参数
+   - 基础数据：维护系统基础数据
+
+4. 数据分析
+   - 用户分析：分析用户使用行为
+   - 智能体分析：分析智能体使用情况
+   - 性能分析：分析系统运行性能
+
+### 2.2 功能模块关系
+
+1. 模块依赖关系
+   - 用户认证是所有功能的基础
+   - 智能体市场依赖平台管理中的智能体配置
+   - 企业管理影响用户的权限和访问范围
+
+2. 数据流转关系
+   - 用户认证信息贯穿所有模块
+   - 智能体配置数据影响市场展示和使用
+   - 使用数据反馈到数据分析模块
+
+### 2.3 功能实现优先级
+
+1. 第一阶段（用户端基础功能）
+   - 用户认证（注册、登录）
+   - 智能体市场（浏览、搜索）
+   - 产品创意智能体的功能实现
+
+2. 第二阶段（平台基本管理功能）
+   - 管理端智能体创建和配置
+   - 企业信息管理
+   - 团队基础管理
+   - 使用数据统计
+
+3.	第三阶段（平台后续扩展功能）
+3.1 管理端扩展功能
+   - 高级权限管理
+   - 深度数据分析
+   - 系统配置优化
+   - 性能监控体系
+   3.2 用户端扩展功能
+   - 扩展实现不同的智能体使用功能
+   - 每个智能体应该有不同的使用流程，例如人力招聘的智能体可能有一系列的操作页面
+   - 每个智能体都是以智能体系搜索或浏览的结果作为统一入口
+   - 这些智能体可能会用到用户自主创建的一些公共资源，例如文件、知识库等
+   - 所有智能体的页面应统一嵌套在平台的整体页面中，页面风格应保持一致
+
+
+
+## 3. 页面设计
+
+### 3.1 页面清单
+
+#### 3.1.1 公共页面
+1. 登录页 (login)
+   - 用户登录表单
+   - 忘记密码入口
+   - 注册入口
+
+2. 注册页 (register)
+   - 用户注册表单
+   - 企业信息填写
+   - 登录入口
+
+3. 忘记密码页 (forgot-password)
+   - 邮箱验证
+   - 密码重置
+
+#### 3.1.2 企业用户页面
+1. 工作台首页 (dashboard)
+   - 常用智能体快捷入口
+   - 最近使用记录
+   - 全局Chat入口
+   - 智能体推荐区
+
+2. 智能体市场页 (agent-market)
+   - 智能体分类展示
+   - 搜索筛选区
+   - 智能体卡片列表
+   - 排序和筛选功能
+
+
+3. 智能体详情页 (agent-detail)
+   - 智能体介绍
+   - 功能说明
+   - 使用指南
+   - 开始使用按钮
+
+4. 智能体使用页面
+   每个智能体都有一组独立的使用页面，本阶段暂时只实现一个产品创意智能体
+   具体页面参见 8.2 产品创意智能体UI设计 ，注意这部分应该UI风格和网站整体风格保持一致
+
+
+5. 个人中心 (profile)
+   - 个人信息设置
+   - 密码修改
+   - 使用记录查看
+   - 偏好设置
+
+6. 企业管理页 (enterprise)
+   - 企业信息设置
+   - 成员管理
+   - 使用统计
+   - 配置管理
+
+#### 3.1.3 管理员页面
+1. 管理控制台 (admin-dashboard)
+   - 系统概览
+   - 快捷功能入口
+   - 数据统计展示
+
+2. 智能体管理页 (admin-agents)
+   - 智能体列表
+   - 创建/编辑智能体
+   - 发布管理
+   - 性能监控
+
+3. 用户管理页 (admin-users)
+   - 企业账号管理
+   - 用户账号管理
+   - 权限设置
+
+4. 系统设置页 (admin-settings)
+   - 平台配置
+   - 参数设置
+   - 基础数据维护
+
+
+const uiStyleGuide = {
+  // 3.4 统一UI规范（新增章节）
+  theme: {
+    // Lobe Chat风格
+    colors: {
+      primary: '#1E1E1E',
+      secondary: '#2D2D2D',
+      accent: '#6B7280',
+      text: {
+        primary: '#FFFFFF',
+        secondary: '#9CA3AF'
+      }
+    },
+    spacing: {
+      base: '16px',
+      large: '24px'
+    },
+    borderRadius: {
+      small: '8px',
+      medium: '12px',
+      large: '16px'
+    },
+    // 深色太空主题
+    background: {
+      primary: 'linear-gradient(180deg, #1A1A1A 0%, #0D0D0D 100%)',
+      secondary: '#1E1E1E',
+      elements: {
+        rocket: true,
+        stars: true,
+        planets: true
+      }
+    }
+  },
+  
+  components: {
+    // 统一组件样式
+    button: {
+      primary: {
+        background: '#3B82F6',
+        hover: '#2563EB',
+        text: '#FFFFFF'
+      },
+      secondary: {
+        background: '#374151',
+        hover: '#4B5563',
+        text: '#FFFFFF'
+      }
+    },
+    input: {
+      background: '#2D2D2D',
+      border: '1px solid #4B5563',
+      text: '#FFFFFF'
+    },
+    card: {
+      background: 'rgba(45, 45, 45, 0.7)',
+      backdropFilter: 'blur(10px)'
+    }
+  }
+};
+
+### 3.2 导航关系
+
+#### 3.2.1 主要导航流程
+1. 登录流程
+   - 登录页 -> 工作台首页/管理控制台(根据角色)
+   - 注册页 -> 登录页
+   - 忘记密码页 -> 登录页
+
+2. 企业用户导航
+   - 工作台首页 -> 智能体市场页 -> 智能体详情页 -> 对话页面
+   - 工作台首页 -> 个人中心
+   - 工作台首页 -> 企业管理页
+
+3. 管理员导航
+   - 管理控制台 -> 智能体管理页
+   - 管理控制台 -> 用户管理页
+   - 管理控制台 -> 系统设置页
+
+### 3.3 页面详细设计
+
+#### 3.3.1 注册页面 (register)
+1. 页面结构
+   - Logo和标题区
+   - 第三方登录区（Google/Apple/GitHub）
+   - 分隔符（"或者"）
+   - 主注册表单
+   - 底部链接区
+
+2. 表单字段
+
+
+
+    typescript
+interface RegisterForm {
+firstName: string; // 名字
+lastName: string; // 姓氏
+username: string; // 用户名
+email: string; // 电子邮件
+password: string; // 密码
+enterpriseName: string; // 企业名称
+industry: string; // 所属行业
+scale: string; // 企业规模
+}
+
+
+3. 视觉设计
+   - 背景：深色渐变星空背景
+   - 主体：白色圆角卡片（带轻微阴影）
+   - 点缀：悬浮动画元素
+   - 按钮：深色主按钮
+   - 字体：系统默认字体，标题加粗
+
+#### 3.3.2 工作台首页 (dashboard)
+1. 页面布局
++------------------------+
+| 顶部导航栏 |
++------------------------+
+|侧边栏| 内容区 |
+| | +----------+ |
+| | |快捷操作区| |
+| | +----------+ |
+| | |智能体推荐| |
+| | +----------+ |
+| | |使用统计 | |
++------+--+----------+--+
+
+
+2. 组件设计
+
+typescript
+// 快捷操作组件
+interface QuickAction {
+id: string;
+icon: string;
+title: string;
+description: string;
+action: () => void;
+}
+// 智能体推荐组件
+interface RecommendedAgent {
+id: string;
+name: string;
+description: string;
+icon: string;
+tags: string[];
+usageCount: number;
+}
+// 使用统计组件
+interface UsageMetrics {
+totalChats: number;
+activeAgents: number;
+recentAgents: {
+agentId: string;
+lastUsed: Date;
+chatCount: number;
+}[];
+}
+
+
+## 4. 数据设计
+
+### 4.1 数据库表结构
+
+#### 4.1.1 用户相关表
+1. 企业表 (enterprises)
+CREATE TABLE enterprises (
+id VARCHAR(36) PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+industry VARCHAR(50),
+scale VARCHAR(20),
+status ENUM('active', 'inactive') DEFAULT 'active',
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+2. 用户表 (users)
+CREATE TABLE users (
+id VARCHAR(36) PRIMARY KEY,
+enterprise_id VARCHAR(36),
+username VARCHAR(50) NOT NULL,
+email VARCHAR(100) NOT NULL,
+password_hash VARCHAR(255) NOT NULL,
+first_name VARCHAR(50),
+last_name VARCHAR(50),
+role ENUM('admin', 'operator', 'enterprise_user') NOT NULL,
+status ENUM('active', 'inactive') DEFAULT 'active',
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (enterprise_id) REFERENCES enterprises(id)
+);
+
+
+
+#### 4.1.2 智能体相关表
+1. 智能体表 (agents)
+CREATE TABLE agents (
+id VARCHAR(36) PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+description TEXT,
+category VARCHAR(50),
+config JSON,
+status ENUM('draft', 'published', 'archived') DEFAULT 'draft',
+created_by VARCHAR(36),
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (created_by) REFERENCES users(id)
+);
+
+
+2. 对话历史表 (chat_history)
+CREATE TABLE chat_history (
+id VARCHAR(36) PRIMARY KEY,
+user_id VARCHAR(36) NOT NULL,
+agent_id VARCHAR(36) NOT NULL,
+message TEXT NOT NULL,
+role ENUM('user', 'assistant') NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (user_id) REFERENCES users(id),
+FOREIGN KEY (agent_id) REFERENCES agents(id)
+);
+
+
+/* 2. 第4章 数据设计补充 */
+const databaseSchema = {
+  // 4.1.4 产品创意相关表（新增章节）
+  tables: {
+    // 创意项目表
+    creative_projects: `
+      CREATE TABLE creative_projects (
+        id VARCHAR(36) PRIMARY KEY,
+        user_id VARCHAR(36) NOT NULL,
+        enterprise_id VARCHAR(36) NOT NULL,
+        title VARCHAR(100) NOT NULL,
+        description TEXT,
+        status ENUM('draft', 'in_progress', 'completed') DEFAULT 'draft',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (enterprise_id) REFERENCES enterprises(id)
+      );
+    `,
+    
+    // 文档分析结果表
+    document_analysis: `
+      CREATE TABLE document_analysis (
+        id VARCHAR(36) PRIMARY KEY,
+        project_id VARCHAR(36) NOT NULL,
+        analysis_type ENUM('core_features', 'feature_relations', 'key_insights'),
+        content JSON,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES creative_projects(id)
+      );
+    `,
+    
+    // 市场分析结果表
+    market_analysis: `
+      CREATE TABLE market_analysis (
+        id VARCHAR(36) PRIMARY KEY,
+        project_id VARCHAR(36) NOT NULL,
+        analysis_data JSON,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES creative_projects(id)
+      );
+    `,
+    
+    // 创意生成结果表
+    idea_generations: `
+      CREATE TABLE idea_generations (
+        id VARCHAR(36) PRIMARY KEY,
+        project_id VARCHAR(36) NOT NULL,
+        idea_content JSON,
+        evaluation_score DECIMAL(3,2),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES creative_projects(id)
+      );
+    `,
+    
+    // 图片生成结果表
+    generated_images: `
+      CREATE TABLE generated_images (
+        id VARCHAR(36) PRIMARY KEY,
+        project_id VARCHAR(36) NOT NULL,
+        idea_id VARCHAR(36) NOT NULL,
+        image_url VARCHAR(255),
+        prompt_used TEXT,
+        style_config JSON,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES creative_projects(id),
+        FOREIGN KEY (idea_id) REFERENCES idea_generations(id)
+      );
+    `,
+    
+    // 方案设计结果表
+    solution_designs: `
+      CREATE TABLE solution_designs (
+        id VARCHAR(36) PRIMARY KEY,
+        project_id VARCHAR(36) NOT NULL,
+        technical_solution JSON,
+        feasibility_study JSON,
+        implementation_path JSON,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES creative_projects(id)
+      );
+    `
+  }
+};
+
+
+### 4.2 数据关系图
+Enterprises] 1 --- [Users]
+[Users] 1 --- [ChatHistory]
+[Agents] 1 --- [ChatHistory]
+[Users] 1 --- [Agents] (created_by)
+
+
+### 4.3 缓存策略
+
+1. Redis缓存设计
+ 用户会话缓存
+user:session:{session_id} -> {user_info}
+TTL: 24小时
+智能体配置缓存
+agent:config:{agent_id} -> {agent_config}
+TTL: 1小时
+对话上下文缓存
+chat:context:{chat_id} -> {context_data}
+TTL: 30分钟
+
+. 缓存更新策略
+   - 用户信息：登录时更新，修改时失效
+   - 智能体配置：发布时更新，修改时失效
+   - 对话上下文：实时更新，会话结束时失效
+
+### 4.4 数据流转图
+
+1. 用户认证流程
+Browser -> API Gateway -> Auth Service -> Redis -> MySQL
+
+2. 智能体对话流程
+Browser -> API Gateway -> Chat Service -> Agent Service -> Model Platform
+-> Redis (context)
+-> MySQL (history)
+
+
+## 5. 接口设计
+## 5.1 API接口清单
+
+#### 5.1.1 用户认证接口
+1. 用户注册
+
+POST /api/v1/auth/register
+Request: {
+email: string,
+password: string,
+username: string,
+enterprise: {
+name: string,
+industry: string,
+scale: string
+}
+}
+Response: {
+code: number,
+message: string,
+data: {
+userId: string,
+token: string
+}
+}
+
+
+[接着前面的接口设计继续]
+
+2. 用户登录 
+POST /api/v1/auth/login
+Request: {
+email: string,
+password: string
+}
+Response: {
+code: number,
+message: string,
+data: {
+userId: string,
+token: string,
+role: string
+}
+}
+
+3. 密码重置
+POST /api/v1/auth/reset-password
+Request: {
+email: string,
+verificationCode: string,
+newPassword: string
+}
+Response: {
+code: number,
+message: string
+}
+
+
+#### 5.1.2 智能体接口
+1. 获取智能体列表
+
+GET /api/v1/agents
+Query: {
+category?: string,
+keyword?: string,
+page: number,
+pageSize: number
+}
+Response: {
+code: number,
+message: string,
+data: {
+total: number,
+items: Array<{
+id: string,
+name: string,
+description: string,
+category: string,
+status: string
+}>
+}
+}
+
+
+2， 创建对话
+
+POST /api/v1/agents/{agentId}/chat
+Request: {
+message: string,
+context?: {
+history: Array<{
+role: string,
+content: string
+}>
+}
+}
+Response: {
+code: number,
+message: string,
+data: {
+chatId: string,
+reply: string
+}
+}
+
+5.2 错误处理机制
+1. 错误码定义
+{
+SUCCESS: 200,
+BAD_REQUEST: 400,
+UNAUTHORIZED: 401,
+FORBIDDEN: 403,
+NOT_FOUND: 404,
+INTERNAL_ERROR: 500
+}
+
+2. 错误响应格式
+{
+code: number, // 错误码
+message: string, // 错误描述
+details?: any // 详细信息
+}
+
+6. 技术实现方案
+
+6。1 开发框架和工具
+
+. 前端技术栈
+- Vue 3.x
+- TypeScript 4.x
+- Vite 2.x
+- Element Plus
+- Pinia 状态管理
+- Vue Router 4.x
+
+2. 后端技术栈
+- Python 3.10+
+- FastAPI
+- SQLAlchemy ORM
+- Redis
+- MySQL 8.0
+
+3. 开发工具
+- VS Code
+- Git
+- Docker
+- Nginx
+
+### 6.2 第三方服务集成
+
+1. Dify平台集成
+python
+class DifyService:
+def init(self, api_key: str, base_url: str):
+self.api_key = api_key
+self.base_url = base_url
+async def create_chat(self, message: str) -> dict:
+headers = {
+"Authorization": f"Bearer {self.api_key}",
+"Content-Type": "application/json"
+}
+data = {
+"message": message
+}
+async with httpx.AsyncClient() as client:
+response = await client.post(
+f"{self.base_url}/chat",
+headers=headers,
+json=data
+)
+return response.json()
+
+### 6.3 部署架构
+1. 容器化部署
+yaml
+version: '3'
+services:
+frontend:
+build: ./frontend
+ports:
+"80:80"
+depends_on:
+backend
+backend:
+build: ./backend
+ports:
+"8000:8000"
+depends_on:
+mysql
+redis
+mysql:
+image: mysql:8.0
+volumes:
+mysql_data:/var/lib/mysql
+redis:
+image: redis:6.2
+volumes:
+redis_data:/data
+
+2，负载均衡
+nginx
+upstream backend {
+server backend1:8000;
+server backend2:8000;
+server backend3:8000;
+}
+server {
+listen 80;
+server_name example.com;
+location /api {
+proxy_pass http://backend;
+}
+location / {
+root /usr/share/nginx/html;
+try_files $uri $uri/ /index.html;
+}
+}
+
+
+### 6.4 性能考虑
+
+1. 前端性能优化
+   - 路由懒加载
+   - 组件按需加载
+   - 静态资源CDN加速
+   - 图片懒加载
+   - 本地缓存策略
+
+2. 后端性能优化
+   - 数据库索引优化
+   - 查询缓存
+   - 异步处理
+   - 连接池管理
+   - 分页查询
+
+3. 智能体服务优化
+   - 对话上下文管理
+   - 模型响应缓存
+   - 并发请求控制
+   - 超时处理机制
+
+## 7. 安全设计
+
+### 7.1 用户认证授权
+
+1. 认证机制
+   - JWT Token认证
+     token_payload = {
+         "user_id": "uuid",
+         "role": "enterprise_user",
+         "enterprise_id": "uuid",
+         "exp": timestamp
+     }
+   
+   - Token刷新机制
+     refresh_token_expires = 7 days
+     access_token_expires = 2 hours
+
+2. 权限控制
+   - 基于角色的访问控制(RBAC)
+     role_permissions = {
+         "admin": ["all"],
+         "operator": ["agent_manage", "user_manage"],
+         "enterprise_user": ["agent_use", "profile_manage"]
+     }
+
+### 7.2 数据安全
+
+1. 数据加密
+   - 密码加密：使用bcrypt算法
+   - 敏感数据加密：AES-256
+   - HTTPS传输加密
+
+2. 数据隔离
+   - 企业级数据隔离
+   - 用户级数据隔离
+   - 对话历史隔离
+
+3. 数据备份
+   - 定时全量备份
+   - 实时增量备份
+   - 多地域备份
+
+### 7.3 API安全
+
+1. 接口防护
+   - 请求频率限制
+     rate_limit = {
+         "default": "100/minute",
+         "chat": "60/minute",
+         "login": "5/minute"
+     }
+   
+   - 参数验证
+   - SQL注入防护
+   - XSS防护
+
+2. 日志记录
+   - 访问日志
+   - 操作日志
+   - 错误日志
+   - 安全事件日志
+
+## 8. 产品创意智能助手功能实现
+
+产品创意助手一共需要A1-A10这10个页面完成整体功能
+页面中一共包括6个智能体，写作关系如下
+1. 数据流转:
+   文档分析智能体 -> 市场分析智能体 -> 需求分析智能体 -> 创意生成智能体->图片生成智能体 -> 方案设计智能体
+
+2. 上下文共享:
+   - 所有智能体共享基础知识库
+   - 前序分析结果作为后续输入
+   - 保持分析链路完整性
+
+3. 结果验证:
+   - 每个环节输出需要符合预定格式
+   - 支持人工确认和调整
+   - 保留调整记录供后续优化
+
+4. 协同规则:
+   - 统一的数据格式标准
+   - 明确的职责边界
+   - 清晰的交互协议
+
+
+### 8.1 产品创意智能助手功能说明
+
+
+## 8.1.1. 文档分析智能体 (Document Analysis Agent)
+
+用途: A1-A2阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+- 解析上传的产品文档
+- 提取核心功能特性
+- 建立功能关系图谱
+- 生成结构化分析报告
+
+知识库要求:
+- 用户上传的产品文档
+- 产品分析框架文档
+
+关键提示词方向:
+- 文档内容理解和结构化提取
+- 产品功能分类和关系识别
+- 核心特性权重分析
+- 功能依赖关系推导
+
+输出格式:
+{
+  "core_features": [Feature],
+  "feature_relations": [Relation],
+  "key_insights": [Insight],
+  "function_map": Graph
+}
+
+# 文档分析智能体 (Document Analysis Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 文档分析智能体
+类型: Assistant
+模型: GPT-4
+用途: A1-A2阶段产品文档分析
+
+### 1.2 RAG配置
+- 开启知识库功能
+- 向量数据库: 使用Dify默认配置
+- 分块大小: 500
+- 重叠大小: 50
+- 相似度阈值: 0.7
+- 最大支持文件大小: 50MB
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个专业的产品文档分析专家。你的主要职责是分析产品文档并提取关键信息。
+
+分析要求：
+1. 保持客观专业，基于文档事实进行分析
+2. 重点关注产品的功能特性、技术规格和市场定位
+3. 识别功能之间的依赖关系和关联性
+4. 对功能进行重要性评级(1-5分)
+5. 生成结构化的分析报告
+
+分析维度：
+1. 核心功能：产品的主要功能点
+2. 技术特性：关键技术指标和规格
+3. 功能关系：功能间的依赖和关联
+4. 创新点：产品的独特价值主张
+5. 市场洞察：产品的竞争优势
+
+输出格式要求：
+{
+    "core_features": [
+        {
+            "name": "功能名称",
+            "description": "详细描述",
+            "importance": "重要性评分(1-5)",
+            "category": "功能类别",
+            "technical_specs": ["技术规格1", "技术规格2"],
+            "innovation_points": ["创新点1", "创新点2"]
+        }
+    ],
+    "feature_relations": [
+        {
+            "source": "功能A",
+            "target": "功能B",
+            "relation_type": "依赖/关联/互斥",
+            "description": "关系说明"
+        }
+    ],
+    "key_insights": [
+        {
+            "category": "洞察类别",
+            "content": "洞察内容",
+            "confidence": "可信度(1-5)"
+        }
+    ],
+    "market_analysis": {
+        "target_market": ["目标市场1", "目标市场2"],
+        "competitive_advantages": ["优势1", "优势2"],
+        "potential_challenges": ["挑战1", "挑战2"]
+    }
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下文档内容进行全面分析：
+
+文档内容：
+{{context}}
+
+分析要求：
+1. 提取所有核心功能特性
+2. 分析功能间的关系
+3. 识别产品创新点
+4. 评估市场竞争优势
+
+请按照规定的JSON格式输出分析结果。
+"""
+
+### 2.3 跟进提示词模板
+FOLLOW_UP_TEMPLATE = """
+基于之前的分析结果，请进一步深入分析以下方面：
+
+关注点：{{focus_area}}
+补充文档：{{additional_context}}
+
+请重点关注：
+1. 与已有分析的关联性
+2. 新发现的见解
+3. 可能的矛盾点
+
+请以增量更新的方式输出分析结果。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifyDocAnalysisAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_dify_app_id"
+        
+    async def upload_files(self, files: List[str]) -> List[str]:
+        """上传文件到Dify知识库"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "multipart/form-data"
+            }
+            
+            file_ids = []
+            for file_path in files:
+                data = aiohttp.FormData()
+                data.add_field('file', 
+                             open(file_path, 'rb'),
+                             filename=file_path.split('/')[-1])
+                
+                async with session.post(
+                    f"{self.api_base}/knowledge-bases/{self.app_id}/files",
+                    headers=headers,
+                    data=data
+                ) as response:
+                    result = await response.json()
+                    file_ids.append(result['id'])
+                    
+            return file_ids
+            
+    async def analyze_documents(self, file_ids: List[str]) -> Dict:
+        """调用Dify进行文档分析"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": "请分析这些文档中的产品功能特性"
+                }
+            ]
+            
+            async with session.post(
+                f"{self.api_base}/chat-messages",
+                headers=headers,
+                json={
+                    "messages": messages,
+                    "query": "分析产品功能",
+                    "knowledge_base_ids": file_ids
+                }
+            ) as response:
+                result = await response.json()
+                return json.loads(result['answer'])
+
+### 3.2 错误处理实现
+class AnalysisError(Enum):
+    FILE_UPLOAD_FAILED = "FILE_UPLOAD_FAILED"
+    PROCESSING_TIMEOUT = "PROCESSING_TIMEOUT"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+    MODEL_TIMEOUT = "MODEL_TIMEOUT"
+    INVALID_RESPONSE = "INVALID_RESPONSE"
+    KNOWLEDGE_BASE_ERROR = "KNOWLEDGE_BASE_ERROR"
+
+class AnalysisException(Exception):
+    def __init__(self, error_type: AnalysisError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class DocumentAnalysisErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            AnalysisError.FILE_UPLOAD_FAILED: {"max_retries": 3, "delay": 5},
+            AnalysisError.API_RATE_LIMIT: {"max_retries": 5, "delay": 10},
+            AnalysisError.MODEL_TIMEOUT: {"max_retries": 2, "delay": 15}
+        }
+
+    async def handle_error(self, error: AnalysisException) -> Dict[str, Any]:
+        """处理分析过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class DocumentAnalysisOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=0)
+        self.batch_size = 5
+        self.cache_ttl = 3600  # 1小时缓存
+        
+    async def optimize_analysis_process(self, file_paths: List[str], background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化文档分析流程"""
+        
+        # 1. 缓存检查
+        cache_key = self._generate_cache_key(file_paths)
+        cached_result = await self._get_cached_result(cache_key)
+        if cached_result:
+            return cached_result
+            
+        # 2. 文件批处理
+        file_batches = self._create_file_batches(file_paths)
+        
+        # 3. 异步处理
+        analysis_task = background_tasks.add_task(
+            self._process_file_batches,
+            file_batches,
+            cache_key
+        )
+        
+        return {
+            "status": "processing",
+            "task_id": str(analysis_task),
+            "estimated_time": self._estimate_processing_time(file_paths)
+        }
+
+## 4. API接口定义
+
+### 4.1 文件上传接口
+@app.post("/api/document-analysis/upload")
+async def upload_documents(
+    files: List[UploadFile] = File(...),
+    background_tasks: BackgroundTasks = None
+):
+    """上传文档接口"""
+    try:
+        # 保存上传的文件
+        file_paths = []
+        for file in files:
+            file_path = f"temp/{file.filename}"
+            with open(file_path, "wb") as buffer:
+                content = await file.read()
+                buffer.write(content)
+            file_paths.append(file_path)
+        
+        # 初始化分析优化器
+        optimizer = DocumentAnalysisOptimizer()
+        
+        # 异步处理文件
+        result = await optimizer.optimize_analysis_process(
+            file_paths,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = DocumentAnalysisErrorHandler()
+        return await error_handler.handle_error(
+            AnalysisException(
+                AnalysisError.FILE_UPLOAD_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取分析结果接口
+@app.get("/api/document-analysis/{task_id}")
+async def get_analysis_result(task_id: str):
+    """获取分析结果接口"""
+    try:
+        optimizer = DocumentAnalysisOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = DocumentAnalysisErrorHandler()
+        return await error_handler.handle_error(
+            AnalysisException(
+                AnalysisError.PROCESSING_TIMEOUT,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 文件处理限制
+- 支持格式：PDF、Word、TXT、Excel、PPT
+- 单文件大小：最大50MB
+- 批量上传：单次最多10个文件
+- 总大小限制：单次上传总大小不超过200MB
+
+### 5.2 API调用限制
+- 并发请求数：最大10个
+- 调用频率：每分钟60次
+- 超时设置：单次分析最长5分钟
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录详细的错误日志
+- 提供友好的错误提示
+- 支持断点续传
+
+### 5.4 性能优化建议
+- 使用文件哈希做缓存
+- 实现异步处理队列
+- 采用分批处理策略
+- 定期清理临时文件
+
+
+
+
+## 8.1.2. 市场分析智能体 (Market Analysis Agent)
+
+用途: A3阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+- 分析市场趋势
+- 识别市场机会
+- 评估竞争态势
+- 生成市场洞察
+
+知识库要求:
+- 用户上传的市场文档
+- 行业报告库
+- 竞品分析资料
+
+关键提示词方向:
+- 市场趋势识别和预测
+- 竞品分析和对标
+- 市场机会点发现
+- 创新空间评估
+
+输出格式:
+{
+  "market_trends": [Trend],
+  "opportunities": [Opportunity],
+  "competitor_analysis": [Competitor],
+  "market_insights": [Insight]
+}
+
+
+
+# 2.市场分析智能体 (Market Analysis Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 市场分析智能体
+类型: Assistant
+模型: GPT-4
+用途: A3阶段市场分析
+
+### 1.2 RAG配置
+- 开启知识库功能
+- 向量数据库: 使用Dify默认配置
+- 分块大小: 800
+- 重叠大小: 100
+- 相似度阈值: 0.75
+- 最大支持文件大小: 50MB
+- 预置知识库: 行业报告、竞品资料
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个专业的市场分析专家。你的主要职责是分析市场趋势、竞争态势和机会。
+
+分析要求：
+1. 基于文档和知识库进行深入市场分析
+2. 识别关键市场趋势和发展方向
+3. 评估竞争格局和主要玩家
+4. 发现市场机会和潜在风险
+5. 生成结构化的分析报告
+
+分析维度：
+1. 市场规模：市场容量和增长潜力
+2. 竞争态势：主要竞争者分析
+3. 用户需求：目标用户画像和需求
+4. 技术趋势：相关技术发展方向
+5. 商业模式：盈利模式和商业可行性
+
+输出格式要求：
+{
+    "market_overview": {
+        "market_size": {
+            "current_size": "当前市场规模",
+            "growth_rate": "增长率",
+            "potential_size": "潜在规模"
+        },
+        "market_segments": [
+            {
+                "name": "细分市场名称",
+                "size": "规模",
+                "growth": "增长率",
+                "key_players": ["主要玩家1", "主要玩家2"]
+            }
+        ]
+    },
+    "competitive_analysis": {
+        "key_players": [
+            {
+                "name": "竞争者名称",
+                "market_share": "市场份额",
+                "strengths": ["优势1", "优势2"],
+                "weaknesses": ["劣势1", "劣势2"]
+            }
+        ],
+        "competition_intensity": "竞争强度评分(1-5)",
+        "entry_barriers": ["进入壁垒1", "进入壁垒2"]
+    },
+    "user_analysis": {
+        "user_segments": [
+            {
+                "segment": "用户群体",
+                "characteristics": ["特征1", "特征2"],
+                "needs": ["需求1", "需求2"],
+                "pain_points": ["痛点1", "痛点2"]
+            }
+        ],
+        "user_trends": ["趋势1", "趋势2"]
+    },
+    "opportunities_threats": {
+        "opportunities": [
+            {
+                "description": "机会描述",
+                "potential": "潜力评分(1-5)",
+                "time_frame": "时间框架"
+            }
+        ],
+        "threats": [
+            {
+                "description": "威胁描述",
+                "severity": "严重程度(1-5)",
+                "likelihood": "可能性(1-5)"
+            }
+        ]
+    },
+    "recommendations": [
+        {
+            "category": "建议类别",
+            "content": "建议内容",
+            "priority": "优先级(1-5)",
+            "implementation_difficulty": "实施难度(1-5)"
+        }
+    ]
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下内容进行市场分析：
+
+文档内容：
+{{context}}
+
+分析要求：
+1. 全面评估市场现状和趋势
+2. 深入分析竞争态势
+3. 识别市场机会和威胁
+4. 提供具体的策略建议
+
+请按照规定的JSON格式输出分析结果。
+"""
+
+### 2.3 跟进提示词模板
+FOLLOW_UP_TEMPLATE = """
+基于之前的市场分析结果，请针对以下方面进行深入分析：
+
+关注领域：{{focus_area}}
+补充信息：{{additional_context}}
+
+请重点关注：
+1. 新增市场信息的影响
+2. 竞争态势的变化
+3. 机会和威胁的更新
+4. 策略建议的调整
+
+请以增量更新的方式输出分析结果。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifyMarketAnalysisAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_market_analysis_app_id"
+        
+    async def upload_market_data(self, files: List[str]) -> List[str]:
+        """上传市场数据到Dify知识库"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "multipart/form-data"
+            }
+            
+            file_ids = []
+            for file_path in files:
+                data = aiohttp.FormData()
+                data.add_field('file', 
+                             open(file_path, 'rb'),
+                             filename=file_path.split('/')[-1])
+                
+                async with session.post(
+                    f"{self.api_base}/knowledge-bases/{self.app_id}/files",
+                    headers=headers,
+                    data=data
+                ) as response:
+                    result = await response.json()
+                    file_ids.append(result['id'])
+                    
+            return file_ids
+            
+    async def analyze_market(self, file_ids: List[str], previous_analysis: Optional[Dict] = None) -> Dict:
+        """执行市场分析"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": "请进行市场分析"
+                }
+            ]
+            
+            if previous_analysis:
+                messages.append({
+                    "role": "assistant",
+                    "content": json.dumps(previous_analysis)
+                })
+            
+            async with session.post(
+                f"{self.api_base}/chat-messages",
+                headers=headers,
+                json={
+                    "messages": messages,
+                    "query": "分析市场状况",
+                    "knowledge_base_ids": file_ids
+                }
+            ) as response:
+                result = await response.json()
+                return json.loads(result['answer'])
+
+### 3.2 错误处理实现
+class MarketAnalysisError(Enum):
+    DATA_UPLOAD_FAILED = "DATA_UPLOAD_FAILED"
+    ANALYSIS_TIMEOUT = "ANALYSIS_TIMEOUT"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+    MODEL_ERROR = "MODEL_ERROR"
+    INVALID_RESPONSE = "INVALID_RESPONSE"
+    KNOWLEDGE_BASE_ERROR = "KNOWLEDGE_BASE_ERROR"
+
+class MarketAnalysisException(Exception):
+    def __init__(self, error_type: MarketAnalysisError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class MarketAnalysisErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            MarketAnalysisError.DATA_UPLOAD_FAILED: {"max_retries": 3, "delay": 5},
+            MarketAnalysisError.API_RATE_LIMIT: {"max_retries": 5, "delay": 10},
+            MarketAnalysisError.MODEL_ERROR: {"max_retries": 2, "delay": 15}
+        }
+
+    async def handle_error(self, error: MarketAnalysisException) -> Dict[str, Any]:
+        """处理分析过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class MarketAnalysisOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=1)
+        self.batch_size = 3
+        self.cache_ttl = 7200  # 2小时缓存
+        
+    async def optimize_analysis_process(self, data_files: List[str], background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化市场分析流程"""
+        
+        # 1. 缓存检查
+        cache_key = self._generate_cache_key(data_files)
+        cached_result = await self._get_cached_result(cache_key)
+        if cached_result:
+            return cached_result
+            
+        # 2. 文件批处理
+        file_batches = self._create_file_batches(data_files)
+        
+        # 3. 异步处理
+        analysis_task = background_tasks.add_task(
+            self._process_file_batches,
+            file_batches,
+            cache_key
+        )
+        
+        return {
+            "status": "processing",
+            "task_id": str(analysis_task),
+            "estimated_time": self._estimate_processing_time(data_files)
+        }
+
+## 4. API接口定义
+
+### 4.1 市场数据上传接口
+@app.post("/api/market-analysis/upload")
+async def upload_market_data(
+    files: List[UploadFile] = File(...),
+    background_tasks: BackgroundTasks = None
+):
+    """上传市场数据接口"""
+    try:
+        # 保存上传的文件
+        file_paths = []
+        for file in files:
+            file_path = f"temp/market/{file.filename}"
+            with open(file_path, "wb") as buffer:
+                content = await file.read()
+                buffer.write(content)
+            file_paths.append(file_path)
+        
+        # 初始化分析优化器
+        optimizer = MarketAnalysisOptimizer()
+        
+        # 异步处理文件
+        result = await optimizer.optimize_analysis_process(
+            file_paths,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = MarketAnalysisErrorHandler()
+        return await error_handler.handle_error(
+            MarketAnalysisException(
+                MarketAnalysisError.DATA_UPLOAD_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取分析结果接口
+@app.get("/api/market-analysis/{task_id}")
+async def get_market_analysis(task_id: str):
+    """获取市场分析结果接口"""
+    try:
+        optimizer = MarketAnalysisOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = MarketAnalysisErrorHandler()
+        return await error_handler.handle_error(
+            MarketAnalysisException(
+                MarketAnalysisError.ANALYSIS_TIMEOUT,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 数据处理限制
+- 支持格式：PDF、Word、Excel、CSV、JSON
+- 单文件大小：最大50MB
+- 批量上传：单次最多5个文件
+- 总大小限制：单次上传总大小不超过150MB
+
+### 5.2 API调用限制
+- 并发请求数：最大5个
+- 调用频率：每分钟30次
+- 超时设置：单次分析最长10分钟
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录详细的错误日志
+- 提供友好的错误提示
+- 支持分析任务恢复
+
+### 5.4 性能优化建议
+- 使用数据哈希做缓存
+- 实现异步分析队列
+- 采用增量分析策略
+- 定期更新知识库
+
+
+
+## 8.1.3. 需求分析智能体 (Requirement Analysis Agent)
+
+用途: A4-A5阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+- 需求提取和分类
+- 需求优先级排序
+- 需求关联性分析
+- 需求可行性评估
+
+知识库要求:
+- 前序分析结果
+- 需求工程最佳实践
+- 用户研究数据
+
+关键提示词方向:
+- 需求提取和分类标准
+- 优先级评估框架
+- 需求依赖关系分析
+- 可行性评估标准
+
+输出格式:
+{
+  "requirements": [Requirement],
+  "priority_matrix": Matrix,
+  "requirement_clusters": [Cluster],
+  "feasibility_analysis": [Analysis]
+}
+
+需求分析智能体 (Requirements Analysis Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 需求分析智能体
+类型: Assistant
+模型: GPT-4
+用途: A4-A5阶段需求分析和优先级排序
+
+### 1.2 RAG配置
+- 开启知识库功能
+- 向量数据库: 使用Dify默认配置
+- 分块大小: 600
+- 重叠大小: 80
+- 相似度阈值: 0.8
+- 最大支持文件大小: 50MB
+- 预置知识库: 产品需求规范、行业标准
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个专业的需求分析专家。你的主要职责是分析和优先级排序产品需求。
+
+分析要求：
+1. 基于前序分析结果提取需求
+2. 对需求进行分类和优先级排序
+3. 评估需求的可行性和价值
+4. 识别需求间的依赖关系
+5. 生成结构化的需求文档
+
+分析维度：
+1. 需求类型：功能性/非功能性需求
+2. 优先级：重要性和紧急性
+3. 实现难度：技术和资源要求
+4. 业务价值：对用户和企业的价值
+5. 依赖关系：需求间的关联性
+
+输出格式要求：
+{
+    "requirements_overview": {
+        "total_count": "需求总数",
+        "categories": {
+            "functional": "功能性需求数",
+            "non_functional": "非功能性需求数"
+        },
+        "priority_distribution": {
+            "high": "高优先级数量",
+            "medium": "中优先级数量",
+            "low": "低优先级数量"
+        }
+    },
+    "functional_requirements": [
+        {
+            "id": "需求ID",
+            "title": "需求标题",
+            "description": "需求描述",
+            "category": "需求类别",
+            "priority": {
+                "importance": "重要性(1-5)",
+                "urgency": "紧急性(1-5)",
+                "score": "综合评分"
+            },
+            "implementation": {
+                "difficulty": "实现难度(1-5)",
+                "estimated_effort": "预估工作量(人天)",
+                "technical_risks": ["风险1", "风险2"]
+            },
+            "business_value": {
+                "user_value": "用户价值(1-5)",
+                "business_value": "业务价值(1-5)",
+                "roi_estimate": "投资回报评估"
+            },
+            "dependencies": ["依赖需求ID1", "依赖需求ID2"]
+        }
+    ],
+    "non_functional_requirements": [
+        {
+            "id": "需求ID",
+            "type": "性能/安全/可用性等",
+            "description": "需求描述",
+            "acceptance_criteria": ["验收标准1", "验收标准2"],
+            "priority": "优先级(1-5)",
+            "constraints": ["约束1", "约束2"]
+        }
+    ],
+    "requirement_dependencies": {
+        "dependency_graph": [
+            {
+                "source": "需求ID1",
+                "target": "需求ID2",
+                "type": "依赖类型",
+                "description": "依赖说明"
+            }
+        ],
+        "critical_path": ["关键路径需求ID列表"]
+    },
+    "implementation_recommendations": [
+        {
+            "phase": "实施阶段",
+            "requirements": ["需求ID列表"],
+            "rationale": "建议理由",
+            "risks": ["风险1", "风险2"],
+            "mitigation_strategies": ["策略1", "策略2"]
+        }
+    ]
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下内容进行需求分析：
+
+前序分析结果：
+{{context}}
+
+分析要求：
+1. 提取和分类所有需求
+2. 评估需求优先级
+3. 分析需求依赖关系
+4. 提供实施建议
+
+请按照规定的JSON格式输出分析结果。
+"""
+
+### 2.3 跟进提示词模板
+FOLLOW_UP_TEMPLATE = """
+基于之前的需求分析结果，请针对以下方面进行深入分析：
+
+关注领域：{{focus_area}}
+补充信息：{{additional_context}}
+
+请重点关注：
+1. 需求优先级的调整
+2. 新增需求的整合
+3. 依赖关系的更新
+4. 实施建议的优化
+
+请以增量更新的方式输出分析结果。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifyRequirementsAnalysisAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_requirements_analysis_app_id"
+        
+    async def analyze_requirements(self, context: Dict, previous_analysis: Optional[Dict] = None) -> Dict:
+        """执行需求分析"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": "请分析以下需求"
+                }
+            ]
+            
+            if previous_analysis:
+                messages.append({
+                    "role": "assistant",
+                    "content": json.dumps(previous_analysis)
+                })
+            
+            async with session.post(
+                f"{self.api_base}/chat-messages",
+                headers=headers,
+                json={
+                    "messages": messages,
+                    "query": "分析需求",
+                    "context": json.dumps(context)
+                }
+            ) as response:
+                result = await response.json()
+                return json.loads(result['answer'])
+
+### 3.2 错误处理实现
+class RequirementsAnalysisError(Enum):
+    ANALYSIS_FAILED = "ANALYSIS_FAILED"
+    CONTEXT_INVALID = "CONTEXT_INVALID"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+    MODEL_ERROR = "MODEL_ERROR"
+    INVALID_RESPONSE = "INVALID_RESPONSE"
+    DEPENDENCY_ERROR = "DEPENDENCY_ERROR"
+
+class RequirementsAnalysisException(Exception):
+    def __init__(self, error_type: RequirementsAnalysisError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class RequirementsAnalysisErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            RequirementsAnalysisError.API_RATE_LIMIT: {"max_retries": 5, "delay": 10},
+            RequirementsAnalysisError.MODEL_ERROR: {"max_retries": 3, "delay": 15}
+        }
+
+    async def handle_error(self, error: RequirementsAnalysisException) -> Dict[str, Any]:
+        """处理分析过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class RequirementsAnalysisOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=2)
+        self.cache_ttl = 3600  # 1小时缓存
+        
+    async def optimize_analysis_process(self, context: Dict, background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化需求分析流程"""
+        
+        # 1. 缓存检查
+        cache_key = self._generate_cache_key(context)
+        cached_result = await self._get_cached_result(cache_key)
+        if cached_result:
+            return cached_result
+            
+        # 2. 上下文处理
+        processed_context = self._preprocess_context(context)
+        
+        # 3. 异步处理
+        analysis_task = background_tasks.add_task(
+            self._process_requirements,
+            processed_context,
+            cache_key
+        )
+        
+        return {
+            "status": "processing",
+            "task_id": str(analysis_task),
+            "estimated_time": self._estimate_processing_time(context)
+        }
+
+## 4. API接口定义
+
+### 4.1 需求分析接口
+@app.post("/api/requirements-analysis/analyze")
+async def analyze_requirements(
+    context: Dict = Body(...),
+    background_tasks: BackgroundTasks = None
+):
+    """需求分析接口"""
+    try:
+        # 初始化分析优化器
+        optimizer = RequirementsAnalysisOptimizer()
+        
+        # 异步处理需求
+        result = await optimizer.optimize_analysis_process(
+            context,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = RequirementsAnalysisErrorHandler()
+        return await error_handler.handle_error(
+            RequirementsAnalysisException(
+                RequirementsAnalysisError.ANALYSIS_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取分析结果接口
+@app.get("/api/requirements-analysis/{task_id}")
+async def get_requirements_analysis(task_id: str):
+    """获取需求分析结果接口"""
+    try:
+        optimizer = RequirementsAnalysisOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = RequirementsAnalysisErrorHandler()
+        return await error_handler.handle_error(
+            RequirementsAnalysisException(
+                RequirementsAnalysisError.ANALYSIS_FAILED,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 输入要求
+- 上下文数据格式：JSON
+- 最大输入大小：1MB
+- 需包含前序分析结果
+- 支持增量更新
+
+### 5.2 API调用限制
+- 并发请求数：最大8个
+- 调用频率：每分钟40次
+- 分析超时：单次最长3分钟
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录分析过程日志
+- 支持部分失败恢复
+- 提供详细错误信息
+
+### 5.4 性能优化建议
+- 使用上下文哈希缓存
+- 实现增量分析机制
+- 优化依赖分析算法
+- 定期清理过期缓存
+
+
+
+## 8.1.4. 创意生成智能体 (Creative Generation Agent)
+
+用途: A6-A7阶段
+类型: Completion
+模型: Claude
+
+功能职责:
+- 产品创意生成
+- 特性组合优化
+- 创意描述生成
+- 创新点提炼
+
+知识库要求:
+- 创新方法论
+- 设计思维案例
+- 前序分析结果
+
+关键提示词方向:
+- 创意发散思维引导
+- 特性组合策略
+- 创新点描述规范
+- 用户价值提炼
+
+输出格式:
+{
+  "creative_ideas": [Idea],
+  "feature_combinations": [Combination],
+  "value_propositions": [Value],
+  "innovation_points": [Point]
+}
+
+# 4.创意生成智能体 (Idea Generation Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 创意生成智能体
+类型: Completion
+模型: GPT-4
+用途: A6阶段创意生成和创新设计
+Temperature: 0.8 (提高创造性)
+
+### 1.2 RAG配置
+- 开启知识库功能
+- 向量数据库: 使用Dify默认配置
+- 分块大小: 1000
+- 重叠大小: 150
+- 相似度阈值: 0.6 (降低阈值以获取更多灵感)
+- 最大支持文件大小: 50MB
+- 预置知识库: 创新案例库、设计模式库
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个富有创造力的产品创意专家。你的主要职责是基于前期分析结果，生成创新的产品创意。
+
+创意生成要求：
+1. 基于市场需求和用户痛点
+2. 结合技术可行性
+3. 保持商业价值
+4. 追求创新突破
+5. 考虑实现路径
+
+创意维度：
+1. 功能创新：核心功能的创新点
+2. 交互创新：用户交互方式的创新
+3. 技术创新：技术实现的创新
+4. 商业创新：商业模式的创新
+5. 场景创新：应用场景的创新
+
+输出格式要求：
+{
+    "idea_overview": {
+        "total_ideas": "创意总数",
+        "categories": {
+            "function_innovation": "功能创新数量",
+            "interaction_innovation": "交互创新数量",
+            "technical_innovation": "技术创新数量",
+            "business_innovation": "商业创新数量",
+            "scenario_innovation": "场景创新数量"
+        }
+    },
+    "innovative_ideas": [
+        {
+            "id": "创意ID",
+            "title": "创意标题",
+            "description": "创意描述",
+            "category": "创意类别",
+            "innovation_points": [
+                {
+                    "point": "创新点描述",
+                    "type": "创新类型",
+                    "originality_score": "原创性评分(1-5)"
+                }
+            ],
+            "user_value": {
+                "pain_points": ["解决的痛点1", "解决的痛点2"],
+                "benefits": ["用户价值1", "用户价值2"],
+                "target_users": ["目标用户群1", "目标用户群2"]
+            },
+            "technical_feasibility": {
+                "difficulty": "技术难度(1-5)",
+                "required_technologies": ["所需技术1", "所需技术2"],
+                "implementation_risks": ["风险1", "风险2"]
+            },
+            "business_potential": {
+                "market_size": "市场规模评估",
+                "revenue_model": "收入模式",
+                "competitive_advantage": ["竞争优势1", "竞争优势2"]
+            },
+            "development_path": {
+                "phases": ["阶段1", "阶段2"],
+                "key_milestones": ["里程碑1", "里程碑2"],
+                "resource_requirements": ["资源需求1", "资源需求2"]
+            }
+        }
+    ],
+    "idea_combinations": [
+        {
+            "combination_id": "组合ID",
+            "ideas": ["创意ID1", "创意ID2"],
+            "synergy_description": "协同效应描述",
+            "combined_value": "组合价值评估"
+        }
+    ],
+    "innovation_metrics": {
+        "originality_score": "原创性得分",
+        "feasibility_score": "可行性得分",
+        "value_score": "价值得分",
+        "overall_rating": "综合评分"
+    }
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下分析结果生成创新产品创意：
+
+前序分析：
+{{context}}
+
+创意要求：
+1. 结合市场需求和用户痛点
+2. 考虑技术可行性
+3. 保证商业价值
+4. 体现创新性
+5. 明确实现路径
+
+请按照规定的JSON格式输出创意方案。
+"""
+
+### 2.3 跟进提示词模板
+FOLLOW_UP_TEMPLATE = """
+基于之前的创意方案，请针对以下方面进行优化：
+
+优化方向：{{focus_area}}
+补充信息：{{additional_context}}
+
+请重点关注：
+1. 创意的独特性提升
+2. 技术可行性完善
+3. 商业模式优化
+4. 实现路径细化
+
+请以增量更新的方式输出优化方案。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifyIdeaGenerationAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_idea_generation_app_id"
+        
+    async def generate_ideas(self, context: Dict, previous_ideas: Optional[Dict] = None) -> Dict:
+        """执行创意生成"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": "请基于分析结果生成创新产品创意"
+                }
+            ]
+            
+            if previous_ideas:
+                messages.append({
+                    "role": "assistant",
+                    "content": json.dumps(previous_ideas)
+                })
+            
+            async with session.post(
+                f"{self.api_base}/completion-messages",
+                headers=headers,
+                json={
+                    "messages": messages,
+                    "query": "生成创意",
+                    "context": json.dumps(context),
+                    "temperature": 0.8
+                }
+            ) as response:
+                result = await response.json()
+                return json.loads(result['answer'])
+
+### 3.2 错误处理实现
+class IdeaGenerationError(Enum):
+    GENERATION_FAILED = "GENERATION_FAILED"
+    CONTEXT_INVALID = "CONTEXT_INVALID"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+    MODEL_ERROR = "MODEL_ERROR"
+    INVALID_RESPONSE = "INVALID_RESPONSE"
+    CREATIVITY_ERROR = "CREATIVITY_ERROR"
+
+class IdeaGenerationException(Exception):
+    def __init__(self, error_type: IdeaGenerationError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class IdeaGenerationErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            IdeaGenerationError.API_RATE_LIMIT: {"max_retries": 5, "delay": 10},
+            IdeaGenerationError.MODEL_ERROR: {"max_retries": 3, "delay": 15}
+        }
+
+    async def handle_error(self, error: IdeaGenerationException) -> Dict[str, Any]:
+        """处理生成过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class IdeaGenerationOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=3)
+        self.cache_ttl = 7200  # 2小时缓存
+        
+    async def optimize_generation_process(self, context: Dict, background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化创意生成流程"""
+        
+        # 1. 缓存检查
+        cache_key = self._generate_cache_key(context)
+        cached_result = await self._get_cached_result(cache_key)
+        if cached_result:
+            return cached_result
+            
+        # 2. 上下文处理
+        processed_context = self._preprocess_context(context)
+        
+        # 3. 异步处理
+        generation_task = background_tasks.add_task(
+            self._process_idea_generation,
+            processed_context,
+            cache_key
+        )
+        
+        return {
+            "status": "processing",
+            "task_id": str(generation_task),
+            "estimated_time": self._estimate_processing_time(context)
+        }
+
+## 4. API接口定义
+
+### 4.1 创意生成接口
+@app.post("/api/idea-generation/generate")
+async def generate_ideas(
+    context: Dict = Body(...),
+    background_tasks: BackgroundTasks = None
+):
+    """创意生成接口"""
+    try:
+        # 初始化生成优化器
+        optimizer = IdeaGenerationOptimizer()
+        
+        # 异步处理创意生成
+        result = await optimizer.optimize_generation_process(
+            context,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = IdeaGenerationErrorHandler()
+        return await error_handler.handle_error(
+            IdeaGenerationException(
+                IdeaGenerationError.GENERATION_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取生成结果接口
+@app.get("/api/idea-generation/{task_id}")
+async def get_idea_generation(task_id: str):
+    """获取创意生成结果接口"""
+    try:
+        optimizer = IdeaGenerationOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = IdeaGenerationErrorHandler()
+        return await error_handler.handle_error(
+            IdeaGenerationException(
+                IdeaGenerationError.GENERATION_FAILED,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 输入要求
+- 上下文数据格式：JSON
+- 最大输入大小：2MB
+- 需包含前序分析结果
+- 支持创意迭代优化
+
+### 5.2 API调用限制
+- 并发请求数：最大5个
+- 调用频率：每分钟20次
+- 生成超时：单次最长5分钟
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录生成过程日志
+- 支持创意存档备份
+- 提供详细错误信息
+
+### 5.4 性能优化建议
+- 使用上下文哈希缓存
+- 实现异步生成队列
+- 优化创意评分算法
+- 定期更新知识库
+
+
+
+
+## 8.1.5. 方案设计智能体 (Solution Design Agent)
+
+用途: A8-A9阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+- 技术方案设计
+- 可行性分析
+- 实现路径规划
+- 优化建议生成
+
+知识库要求:
+- 产品设计规范
+- 技术实现文档
+- 行业最佳实践
+
+关键提示词方向:
+- 技术可行性分析框架
+- 实现方案设计规范
+- 优化建议生成标准
+- 资源评估方法
+
+输出格式:
+{
+  "technical_solution": Solution,
+  "feasibility_study": Study,
+  "implementation_path": Path,
+  "optimization_suggestions": [Suggestion]
+}
+
+方案设计智能体 (Solution Design Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 方案设计智能体
+类型: Completion
+模型: GPT-4
+用途: A7-A8阶段解决方案设计
+Temperature: 0.6 (平衡创造性和严谨性)
+
+### 1.2 RAG配置
+- 开启知识库功能
+- 向量数据库: 使用Dify默认配置
+- 分块大小: 1200
+- 重叠大小: 200
+- 相似度阈值: 0.7
+- 最大支持文件大小: 50MB
+- 预置知识库: 技术方案库、架构设计模式库
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个专业的解决方案架构师。你的主要职责是整合前期所有分析结果，设计完整的解决方案。
+
+方案设计要求：
+1. 整合所有前期分析结果
+2. 设计完整的技术架构
+3. 规划实施路径
+4. 评估资源需求
+5. 制定风险应对策略
+
+设计维度：
+1. 系统架构：整体架构设计
+2. 技术选型：具体技术方案
+3. 实施规划：分期实施计划
+4. 资源评估：所需资源规划
+5. 风险控制：风险管理方案
+
+输出格式要求：
+{
+    "solution_overview": {
+        "name": "方案名称",
+        "version": "版本号",
+        "description": "方案概述",
+        "key_features": ["特性1", "特性2"],
+        "target_objectives": ["目标1", "目标2"]
+    },
+    "architecture_design": {
+        "system_architecture": {
+            "overview": "架构概述",
+            "layers": [
+                {
+                    "name": "层级名称",
+                    "components": ["组件1", "组件2"],
+                    "responsibilities": ["职责1", "职责2"]
+                }
+            ],
+            "key_technologies": [
+                {
+                    "name": "技术名称",
+                    "purpose": "使用目的",
+                    "advantages": ["优势1", "优势2"]
+                }
+            ]
+        },
+        "data_architecture": {
+            "data_models": ["模型1", "模型2"],
+            "data_flows": ["流程1", "流程2"],
+            "storage_solutions": ["存储方案1", "存储方案2"]
+        },
+        "integration_points": [
+            {
+                "name": "集成点名称",
+                "type": "集成类型",
+                "description": "详细描述"
+            }
+        ]
+    },
+    "implementation_plan": {
+        "phases": [
+            {
+                "phase": "阶段名称",
+                "duration": "预计周期",
+                "deliverables": ["交付物1", "交付物2"],
+                "milestones": ["里程碑1", "里程碑2"]
+            }
+        ],
+        "dependencies": [
+            {
+                "source": "前置任务",
+                "target": "后置任务",
+                "type": "依赖类型"
+            }
+        ],
+        "critical_path": ["关键路径任务列表"]
+    },
+    "resource_requirements": {
+        "human_resources": [
+            {
+                "role": "角色名称",
+                "skills": ["技能1", "技能2"],
+                "quantity": "所需人数",
+                "duration": "所需时间"
+            }
+        ],
+        "technical_resources": [
+            {
+                "category": "资源类别",
+                "items": ["项目1", "项目2"],
+                "specifications": "规格说明"
+            }
+        ],
+        "budget_estimation": {
+            "categories": ["预算类别1", "预算类别2"],
+            "amounts": ["金额1", "金额2"],
+            "total": "总预算"
+        }
+    },
+    "risk_management": {
+        "technical_risks": [
+            {
+                "risk": "风险描述",
+                "probability": "发生概率(1-5)",
+                "impact": "影响程度(1-5)",
+                "mitigation": "缓解策略"
+            }
+        ],
+        "business_risks": [
+            {
+                "risk": "风险描述",
+                "probability": "发生概率(1-5)",
+                "impact": "影响程度(1-5)",
+                "mitigation": "缓解策略"
+            }
+        ],
+        "contingency_plans": [
+            {
+                "scenario": "场景描述",
+                "response": "应对方案",
+                "resources": ["所需资源1", "所需资源2"]
+            }
+        ]
+    },
+    "quality_assurance": {
+        "quality_objectives": ["目标1", "目标2"],
+        "metrics": [
+            {
+                "name": "指标名称",
+                "description": "指标描述",
+                "target_value": "目标值"
+            }
+        ],
+        "testing_strategy": {
+            "approaches": ["方法1", "方法2"],
+            "tools": ["工具1", "工具2"],
+            "coverage": "测试覆盖要求"
+        }
+    }
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下分析结果设计完整的解决方案：
+
+前序分析：
+{{context}}
+
+设计要求：
+1. 整合所有分析结果
+2. 提供完整技术方案
+3. 详细实施计划
+4. 资源需求评估
+5. 风险管理策略
+
+请按照规定的JSON格式输出方案设计。
+"""
+
+### 2.3 跟进提示词模板
+FOLLOW_UP_TEMPLATE = """
+基于之前的方案设计，请针对以下方面进行优化：
+
+优化方向：{{focus_area}}
+补充信息：{{additional_context}}
+
+请重点关注：
+1. 方案可行性完善
+2. 实施计划细化
+3. 资源评估优化
+4. 风险控制加强
+
+请以增量更新的方式输出优化方案。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifySolutionDesignAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_solution_design_app_id"
+        
+    async def design_solution(self, context: Dict, previous_design: Optional[Dict] = None) -> Dict:
+        """执行方案设计"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": "请基于分析结果设计解决方案"
+                }
+            ]
+            
+            if previous_design:
+                messages.append({
+                    "role": "assistant",
+                    "content": json.dumps(previous_design)
+                })
+            
+            async with session.post(
+                f"{self.api_base}/completion-messages",
+                headers=headers,
+                json={
+                    "messages": messages,
+                    "query": "设计解决方案",
+                    "context": json.dumps(context),
+                    "temperature": 0.6
+                }
+            ) as response:
+                result = await response.json()
+                return json.loads(result['answer'])
+
+### 3.2 错误处理实现
+class SolutionDesignError(Enum):
+    DESIGN_FAILED = "DESIGN_FAILED"
+    CONTEXT_INVALID = "CONTEXT_INVALID"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+    MODEL_ERROR = "MODEL_ERROR"
+    INVALID_RESPONSE = "INVALID_RESPONSE"
+    INTEGRATION_ERROR = "INTEGRATION_ERROR"
+
+class SolutionDesignException(Exception):
+    def __init__(self, error_type: SolutionDesignError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class SolutionDesignErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            SolutionDesignError.API_RATE_LIMIT: {"max_retries": 5, "delay": 10},
+            SolutionDesignError.MODEL_ERROR: {"max_retries": 3, "delay": 15}
+        }
+
+    async def handle_error(self, error: SolutionDesignException) -> Dict[str, Any]:
+        """处理设计过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class SolutionDesignOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=4)
+        self.cache_ttl = 14400  # 4小时缓存
+        
+    async def optimize_design_process(self, context: Dict, background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化方案设计流程"""
+        
+        # 1. 缓存检查
+        cache_key = self._generate_cache_key(context)
+        cached_result = await self._get_cached_result(cache_key)
+        if cached_result:
+            return cached_result
+            
+        # 2. 上下文处理
+        processed_context = self._preprocess_context(context)
+        
+        # 3. 异步处理
+        design_task = background_tasks.add_task(
+            self._process_solution_design,
+            processed_context,
+            cache_key
+        )
+        
+        return {
+            "status": "processing",
+            "task_id": str(design_task),
+            "estimated_time": self._estimate_processing_time(context)
+        }
+
+## 4. API接口定义
+
+### 4.1 方案设计接口
+@app.post("/api/solution-design/design")
+async def design_solution(
+    context: Dict = Body(...),
+    background_tasks: BackgroundTasks = None
+):
+    """方案设计接口"""
+    try:
+        # 初始化设计优化器
+        optimizer = SolutionDesignOptimizer()
+        
+        # 异步处理方案设计
+        result = await optimizer.optimize_design_process(
+            context,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = SolutionDesignErrorHandler()
+        return await error_handler.handle_error(
+            SolutionDesignException(
+                SolutionDesignError.DESIGN_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取设计结果接口
+@app.get("/api/solution-design/{task_id}")
+async def get_solution_design(task_id: str):
+    """获取方案设计结果接口"""
+    try:
+        optimizer = SolutionDesignOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = SolutionDesignErrorHandler()
+        return await error_handler.handle_error(
+            SolutionDesignException(
+                SolutionDesignError.DESIGN_FAILED,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 输入要求
+- 上下文数据格式：JSON
+- 最大输入大小：5MB
+- 需包含所有前序分析结果
+- 支持方案迭代优化
+
+### 5.2 API调用限制
+- 并发请求数：最大3个
+- 调用频率：每分钟15次
+- 设计超时：单次最长10分钟
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录设计过程日志
+- 支持方案版本控制
+- 提供详细错误信息
+
+### 5.4 性能优化建议
+- 使用上下文哈希缓存
+- 实现异步设计队列
+- 优化方案评估算法
+- 定期更新知识库
+
+
+
+
+
+
+## 8.1.6. 图片生成智能体 (Picture Generation Agent)
+
+用途: A8-A9阶段
+类型: Assistant
+模型: GPT-4
+
+功能职责:
+-  产品创意图片生成
+
+知识库要求:
+- 产品设计规范
+- 技术实现文档
+- 行业最佳实践
+
+关键提示词方向:
+- 技术可行性分析框架
+- 实现方案设计规范
+- 优化建议生成标准
+- 资源评估方法
+
+输出格式:
+{
+  "technical_solution": Solution,
+  "feasibility_study": Study,
+  "implementation_path": Path,
+  "optimization_suggestions": [Suggestion]
+}
+
+# 图片创意智能体 (Picture Generation Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 图片创意智能体
+类型: Image
+模型: DALL-E 3 / Stable Diffusion
+用途: A7阶段创意图片生成
+Temperature: 0.7 (平衡创造性和一致性)
+
+### 1.2 存储配置
+- 图片存储: AWS S3/阿里云OSS
+- CDN加速: 启用
+- 图片格式: PNG/JPEG
+- 最大分辨率: 1024x1024
+- 存储期限: 30天
+- 图片水印: 可选
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个专业的产品创意图片生成专家。你的主要职责是将文字创意转化为视觉设计。
+
+图片生成要求：
+1. 准确理解文字创意意图
+2. 转化为清晰的图片提示词
+3. 控制图片风格一致性
+4. 确保视觉效果专业
+5. 生成多个备选方案
+
+设计维度：
+1. 视觉风格：整体设计风格
+2. 关键元素：核心内容展示
+3. 色彩方案：配色体系
+4. 构图布局：画面安排
+5. 细节处理：细节表现
+
+输出格式要求：
+{
+    "image_generation_prompt": {
+        "main_prompt": "主要提示词",
+        "negative_prompt": "负面提示词",
+        "style_settings": {
+            "style": "风格类型",
+            "mood": "氛围设定",
+            "lighting": "光线效果",
+            "color_scheme": "配色方案"
+        },
+        "composition": {
+            "layout": "布局方式",
+            "focus_point": "焦点位置",
+            "perspective": "视角设定"
+        },
+        "technical_params": {
+            "resolution": "图片分辨率",
+            "aspect_ratio": "宽高比",
+            "quality_settings": "质量参数"
+        }
+    },
+    "generation_variations": [
+        {
+            "variation_id": "变体ID",
+            "prompt_adjustments": {
+                "emphasis": "强调内容",
+                "modifications": ["修改点1", "修改点2"]
+            },
+            "style_variations": {
+                "style_shift": "风格变化",
+                "mood_adjustment": "氛围调整"
+            }
+        }
+    ],
+    "output_requirements": {
+        "file_format": "文件格式",
+        "size_specs": {
+            "width": "宽度",
+            "height": "高度"
+        },
+        "quality_requirements": {
+            "min_quality_score": "最低质量分",
+            "required_elements": ["必需元素1", "必需元素2"]
+        }
+    }
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下创意描述生成图片：
+
+创意描述：
+{{context}}
+
+图片要求：
+1. 风格：{{style}}
+2. 色调：{{color_scheme}}
+3. 重点：{{focus}}
+4. 场景：{{scene}}
+5. 效果：{{effect}}
+
+请生成对应的图片生成提示词。
+"""
+
+### 2.3 图片评估提示词
+EVALUATION_PROMPT = """
+请评估生成的图片是否符合要求：
+
+原始创意：{{original_idea}}
+生成图片：{{generated_image}}
+
+评估维度：
+1. 创意还原度
+2. 视觉效果
+3. 专业水准
+4. 细节表现
+5. 整体一致性
+
+请提供评估结果和优化建议。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifyPictureGenerationAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_picture_generation_app_id"
+        self.image_storage = S3ImageStorage()  # 或其他存储服务
+        self.cdn_service = CDNService()
+        
+    async def generate_pictures(self, text_idea: Dict, style_config: Dict) -> List[Dict]:
+        """生成创意图片"""
+        # 1. 生成提示词
+        prompt = await self._generate_image_prompt(text_idea)
+        
+        # 2. 调用图片生成API
+        images = await self._call_image_generation_api(prompt)
+        
+        # 3. 处理和优化图片
+        processed_images = await self._process_images(images)
+        
+        # 4. 存储和分发
+        image_urls = await self._store_and_distribute(processed_images)
+        
+        return image_urls
+
+    async def _generate_image_prompt(self, text_idea: Dict) -> Dict:
+        """生成图片提示词"""
+        pass
+
+    async def _call_image_generation_api(self, prompt: Dict) -> List[bytes]:
+        """调用图片生成API"""
+        pass
+
+    async def _process_images(self, images: List[bytes]) -> List[bytes]:
+        """处理和优化图片"""
+        pass
+
+    async def _store_and_distribute(self, images: List[bytes]) -> List[str]:
+        """存储和分发图片"""
+        pass
+
+### 3.2 错误处理实现
+class PictureGenerationError(Enum):
+    PROMPT_GENERATION_FAILED = "PROMPT_GENERATION_FAILED"
+    IMAGE_GENERATION_FAILED = "IMAGE_GENERATION_FAILED"
+    PROCESSING_FAILED = "PROCESSING_FAILED"
+    STORAGE_FAILED = "STORAGE_FAILED"
+    QUALITY_CHECK_FAILED = "QUALITY_CHECK_FAILED"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+
+class PictureGenerationException(Exception):
+    def __init__(self, error_type: PictureGenerationError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class PictureGenerationErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            PictureGenerationError.API_RATE_LIMIT: {"max_retries": 3, "delay": 15},
+            PictureGenerationError.IMAGE_GENERATION_FAILED: {"max_retries": 2, "delay": 10}
+        }
+
+    async def handle_error(self, error: PictureGenerationException) -> Dict[str, Any]:
+        """处理图片生成过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class PictureGenerationOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=5)
+        self.cache_ttl = 7200  # 2小时缓存
+        self.image_processor = ImageProcessor()
+        
+    async def optimize_generation_process(self, text_idea: Dict, background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化图片生成流程"""
+        
+        # 1. 提示词缓存检查
+        prompt_cache_key = self._generate_prompt_cache_key(text_idea)
+        cached_prompt = await self._get_cached_prompt(prompt_cache_key)
+        
+        # 2. 图片生成和处理
+        if cached_prompt:
+            generation_task = background_tasks.add_task(
+                self._generate_with_cached_prompt,
+                cached_prompt
+            )
+        else:
+            generation_task = background_tasks.add_task(
+                self._full_generation_process,
+                text_idea,
+                prompt_cache_key
+            )
+        
+        return {
+            "status": "processing",
+            "task_id": str(generation_task),
+            "estimated_time": self._estimate_processing_time(text_idea)
+        }
+
+## 4. API接口定义
+
+### 4.1 图片生成接口
+@app.post("/api/picture-generation/generate")
+async def generate_pictures(
+    text_idea: Dict = Body(...),
+    style_config: Dict = Body(...),
+    background_tasks: BackgroundTasks = None
+):
+    """图片生成接口"""
+    try:
+        # 初始化生成优化器
+        optimizer = PictureGenerationOptimizer()
+        
+        # 异步处理图片生成
+        result = await optimizer.optimize_generation_process(
+            text_idea,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = PictureGenerationErrorHandler()
+        return await error_handler.handle_error(
+            PictureGenerationException(
+                PictureGenerationError.GENERATION_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取生成结果接口
+@app.get("/api/picture-generation/{task_id}")
+async def get_picture_generation(task_id: str):
+    """获取图片生成结果接口"""
+    try:
+        optimizer = PictureGenerationOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = PictureGenerationErrorHandler()
+        return await error_handler.handle_error(
+            PictureGenerationException(
+                PictureGenerationError.GENERATION_FAILED,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 输入要求
+- 文字创意格式：JSON
+- 最大文字长度：2000字
+- 风格配置：必填
+- 支持批量生成：单次最多5张
+
+### 5.2 API调用限制
+- 并发请求数：最大2个
+- 调用频率：每分钟10次
+- 生成超时：单次最长30秒
+- 每日配额：1000张图片
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录生成过程日志
+- 支持图片质量检查
+- 提供详细错误信息
+
+### 5.4 性能优化建议
+- 使用提示词缓存
+- 实现异步生成队列
+- 优化图片处理流程
+- CDN分发加速
+
+### 5.5 图片质量控制
+- 分辨率要求：最低1024x1024
+- 图片格式：PNG优先
+- 质量评分：最低4.0分
+- 违规内容过滤
+
+
+
+
+### 8.2 产品创意智能体UI设计
+
+

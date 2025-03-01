@@ -1,0 +1,96 @@
+
+1. frontend 清理依赖
+   # Windows下删除node_modules和package-lock.json
+rmdir /s /q node_modules
+del package-lock.json
+
+2. 安装缺失的类型说明
+# 安装必要的类型声明文件
+npm install --save-dev @types/node @types/vue-router @types/axios
+npm install --save-dev @types/vite
+
+
+3. 更新package.json
+{
+  "name": "enterprise-agent-platform",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.0",
+    "pinia": "^2.1.0",
+    "element-plus": "^2.3.0",
+    "axios": "^1.6.0",
+    "@vueuse/core": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/compiler-sfc": "^3.4.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "@types/vue-router": "^2.0.0",
+    "@types/axios": "^0.14.0",
+    "@vue/tsconfig": "^0.4.0"
+  }
+}
+
+4. 更新类型声明文件 env.d.ts
+/// <reference types="vite/client" />
+
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}
+
+declare module 'vue-router'
+declare module 'pinia'
+declare module 'axios'
+declare module '@vueuse/core'
+declare module 'element-plus'
+
+5. 安装所有依赖
+# 如果遇到网络问题，可以先设置淘宝镜像
+npm config set registry https://registry.npmmirror.com
+
+# 安装依赖
+npm install
+以上前端安装完成
+
+以下进入后端安装
+1. 项目根目录下创建虚拟环境
+# 创建虚拟环境
+python -m venv venv
+
+# 激活虚拟环境（Windows下）
+.\venv\Scripts\activate
+
+2. 安装后端依赖
+# 进入backend目录
+cd backend
+
+# 安装依赖
+pip install -r requirements.txt
+
+3. 启动数据库服务
+# 回到项目根目录
+cd ..
+
+# 启动MySQL和Redis容器
+docker-compose up -d mysql redis
+
+# 检查容器是否正常运行
+docker ps
+
+4. 执行数据库迁移
+
+# 确保在backend目录下且虚拟环境已激活
+cd backend
+alembic upgrade head

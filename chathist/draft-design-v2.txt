@@ -1,0 +1,460 @@
+# 企业智能助手平台产品设计方案 v2
+
+## 0. 项目基础信息
+项目名称: enterprise-agent-platform
+版本: 1.0.0
+项目结构:
+frontend/                # 前端项目目录
+  ├── package.json      # 前端依赖配置
+  └── vite.config.ts    # Vite配置
+backend/                 # 后端项目目录
+  ├── requirements.txt  # Python依赖
+  └── main.py          # 后端入口文件
+
+## 1. 产品概述
+
+### 1.1 产品定位
+- 面向企业用户的智能体服务平台
+- 提供多样化的AI助手服务
+- 支持智能推荐和自定义配置
+
+### 1.2 核心功能
+- 智能体市场
+- 聊天助手
+- 智能推荐系统
+- 用户工作空间
+
+## 2. 技术架构
+
+### 2.1 技术栈
+前端：
+- Vue 3 + TypeScript
+- Element Plus
+- Vite
+- TailwindCSS
+
+后端：
+- Python FastAPI
+- MySQL
+- Redis
+- RAG 服务集成
+
+### 2.2 项目结构
+src/
+├── components/        # 通用组件
+│   ├── Layout/       # 布局组件
+│   ├── Agent/        # 智能体相关组件
+│   └── Chat/         # 聊天相关组件
+├── views/            # 页面视图
+├── store/            # 状态管理
+├── api/              # API 接口
+└── styles/           # 全局样式
+
+### 2.3 依赖配置
+// 前端依赖 (package.json)
+{
+  "dependencies": {
+    "vue": "^3.3.0",
+    "vue-router": "^4.2.0",
+    "pinia": "^2.1.0",
+    "element-plus": "^2.3.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vite": "^4.5.0",
+    "@vitejs/plugin-vue": "^4.5.0"
+  }
+}
+
+// 后端依赖 (requirements.txt)
+fastapi==0.104.0
+uvicorn==0.24.0
+sqlalchemy==2.0.23
+python-jose==3.3.0
+passlib==1.7.4
+python-multipart==0.0.6
+redis==5.0.1
+mysql-connector-python==8.2.0
+
+## 3. 详细设计规范
+
+### 3.1 色彩系统
+// 主题色值定义
+$theme-colors: (
+  'primary': #4F9BFF,
+  'secondary': #6C757D,
+  'success': #28A745,
+  'info': #17A2B8,
+  'warning': #FFC107,
+  'danger': #DC3545,
+  'light': #F8F9FA,
+  'dark': #2D2D2D
+);
+
+// 文字颜色
+$text-colors: (
+  'primary': #333333,
+  'secondary': #666666,
+  'light': #FFFFFF
+);
+
+### 3.2 组件规范
+
+#### 3.2.1 智能体卡片组件
+interface AgentCard {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  category: string;
+  capabilities: string[];
+}
+
+#### 3.2.2 登录表单组件
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
+#### 3.2.3 聊天消息组件
+interface ChatMessageProps {
+  message: ChatMessage;
+  isUser: boolean;
+}
+
+#### 3.2.4 智能体列表组件
+interface AgentListProps {
+  agents: Agent[];
+  onSelect: (agent: Agent) => void;
+}
+
+### 3.3 页面布局
+
+#### 3.3.1 主页布局
+<template>
+  <div class="app-container">
+    <!-- 左侧边栏 -->
+    <aside class="sidebar" :class="{ 'collapsed': isSidebarCollapsed }">
+      <div class="user-profile">
+        <!-- 用户信息 -->
+      </div>
+      <nav class="agent-nav">
+        <!-- 智能体导航 -->
+      </nav>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+      <header class="top-bar">
+        <!-- 顶部导航栏 -->
+      </header>
+      <div class="content-area">
+        <!-- 路由视图 -->
+        <router-view></router-view>
+      </div>
+    </main>
+  </div>
+</template>
+
+### 3.4 路由设计
+interface RouteConfig {
+  path: string;
+  component: string;
+  meta: RouteMeta;
+}
+
+const routes = [
+  {
+    path: '/login',
+    component: 'LoginView',
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/register',
+    component: 'RegisterView',
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/',
+    component: 'MainLayout',
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'agents',
+        component: 'AgentMarketView',
+        meta: { title: '智能体市场' }
+      },
+      {
+        path: 'chat/:agentId',
+        component: 'ChatView',
+        meta: { title: '对话' }
+      }
+    ]
+  }
+]
+
+## 4. 功能模块设计
+
+### 4.1 智能体市场
+interface AgentMarket {
+  categories: Category[];
+  agents: Agent[];
+  recommendations: Recommendation[];
+}
+
+interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;
+}
+
+interface Agent {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  capabilities: string[];
+  icon: string;
+  rating: number;
+  usageCount: number;
+}
+
+### 4.2 聊天系统
+interface ChatMessage {
+  id: string;
+  sender: 'user' | 'agent';
+  content: string;
+  timestamp: Date;
+  type: 'text' | 'image' | 'file';
+  metadata?: any;
+}
+
+interface ChatSession {
+  id: string;
+  agentId: string;
+  messages: ChatMessage[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+### 4.3 智能推荐系统
+interface RecommendationEngine {
+  userPreferences: UserPreference[];
+  agentMetadata: AgentMetadata[];
+  recommendationRules: RecommendationRule[];
+}
+
+interface RecommendationRule {
+  condition: (context: any) => boolean;
+  weight: number;
+  action: (agents: Agent[]) => Agent[];
+}
+
+### 4.4 状态管理设计
+interface RootState {
+  user: UserState;
+  agents: AgentState;
+  chat: ChatState;
+}
+
+interface UserState {
+  currentUser: User | null;
+  token: string | null;
+  loading: boolean;
+  error: string | null;
+}
+
+interface AgentState {
+  agents: Agent[];
+  categories: Category[];
+  currentAgent: Agent | null;
+  loading: boolean;
+  error: string | null;
+}
+
+interface ChatState {
+  sessions: ChatSession[];
+  currentSession: ChatSession | null;
+  messages: ChatMessage[];
+  loading: boolean;
+  error: string | null;
+}
+
+## 5. API 接口设计
+
+### 5.1 基础接口
+// 用户相关
+POST /api/auth/login
+POST /api/auth/register
+GET /api/user/profile
+
+// 智能体相关
+GET /api/agents
+GET /api/agents/:id
+POST /api/agents/:id/chat
+GET /api/agents/recommend
+
+// 聊天相关
+GET /api/chat/sessions
+POST /api/chat/messages
+GET /api/chat/history/:sessionId
+
+### 5.2 API 响应格式
+interface ApiResponse<T> {
+  code: number;
+  message: string;
+  data: T;
+}
+
+// 示例响应格式
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    // 具体数据
+  }
+}
+
+// 错误响应格式
+{
+  "code": 400,
+  "message": "Invalid parameters",
+  "data": null
+}
+
+### 5.3 错误处理
+interface ApiError {
+  code: number;
+  message: string;
+  details?: any;
+}
+
+const ErrorCodes = {
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  VALIDATION_ERROR: 422,
+  INTERNAL_ERROR: 500
+} as const;
+
+### 5.4 WebSocket 通信
+interface WSMessage {
+  type: 'message' | 'typing' | 'status';
+  payload: any;
+  sessionId: string;
+  timestamp: number;
+}
+
+// WebSocket 事件类型
+type WSEventType = 
+  | 'connect'
+  | 'disconnect'
+  | 'message'
+  | 'error';
+
+## 6. 数据库设计
+
+### 6.1 核心表结构
+-- 用户表
+CREATE TABLE users (
+  id VARCHAR(36) PRIMARY KEY,
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 智能体表
+CREATE TABLE agents (
+  id VARCHAR(36) PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  category VARCHAR(50),
+  capabilities JSON,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 聊天会话表
+CREATE TABLE chat_sessions (
+  id VARCHAR(36) PRIMARY KEY,
+  user_id VARCHAR(36),
+  agent_id VARCHAR(36),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (agent_id) REFERENCES agents(id)
+);
+
+## 7. 部署方案
+
+### 7.1 开发环境
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    
+  database:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      
+  redis:
+    image: redis:alpine
+
+### 7.2 环境配置
+// .env 配置项
+VITE_API_BASE_URL=http://localhost:8000
+VITE_WS_URL=ws://localhost:8000/ws
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=agent_platform
+DB_USER=agent_user
+DB_PASSWORD=agent_password
+REDIS_HOST=localhost
+REDIS_PORT=6379
+JWT_SECRET=your-jwt-secret
+
+### 7.3 启动脚本
+// 前端启动脚本 (package.json)
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  }
+}
+
+// 后端启动脚本 (run.sh)
+#!/bin/bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+### 7.4 Docker配置
+// Dockerfile.frontend
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+// Dockerfile.backend
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+注意事项：
+1. 确认具体的业务流程
+2. 补充更详细的API文档
+3. 制定具体的开发里程碑
+4. 设置代码规范和提交规范 

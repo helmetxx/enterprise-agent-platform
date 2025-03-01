@@ -1,0 +1,318 @@
+# 创意生成智能体 (Idea Generation Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 创意生成智能体
+类型: Completion
+模型: GPT-4
+用途: A6阶段创意生成和创新设计
+Temperature: 0.8 (提高创造性)
+
+### 1.2 RAG配置
+- 开启知识库功能
+- 向量数据库: 使用Dify默认配置
+- 分块大小: 1000
+- 重叠大小: 150
+- 相似度阈值: 0.6 (降低阈值以获取更多灵感)
+- 最大支持文件大小: 50MB
+- 预置知识库: 创新案例库、设计模式库
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个富有创造力的产品创意专家。你的主要职责是基于前期分析结果，生成创新的产品创意。
+
+创意生成要求：
+1. 基于市场需求和用户痛点
+2. 结合技术可行性
+3. 保持商业价值
+4. 追求创新突破
+5. 考虑实现路径
+
+创意维度：
+1. 功能创新：核心功能的创新点
+2. 交互创新：用户交互方式的创新
+3. 技术创新：技术实现的创新
+4. 商业创新：商业模式的创新
+5. 场景创新：应用场景的创新
+
+输出格式要求：
+{
+    "idea_overview": {
+        "total_ideas": "创意总数",
+        "categories": {
+            "function_innovation": "功能创新数量",
+            "interaction_innovation": "交互创新数量",
+            "technical_innovation": "技术创新数量",
+            "business_innovation": "商业创新数量",
+            "scenario_innovation": "场景创新数量"
+        }
+    },
+    "innovative_ideas": [
+        {
+            "id": "创意ID",
+            "title": "创意标题",
+            "description": "创意描述",
+            "category": "创意类别",
+            "innovation_points": [
+                {
+                    "point": "创新点描述",
+                    "type": "创新类型",
+                    "originality_score": "原创性评分(1-5)"
+                }
+            ],
+            "user_value": {
+                "pain_points": ["解决的痛点1", "解决的痛点2"],
+                "benefits": ["用户价值1", "用户价值2"],
+                "target_users": ["目标用户群1", "目标用户群2"]
+            },
+            "technical_feasibility": {
+                "difficulty": "技术难度(1-5)",
+                "required_technologies": ["所需技术1", "所需技术2"],
+                "implementation_risks": ["风险1", "风险2"]
+            },
+            "business_potential": {
+                "market_size": "市场规模评估",
+                "revenue_model": "收入模式",
+                "competitive_advantage": ["竞争优势1", "竞争优势2"]
+            },
+            "development_path": {
+                "phases": ["阶段1", "阶段2"],
+                "key_milestones": ["里程碑1", "里程碑2"],
+                "resource_requirements": ["资源需求1", "资源需求2"]
+            }
+        }
+    ],
+    "idea_combinations": [
+        {
+            "combination_id": "组合ID",
+            "ideas": ["创意ID1", "创意ID2"],
+            "synergy_description": "协同效应描述",
+            "combined_value": "组合价值评估"
+        }
+    ],
+    "innovation_metrics": {
+        "originality_score": "原创性得分",
+        "feasibility_score": "可行性得分",
+        "value_score": "价值得分",
+        "overall_rating": "综合评分"
+    }
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下分析结果生成创新产品创意：
+
+前序分析：
+{{context}}
+
+创意要求：
+1. 结合市场需求和用户痛点
+2. 考虑技术可行性
+3. 保证商业价值
+4. 体现创新性
+5. 明确实现路径
+
+请按照规定的JSON格式输出创意方案。
+"""
+
+### 2.3 跟进提示词模板
+FOLLOW_UP_TEMPLATE = """
+基于之前的创意方案，请针对以下方面进行优化：
+
+优化方向：{{focus_area}}
+补充信息：{{additional_context}}
+
+请重点关注：
+1. 创意的独特性提升
+2. 技术可行性完善
+3. 商业模式优化
+4. 实现路径细化
+
+请以增量更新的方式输出优化方案。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifyIdeaGenerationAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_idea_generation_app_id"
+        
+    async def generate_ideas(self, context: Dict, previous_ideas: Optional[Dict] = None) -> Dict:
+        """执行创意生成"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": "请基于分析结果生成创新产品创意"
+                }
+            ]
+            
+            if previous_ideas:
+                messages.append({
+                    "role": "assistant",
+                    "content": json.dumps(previous_ideas)
+                })
+            
+            async with session.post(
+                f"{self.api_base}/completion-messages",
+                headers=headers,
+                json={
+                    "messages": messages,
+                    "query": "生成创意",
+                    "context": json.dumps(context),
+                    "temperature": 0.8
+                }
+            ) as response:
+                result = await response.json()
+                return json.loads(result['answer'])
+
+### 3.2 错误处理实现
+class IdeaGenerationError(Enum):
+    GENERATION_FAILED = "GENERATION_FAILED"
+    CONTEXT_INVALID = "CONTEXT_INVALID"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+    MODEL_ERROR = "MODEL_ERROR"
+    INVALID_RESPONSE = "INVALID_RESPONSE"
+    CREATIVITY_ERROR = "CREATIVITY_ERROR"
+
+class IdeaGenerationException(Exception):
+    def __init__(self, error_type: IdeaGenerationError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class IdeaGenerationErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            IdeaGenerationError.API_RATE_LIMIT: {"max_retries": 5, "delay": 10},
+            IdeaGenerationError.MODEL_ERROR: {"max_retries": 3, "delay": 15}
+        }
+
+    async def handle_error(self, error: IdeaGenerationException) -> Dict[str, Any]:
+        """处理生成过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class IdeaGenerationOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=3)
+        self.cache_ttl = 7200  # 2小时缓存
+        
+    async def optimize_generation_process(self, context: Dict, background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化创意生成流程"""
+        
+        # 1. 缓存检查
+        cache_key = self._generate_cache_key(context)
+        cached_result = await self._get_cached_result(cache_key)
+        if cached_result:
+            return cached_result
+            
+        # 2. 上下文处理
+        processed_context = self._preprocess_context(context)
+        
+        # 3. 异步处理
+        generation_task = background_tasks.add_task(
+            self._process_idea_generation,
+            processed_context,
+            cache_key
+        )
+        
+        return {
+            "status": "processing",
+            "task_id": str(generation_task),
+            "estimated_time": self._estimate_processing_time(context)
+        }
+
+## 4. API接口定义
+
+### 4.1 创意生成接口
+@app.post("/api/idea-generation/generate")
+async def generate_ideas(
+    context: Dict = Body(...),
+    background_tasks: BackgroundTasks = None
+):
+    """创意生成接口"""
+    try:
+        # 初始化生成优化器
+        optimizer = IdeaGenerationOptimizer()
+        
+        # 异步处理创意生成
+        result = await optimizer.optimize_generation_process(
+            context,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = IdeaGenerationErrorHandler()
+        return await error_handler.handle_error(
+            IdeaGenerationException(
+                IdeaGenerationError.GENERATION_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取生成结果接口
+@app.get("/api/idea-generation/{task_id}")
+async def get_idea_generation(task_id: str):
+    """获取创意生成结果接口"""
+    try:
+        optimizer = IdeaGenerationOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = IdeaGenerationErrorHandler()
+        return await error_handler.handle_error(
+            IdeaGenerationException(
+                IdeaGenerationError.GENERATION_FAILED,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 输入要求
+- 上下文数据格式：JSON
+- 最大输入大小：2MB
+- 需包含前序分析结果
+- 支持创意迭代优化
+
+### 5.2 API调用限制
+- 并发请求数：最大5个
+- 调用频率：每分钟20次
+- 生成超时：单次最长5分钟
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录生成过程日志
+- 支持创意存档备份
+- 提供详细错误信息
+
+### 5.4 性能优化建议
+- 使用上下文哈希缓存
+- 实现异步生成队列
+- 优化创意评分算法
+- 定期更新知识库 

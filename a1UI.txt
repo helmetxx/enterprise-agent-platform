@@ -1,0 +1,631 @@
+
+# A1: 文档上传与知识库管理界面设计
+
+## 1. 界面布局
+
+### 1.1 主要区域划分
+------------------------------------------------------------------+
+| 页面标题栏 |
+| "产品创意生成 - 文档管理" |
++------------------------------------------------------------------+
+| |
+| [选择知识库] | [创建知识库] <切换标签页> |
+| |
++------------------------------------------------------------------+
+| |
+| 内容主区域 |
+| (根据标签页切换显示) |
+| |
++------------------------------------------------------------------+
+| |
+| 状态显示区 |
+| |
++------------------------------------------------------------------+
+
+
+### 1.2 "选择知识库"标签页
+
++------------------------------------------------------------------+
+| 搜索框 [] 筛选: [最近使用▼] [使用次数▼] [创建时间▼] |
++------------------------------------------------------------------+
+| |
+| 知识库列表（表格形式） |
+| +--------+------------+-----------+----------+---------+ |
+| |选择 |知识库名称 |创建时间 |最后使用 |使用次数 | |
+| |[单选框]|Product_001 |2024-03-01 |昨天 |12次 | |
+| |[单选框]|Product_002 |2024-03-05 |1小时前 |3次 | |
+| |[单选框]|Product_003 |2024-03-10 |刚刚 |1次 | |
+| +--------+------------+-----------+----------+---------+ |
+| |
+| 分页控件: < 1 2 3 ... 10 > |
++------------------------------------------------------------------+
+| [使用选中的知识库] |
++------------------------------------------------------------------+
+
+
+### 1.3 "创建知识库"标签页
+
++------------------------------------------------------------------+
+| |
+| 知识库信息 |
+| 知识库名称: [] |
+| 描述: [_] |
+| |
+| 文件上传区域 |
+| +----------------------------------+ |
+| | | |
+| | 拖拽文件到此处或点击上传 | |
+| | | |
+| +----------------------------------+ |
+| |
+| 已选文件列表： |
+| +--------+------------+-----------+----------+---------+ |
+| |文件名 |大小 |类型 |状态 |操作 | |
+| |doc1.pdf|2.5MB |PDF |等待上传 |[删除] | |
+| |doc2.doc|1.8MB |Word |等待上传 |[删除] | |
+| +--------+------------+-----------+----------+---------+ |
+| |
+| [开始创建知识库] |
++------------------------------------------------------------------+
+
+
+
+### 1.4 状态显示区
+
+
+------------------------------------------------------------------+
+| 当前状态： |
+| [进度条或状态信息] |
+| 知识库ID: KB_001 |
+| 文件数量: 5 |
+| 创建时间: 2024-03-15 14:30 |
++------------------------------------------------------------------+
+
+
+
+
+## 2. 交互设计
+
+### 2.1 选择知识库
+- 点击单选框选择知识库
+- 可通过搜索框搜索知识库名称
+- 支持多个维度的排序
+- 点击"使用选中的知识库"进入下一步
+
+### 2.2 创建知识库
+- 填写知识库基本信息
+- 支持拖拽上传文件
+- 支持多文件同时上传
+- 显示上传进度和状态
+- 可删除待上传文件
+
+### 2.3 状态反馈
+- 显示当前操作状态
+- 显示知识库创建进度
+- 显示错误信息（如有）
+- 显示成功提示
+
+## 3. 样式规范
+
+### 3.1 颜色方案
+- 主色调：#2B579A（深蓝）
+- 背景色：#F5F5F5（浅灰）
+- 强调色：#4CAF50（绿色，用于成功状态）
+- 警告色：#FFC107（黄色，用于警告）
+- 错误色：#F44336（红色，用于错误）
+
+### 3.2 字体
+- 标题：Roboto, 18px, 粗体
+- 正文：Roboto, 14px, 常规
+- 小字：Roboto, 12px, 常规
+
+### 3.3 间距
+- 页面边距：24px
+- 组件间距：16px
+- 内部间距：8px
+
+## 4. 响应式设计
+
+### 4.1 桌面端（>1200px）
+- 完整显示所有功能
+- 表格可显示全部列
+
+### 4.2 平板端（768px-1200px）
+- 调整表格列的显示优先级
+- 简化部分操作按钮
+
+### 4.3 移动端（<768px）
+- 垂直堆叠布局
+- 只显示最重要的信息
+- 简化操作流程
+
+## 5. 辅助功能
+
+### 5.1 快捷键
+- Enter：确认操作
+- Esc：取消操作
+- Ctrl+F：聚焦搜索框
+
+### 5.2 提示信息
+- 悬停提示
+- 操作确认对话框
+- 错误提示信息
+
+### 5.3 加载状态
+- 骨架屏加载效果
+- 进度条显示
+- 加载动画
+
+## 6. 错误处理
+
+### 6.1 表单验证
+- 必填项提示
+- 格式验证
+- 实时反馈
+
+### 6.2 上传限制
+- 文件大小限制
+- 文件类型限制
+- 总数量限制
+
+### 6.3 错误提示
+- 友好的错误信息
+- 重试选项
+- 问题解决建议
+
+
+
+# A1: 文档上传与知识库管理界面设计
+
+## 1. 组件设计
+
+### 1.1 Vue组件结构
+
+<!-- KnowledgeBaseManager.vue -->
+<template>
+  <div class="knowledge-base-container">
+    <el-tabs v-model="activeTab">
+      <!-- 选择知识库标签页 -->
+      <el-tab-pane label="选择知识库" name="select">
+        <knowledge-base-selector
+          :knowledge-bases="knowledgeBases"
+          @select="handleSelect"
+        />
+      </el-tab-pane>
+      
+      <!-- 创建知识库标签页 -->
+      <el-tab-pane label="创建知识库" name="create">
+        <knowledge-base-creator
+          @create="handleCreate"
+        />
+      </el-tab-pane>
+    </el-tabs>
+    
+    <!-- 状态显示区 -->
+    <knowledge-base-status
+      :status="currentStatus"
+      :progress="uploadProgress"
+    />
+  </div>
+</template>
+
+<!-- KnowledgeBaseSelector.vue -->
+<template>
+  <div class="selector-container">
+    <div class="search-bar">
+      <el-input
+        v-model="searchQuery"
+        placeholder="搜索知识库"
+        prefix-icon="el-icon-search"
+      />
+      <el-select v-model="sortBy" placeholder="排序方式">
+        <el-option label="最近使用" value="last_used" />
+        <el-option label="使用次数" value="usage_count" />
+        <el-option label="创建时间" value="created_at" />
+      </el-select>
+    </div>
+    
+    <el-table
+      :data="filteredKnowledgeBases"
+      @selection-change="handleSelectionChange">
+      <el-table-column type="radio" width="55" />
+      <el-table-column prop="name" label="知识库名称" />
+      <el-table-column prop="created_at" label="创建时间" />
+      <el-table-column prop="last_used" label="最后使用" />
+      <el-table-column prop="usage_count" label="使用次数" />
+    </el-table>
+    
+    <div class="pagination-container">
+      <el-pagination
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="total"
+        @current-change="handlePageChange"
+      />
+    </div>
+    
+    <el-button type="primary" @click="useSelected">
+      使用选中的知识库
+    </el-button>
+  </div>
+</template>
+
+<!-- KnowledgeBaseCreator.vue -->
+<template>
+  <div class="creator-container">
+    <el-form :model="formData" :rules="rules" ref="form">
+      <el-form-item label="知识库名称" prop="name">
+        <el-input v-model="formData.name" />
+      </el-form-item>
+      
+      <el-form-item label="描述" prop="description">
+        <el-input type="textarea" v-model="formData.description" />
+      </el-form-item>
+      
+      <el-upload
+        class="uploader"
+        drag
+        multiple
+        :http-request="customUpload"
+        :before-upload="beforeUpload"
+        :file-list="fileList"
+      >
+        <i class="el-icon-upload" />
+        <div class="el-upload__text">
+          拖拽文件到此处或点击上传
+        </div>
+      </el-upload>
+      
+      <el-button type="primary" @click="createKnowledgeBase">
+        开始创建知识库
+      </el-button>
+    </el-form>
+  </div>
+</template>
+
+## 2. TypeScript 接口定义
+
+interface KnowledgeBase {
+  id: string;
+  name: string;
+  description: string;
+  created_at: string;
+  last_used: string;
+  usage_count: number;
+  file_count: number;
+  status: 'active' | 'processing' | 'error';
+}
+
+interface CreateKnowledgeBaseRequest {
+  name: string;
+  description: string;
+  files: File[];
+}
+
+interface KnowledgeBaseResponse {
+  status: string;
+  data: KnowledgeBase;
+  message?: string;
+}
+
+interface ListKnowledgeBasesRequest {
+  page: number;
+  pageSize: number;
+  sortBy?: string;
+  searchQuery?: string;
+}
+
+interface ListKnowledgeBasesResponse {
+  status: string;
+  data: {
+    items: KnowledgeBase[];
+    total: number;
+  };
+}
+
+## 3. API 服务实现
+
+class KnowledgeBaseService {
+  static async list(params: ListKnowledgeBasesRequest): Promise<ListKnowledgeBasesResponse> {
+    return await http.get('/api/knowledge-base/list', { params });
+  }
+  
+  static async create(data: CreateKnowledgeBaseRequest): Promise<KnowledgeBaseResponse> {
+    return await http.post('/api/knowledge-base/create', data);
+  }
+  
+  static async select(knowledgeBaseId: string): Promise<KnowledgeBaseResponse> {
+    return await http.post('/api/knowledge-base/select', { knowledge_base_id: knowledgeBaseId });
+  }
+  
+  static async getStatus(taskId: string): Promise<any> {
+    return await http.get(`/api/knowledge-base/status/${taskId}`);
+  }
+}
+
+## 4. Vuex Store 实现
+
+interface KnowledgeBaseState {
+  knowledgeBases: KnowledgeBase[];
+  currentKnowledgeBase: KnowledgeBase | null;
+  loading: boolean;
+  error: string | null;
+  uploadProgress: number;
+}
+
+const knowledgeBaseStore = {
+  state: (): KnowledgeBaseState => ({
+    knowledgeBases: [],
+    currentKnowledgeBase: null,
+    loading: false,
+    error: null,
+    uploadProgress: 0
+  }),
+  
+  mutations: {
+    SET_KNOWLEDGE_BASES(state, bases) {
+      state.knowledgeBases = bases;
+    },
+    SET_CURRENT_KNOWLEDGE_BASE(state, base) {
+      state.currentKnowledgeBase = base;
+    },
+    SET_LOADING(state, loading) {
+      state.loading = loading;
+    },
+    SET_ERROR(state, error) {
+      state.error = error;
+    },
+    SET_UPLOAD_PROGRESS(state, progress) {
+      state.uploadProgress = progress;
+    }
+  },
+  
+  actions: {
+    async fetchKnowledgeBases({ commit }, params) {
+      commit('SET_LOADING', true);
+      try {
+        const response = await KnowledgeBaseService.list(params);
+        commit('SET_KNOWLEDGE_BASES', response.data.items);
+      } catch (error) {
+        commit('SET_ERROR', error.message);
+      } finally {
+        commit('SET_LOADING', false);
+      }
+    }
+  }
+};
+
+## 5. 样式定义
+
+:root {
+  // 颜色
+  --primary-color: #2B579A;
+  --secondary-color: #4CAF50;
+  --background-color: #F5F5F5;
+  --error-color: #F44336;
+  --warning-color: #FFC107;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  
+  // 字体
+  --font-family: 'Roboto', sans-serif;
+  --font-size-small: 12px;
+  --font-size-normal: 14px;
+  --font-size-large: 16px;
+  --font-size-xlarge: 18px;
+  
+  // 间距
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 24px;
+  
+  // 圆角
+  --border-radius: 4px;
+  --border-radius-large: 8px;
+  
+  // 阴影
+  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.knowledge-base-container {
+  padding: var(--spacing-large);
+  background-color: var(--background-color);
+  
+  .selector-container {
+    margin-bottom: var(--spacing-large);
+    
+    .search-bar {
+      display: flex;
+      gap: var(--spacing-medium);
+      margin-bottom: var(--spacing-medium);
+    }
+    
+    .el-table {
+      margin-bottom: var(--spacing-medium);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-small);
+    }
+  }
+  
+  .creator-container {
+    .uploader {
+      margin: var(--spacing-medium) 0;
+      border: 2px dashed var(--primary-color);
+      border-radius: var(--border-radius);
+      padding: var(--spacing-large);
+      text-align: center;
+      
+      &:hover {
+        border-color: var(--secondary-color);
+      }
+    }
+  }
+}
+
+## 6. 响应式设计
+
+$breakpoints: (
+  'mobile': 320px,
+  'tablet': 768px,
+  'desktop': 1024px,
+  'wide': 1200px
+);
+
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}
+
+.knowledge-base-container {
+  @include respond-to('mobile') {
+    padding: var(--spacing-small);
+    
+    .el-table {
+      th, td {
+        padding: var(--spacing-small);
+      }
+    }
+  }
+  
+  @include respond-to('tablet') {
+    padding: var(--spacing-medium);
+  }
+  
+  @include respond-to('desktop') {
+    padding: var(--spacing-large);
+  }
+}
+
+## 7. 工具函数和错误处理
+
+// 加载状态指令
+const loadingDirective = {
+  mounted(el, binding) {
+    if (binding.value) {
+      el.classList.add('is-loading');
+      el.appendChild(createLoadingElement());
+    }
+  },
+  updated(el, binding) {
+    if (binding.value !== binding.oldValue) {
+      if (binding.value) {
+        el.classList.add('is-loading');
+        el.appendChild(createLoadingElement());
+      } else {
+        el.classList.remove('is-loading');
+        const loader = el.querySelector('.loading-spinner');
+        if (loader) {
+          loader.remove();
+        }
+      }
+    }
+  }
+};
+
+// 全局错误处理
+const errorHandler = {
+  handle(error: any) {
+    if (error.response) {
+      switch (error.response.status) {
+        case 400:
+          ElMessage.error('请求参数错误');
+          break;
+        case 401:
+          ElMessage.error('未授权，请重新登录');
+          break;
+        case 403:
+          ElMessage.error('拒绝访问');
+          break;
+        case 404:
+          ElMessage.error('请求错误，未找到该资源');
+          break;
+        case 500:
+          ElMessage.error('服务器端错误');
+          break;
+        default:
+          ElMessage.error('未知错误');
+      }
+    } else {
+      ElMessage.error('网络错误，请检查网络连接');
+    }
+  }
+};
+
+// 缓存管理
+const cacheManager = {
+  set(key: string, data: any, ttl: number = 300000) {
+    const item = {
+      data,
+      timestamp: Date.now(),
+      ttl
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+  },
+  
+  get(key: string) {
+    const item = localStorage.getItem(key);
+    if (!item) return null;
+    
+    const { data, timestamp, ttl } = JSON.parse(item);
+    if (Date.now() - timestamp > ttl) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    
+    return data;
+  }
+};
+
+## 8. 组件使用说明
+
+1. 安装依赖
+
+bash 
+npm install element-plus @vueuse/core
+
+2. 组件注册
+typescript
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import KnowledgeBaseManager from './components/KnowledgeBaseManager.vue'
+const app = createApp(App)
+app.use(ElementPlus)
+app.component('KnowledgeBaseManager', KnowledgeBaseManager)
+
+3. 组件使用
+
+vue
+<template>
+<knowledge-base-manager
+@select="onKnowledgeBaseSelect"
+@create="onKnowledgeBaseCreate"
+/>
+</template>
+
+4. 事件处理
+typescript
+const onKnowledgeBaseSelect = (knowledgeBase: KnowledgeBase) => {
+// 处理知识库选择
+};
+const onKnowledgeBaseCreate = (result: KnowledgeBaseResponse) => {
+// 处理知识库创建
+};
+
+
+```
+
+这个设计现在包含了完整的：
+1. Vue组件结构
+2. TypeScript接口定义
+3. API服务实现
+4. Vuex状态管理
+5. 样式定义
+6. 响应式设计
+7. 工具函数和错误处理
+8. 使用说明
+
+所有内容都在一个代码块中，方便一键复制和保存。需要我对某个部分进行补充说明吗？

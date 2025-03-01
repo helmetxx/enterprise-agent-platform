@@ -1,0 +1,264 @@
+# 产品创意助手 - A1页面技术设计规范
+
+## 1. 类型定义
+
+interface UploadedFile {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  status: 'uploading' | 'success' | 'error';
+  progress: number;
+  url?: string;
+  errorMessage?: string;
+}
+
+interface UploadState {
+  files: UploadedFile[];
+  isUploading: boolean;
+  totalProgress: number;
+  analysisProgress: number;
+}
+
+## 2. 组件结构
+
+<template>
+  <div class="upload-container">
+    <ProgressBar :current="currentStep" :total="totalSteps" />
+    
+    <UploadZone
+      :accept="allowedFileTypes"
+      :maxSize="maxFileSize"
+      :multiple="true"
+      @drop="handleFileDrop"
+      @select="handleFileSelect"
+    >
+      <template #icon>
+        <DocumentIcon class="upload-icon" />
+      </template>
+      <template #text>
+        <p class="upload-text">拖拽文件到此处或点击上传</p>
+        <p class="upload-hint">支持 Word/PDF/TXT/Excel/PPT 格式</p>
+      </template>
+    </UploadZone>
+
+    <FileList
+      v-if="files.length > 0"
+      :files="files"
+      @delete="handleFileDelete"
+      @preview="handleFilePreview"
+    />
+
+    <div class="action-bar">
+      <Button 
+        type="primary"
+        :disabled="!canProceed"
+        @click="handleProceed"
+      >
+        开始分析
+      </Button>
+    </div>
+  </div>
+</template>
+
+## 3. 组件逻辑
+
+export default defineComponent({
+  name: 'UploadView',
+  
+  components: {
+    ProgressBar,
+    UploadZone,
+    FileList,
+    Button,
+    DocumentIcon
+  },
+
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    // 状态管理
+    const state = reactive<UploadState>({
+      files: [],
+      isUploading: false,
+      totalProgress: 0,
+      analysisProgress: 0
+    });
+
+    // 计算属性
+    const canProceed = computed(() => 
+      state.files.length > 0 && 
+      state.files.every(f => f.status === 'success')
+    );
+
+    // 文件上传处理
+    const handleFileDrop = async (files: File[]) => {
+      for (const file of files) {
+        if (validateFile(file)) {
+          await uploadFile(file);
+        }
+      }
+    };
+
+    return {
+      ...toRefs(state),
+      canProceed,
+      handleFileDrop,
+      handleFileSelect,
+      handleFileDelete,
+      handleFilePreview,
+      handleProceed
+    };
+  }
+});
+
+## 4. 样式定义
+
+.upload-container {
+  @apply max-w-4xl mx-auto p-6;
+
+  .upload-zone {
+    @apply bg-white/80 backdrop-blur-md
+           border-2 border-dashed border-blue-300
+           rounded-lg p-8 mb-6
+           transition-all duration-300;
+
+    &:hover {
+      @apply border-blue-500 shadow-lg;
+    }
+
+    &.is-dragging {
+      @apply border-blue-600 bg-blue-50/50;
+    }
+  }
+
+  .upload-icon {
+    @apply w-12 h-12 text-blue-500 mb-4;
+  }
+
+  .upload-text {
+    @apply text-lg font-medium text-gray-700 mb-2;
+  }
+
+  .upload-hint {
+    @apply text-sm text-gray-500;
+  }
+
+  .file-list {
+    @apply space-y-3 mt-6;
+  }
+
+  .action-bar {
+    @apply flex justify-end mt-6;
+  }
+}
+
+## 5. API接口定义
+
+export interface UploadAPI {
+  // 文件上传
+  uploadFile(file: File): Promise<UploadedFile>;
+  
+  // 删除文件
+  deleteFile(fileId: string): Promise<void>;
+  
+  // 开始分析
+  startAnalysis(fileIds: string[]): Promise<void>;
+}
+
+## 6. 接口实现
+
+export const uploadApi: UploadAPI = {
+  async uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const response = await axios.post('/api/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: (e) => {
+        // 处理上传进度
+      }
+    });
+    
+    return response.data;
+  },
+
+  async deleteFile(fileId: string) {
+    await axios.delete(`/api/files/${fileId}`);
+  },
+
+  async startAnalysis(fileIds: string[]) {
+    await axios.post('/api/analysis/start', { fileIds });
+  }
+};
+
+## 7. Vuex状态管理
+
+export const uploadStore = defineStore('upload', {
+  state: (): UploadState => ({
+    files: [],
+    isUploading: false,
+    totalProgress: 0,
+    analysisProgress: 0
+  }),
+
+  actions: {
+    async uploadFile(file: File) {
+      this.isUploading = true;
+      try {
+        const uploadedFile = await uploadApi.uploadFile(file);
+        this.files.push(uploadedFile);
+      } catch (error) {
+        // 错误处理
+      } finally {
+        this.isUploading = false;
+      }
+    },
+
+    async deleteFile(fileId: string) {
+      await uploadApi.deleteFile(fileId);
+      this.files = this.files.filter(f => f.id !== fileId);
+    },
+
+    async startAnalysis() {
+      const fileIds = this.files.map(f => f.id);
+      await uploadApi.startAnalysis(fileIds);
+    }
+  }
+});
+
+## 8. 工具函数
+
+export const validateFile = (file: File): boolean => {
+  const maxSize = 50 * 1024 * 1024; // 50MB
+  const allowedTypes = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  ];
+
+  if (file.size > maxSize) {
+    showError('文件大小不能超过50MB');
+    return false;
+  }
+
+  if (!allowedTypes.includes(file.type)) {
+    showError('不支持的文件类型');
+    return false;
+  }
+
+  return true;
+};
+
+export const formatFileSize = (bytes: number): string => {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}; 

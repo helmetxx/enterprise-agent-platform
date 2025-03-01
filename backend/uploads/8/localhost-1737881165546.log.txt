@@ -1,0 +1,23 @@
+client.ts:19 [vite] connecting...
+client.ts:155 [vite] connected.
+auth.ts:25 XHR finished loading: POST "http://localhost:8000/api/v1/auth/login".
+dispatchXhrRequest @ axios.js?v=0978bbdc:1664
+xhr @ axios.js?v=0978bbdc:1544
+dispatchRequest @ axios.js?v=0978bbdc:2019
+Promise.then
+_request @ axios.js?v=0978bbdc:2216
+request @ axios.js?v=0978bbdc:2131
+httpMethod @ axios.js?v=0978bbdc:2263
+wrap @ axios.js?v=0978bbdc:8
+login @ auth.ts:25
+wrappedAction @ pinia.js?v=0978bbdc:1093
+store.<computed> @ pinia.js?v=0978bbdc:771
+(anonymous) @ Login.vue:71
+validateField @ element-plus.js?v=0978bbdc:30932
+await in validateField
+validate @ element-plus.js?v=0978bbdc:30903
+handleLogin @ Login.vue:67
+cache.<computed>.cache.<computed> @ chunk-S7ZBDJCF.js?v=0978bbdc:12245
+callWithErrorHandling @ chunk-S7ZBDJCF.js?v=0978bbdc:2282
+callWithAsyncErrorHandling @ chunk-S7ZBDJCF.js?v=0978bbdc:2289
+invoker @ chunk-S7ZBDJCF.js?v=0978bbdc:11273

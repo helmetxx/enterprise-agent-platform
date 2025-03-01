@@ -1,0 +1,262 @@
+2025-01-14 16:28:49,820 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:28:49,849 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:31:14,819 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:31:14,835 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:31:28,768 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:31:28,791 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:32:07,900 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:32:07,900 - app.main - INFO - Registering API routes
+2025-01-14 16:32:07,916 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:32:07,916 - app.main - INFO - Registering API routes
+2025-01-14 16:32:07,916 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:32:07,916 - app.main - INFO - API routes registered successfully
+2025-01-14 16:32:07,936 - app.main - INFO - Registering API routes
+2025-01-14 16:32:07,938 - app.main - INFO - API routes registered successfully
+2025-01-14 16:32:07,947 - app.main - INFO - API routes registered successfully
+2025-01-14 16:32:21,104 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:32:21,114 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:33:11,229 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:33:11,229 - app.main - INFO - Registering API routes
+2025-01-14 16:33:11,249 - app.main - INFO - API routes registered successfully
+2025-01-14 16:33:11,478 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:33:11,478 - app.main - INFO - Registering API routes
+2025-01-14 16:33:11,497 - app.main - INFO - API routes registered successfully
+2025-01-14 16:33:11,512 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:33:11,512 - app.main - INFO - Registering API routes
+2025-01-14 16:33:11,530 - app.main - INFO - API routes registered successfully
+2025-01-14 16:33:18,199 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:33:18,214 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:34:20,883 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:34:20,883 - app.main - INFO - Registering API routes
+2025-01-14 16:34:20,900 - app.main - INFO - API routes registered successfully
+2025-01-14 16:34:20,912 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:34:20,912 - app.main - INFO - Registering API routes
+2025-01-14 16:34:20,931 - app.main - INFO - API routes registered successfully
+2025-01-14 16:34:20,937 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:34:20,937 - app.main - INFO - Registering API routes
+2025-01-14 16:34:20,954 - app.main - INFO - API routes registered successfully
+2025-01-14 16:37:10,557 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:37:10,557 - app.main - INFO - Registering API routes
+2025-01-14 16:37:10,578 - app.main - INFO - API routes registered successfully
+2025-01-14 16:37:10,613 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:37:10,613 - app.main - INFO - Registering API routes
+2025-01-14 16:37:10,638 - app.main - INFO - API routes registered successfully
+2025-01-14 16:37:10,638 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:37:10,638 - app.main - INFO - Registering API routes
+2025-01-14 16:37:10,645 - app.main - INFO - API routes registered successfully
+2025-01-14 16:37:23,218 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:37:23,218 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:38:35,264 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:38:35,281 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:38:43,317 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:38:43,342 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:39:20,325 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:39:20,326 - app.main - INFO - Registering API routes
+2025-01-14 16:39:20,347 - app.main - INFO - API routes registered successfully
+2025-01-14 16:39:20,388 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:39:20,388 - app.main - INFO - Registering API routes
+2025-01-14 16:39:20,402 - app.main - INFO - API routes registered successfully
+2025-01-14 16:39:20,488 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:39:20,488 - app.main - INFO - Registering API routes
+2025-01-14 16:39:20,503 - app.main - INFO - API routes registered successfully
+2025-01-14 16:43:16,640 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:43:16,640 - app.main - INFO - Registering API routes
+2025-01-14 16:43:16,656 - app.main - INFO - API routes registered successfully
+2025-01-14 16:43:34,963 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:43:34,998 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:45:17,022 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:45:17,022 - app.main - INFO - Registering API routes
+2025-01-14 16:45:17,040 - app.main - INFO - API routes registered successfully
+2025-01-14 16:45:17,302 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:45:17,302 - app.main - INFO - Registering API routes
+2025-01-14 16:45:17,321 - app.main - INFO - API routes registered successfully
+2025-01-14 16:45:17,333 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:45:17,333 - app.main - INFO - Registering API routes
+2025-01-14 16:45:17,345 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:45:17,345 - app.main - INFO - Registering API routes
+2025-01-14 16:45:17,351 - app.main - INFO - API routes registered successfully
+2025-01-14 16:45:17,364 - app.main - INFO - API routes registered successfully
+2025-01-14 16:48:31,815 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:48:31,815 - app.main - INFO - Registering API routes
+2025-01-14 16:48:31,840 - app.main - INFO - API routes registered successfully
+2025-01-14 16:48:31,874 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:48:31,874 - app.main - INFO - Registering API routes
+2025-01-14 16:48:31,878 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:48:31,878 - app.main - INFO - Registering API routes
+2025-01-14 16:48:31,897 - app.main - INFO - API routes registered successfully
+2025-01-14 16:48:31,897 - app.main - INFO - API routes registered successfully
+2025-01-14 16:48:31,902 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:48:31,902 - app.main - INFO - Registering API routes
+2025-01-14 16:48:31,917 - app.main - INFO - API routes registered successfully
+2025-01-14 16:50:59,558 - app.main - INFO - Starting FastAPI application
+2025-01-14 16:50:59,558 - app.main - INFO - Registering API routes
+2025-01-14 16:50:59,563 - app.main - INFO - API routes registered successfully
+2025-01-14 16:51:04,663 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:51:04,680 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 16:51:19,965 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 16:51:19,991 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 17:01:02,487 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:01:02,487 - app.main - INFO - Registering API routes
+2025-01-14 17:01:02,503 - app.main - INFO - API routes registered successfully
+2025-01-14 17:01:25,779 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 17:01:25,787 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 17:02:00,238 - app.api.v1.endpoints.auth - INFO - Received registration request: email='139@123.com' username='Tony' password='123456'
+2025-01-14 17:02:00,258 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 17:02:19,937 - app.api.v1.endpoints.auth - INFO - Received registration request: email='139@123.com' username='Tony' password='123456'
+2025-01-14 17:02:19,951 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 17:04:51,128 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:04:51,128 - app.main - INFO - Registering API routes
+2025-01-14 17:04:51,132 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:04:51,132 - app.main - INFO - Registering API routes
+2025-01-14 17:04:51,156 - app.main - INFO - API routes registered successfully
+2025-01-14 17:04:51,161 - app.main - INFO - API routes registered successfully
+2025-01-14 17:04:51,428 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:04:51,428 - app.main - INFO - Registering API routes
+2025-01-14 17:04:51,450 - app.main - INFO - API routes registered successfully
+2025-01-14 17:04:51,560 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:04:51,560 - app.main - INFO - Registering API routes
+2025-01-14 17:04:51,575 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:04:51,575 - app.main - INFO - Registering API routes
+2025-01-14 17:04:51,588 - app.main - INFO - API routes registered successfully
+2025-01-14 17:04:51,594 - app.main - INFO - API routes registered successfully
+2025-01-14 17:04:51,607 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:04:51,607 - app.main - INFO - Registering API routes
+2025-01-14 17:04:51,611 - app.main - INFO - API routes registered successfully
+2025-01-14 17:20:27,927 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:20:27,942 - app.main - INFO - Registering API routes
+2025-01-14 17:20:27,960 - app.main - INFO - API routes registered successfully
+2025-01-14 17:20:27,992 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:20:27,993 - app.main - INFO - Registering API routes
+2025-01-14 17:20:28,000 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:20:28,000 - app.main - INFO - Registering API routes
+2025-01-14 17:20:28,018 - app.main - INFO - API routes registered successfully
+2025-01-14 17:20:28,020 - app.main - INFO - API routes registered successfully
+2025-01-14 17:20:28,031 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:20:28,031 - app.main - INFO - Registering API routes
+2025-01-14 17:20:28,050 - app.main - INFO - API routes registered successfully
+2025-01-14 17:20:28,055 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:20:28,055 - app.main - INFO - Registering API routes
+2025-01-14 17:20:28,064 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:20:28,064 - app.main - INFO - Registering API routes
+2025-01-14 17:20:28,072 - app.main - INFO - API routes registered successfully
+2025-01-14 17:20:28,082 - app.main - INFO - API routes registered successfully
+2025-01-14 17:21:19,628 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:21:19,628 - app.main - INFO - Registering API routes
+2025-01-14 17:21:19,647 - app.main - INFO - API routes registered successfully
+2025-01-14 17:21:20,341 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:21:20,341 - app.main - INFO - Registering API routes
+2025-01-14 17:21:20,361 - app.main - INFO - API routes registered successfully
+2025-01-14 17:21:20,368 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:21:20,368 - app.main - INFO - Registering API routes
+2025-01-14 17:21:20,390 - app.main - INFO - API routes registered successfully
+2025-01-14 17:21:20,410 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:21:20,410 - app.main - INFO - Registering API routes
+2025-01-14 17:21:20,429 - app.main - INFO - API routes registered successfully
+2025-01-14 17:21:20,471 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:21:20,471 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:21:20,471 - app.main - INFO - Registering API routes
+2025-01-14 17:21:20,481 - app.main - INFO - API routes registered successfully
+2025-01-14 17:21:20,490 - app.main - INFO - API routes registered successfully
+2025-01-14 17:25:20,168 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:25:20,175 - app.main - INFO - Registering API routes
+2025-01-14 17:25:20,179 - app.main - INFO - API routes registered successfully
+2025-01-14 17:25:20,192 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:25:20,192 - app.main - INFO - Registering API routes
+2025-01-14 17:25:20,195 - app.main - INFO - API routes registered successfully
+2025-01-14 17:25:20,239 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:25:20,240 - app.main - INFO - Registering API routes
+2025-01-14 17:25:20,240 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:25:20,240 - app.main - INFO - Registering API routes
+2025-01-14 17:25:20,244 - app.main - INFO - API routes registered successfully
+2025-01-14 17:25:20,244 - app.main - INFO - API routes registered successfully
+2025-01-14 17:25:20,250 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:25:20,250 - app.main - INFO - Registering API routes
+2025-01-14 17:25:20,251 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:25:20,251 - app.main - INFO - Registering API routes
+2025-01-14 17:25:20,255 - app.main - INFO - API routes registered successfully
+2025-01-14 17:25:20,255 - app.main - INFO - API routes registered successfully
+2025-01-14 17:26:36,363 - app.api.v1.endpoints.auth - INFO - Received registration request: email='139@123.com' username='Tony' password='123456'
+2025-01-14 17:26:36,373 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 17:28:52,475 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:28:52,479 - app.main - INFO - Registering API routes
+2025-01-14 17:28:52,479 - app.main - INFO - API routes registered successfully
+2025-01-14 17:28:52,534 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:28:52,534 - app.main - INFO - Registering API routes
+2025-01-14 17:28:52,539 - app.main - INFO - API routes registered successfully
+2025-01-14 17:28:52,784 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:28:52,784 - app.main - INFO - Registering API routes
+2025-01-14 17:28:52,784 - app.main - INFO - API routes registered successfully
+2025-01-14 17:28:52,818 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:28:52,818 - app.main - INFO - Registering API routes
+2025-01-14 17:28:52,821 - app.main - INFO - API routes registered successfully
+2025-01-14 17:28:52,853 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:28:52,854 - app.main - INFO - Registering API routes
+2025-01-14 17:28:52,857 - app.main - INFO - API routes registered successfully
+2025-01-14 17:28:52,862 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:28:52,863 - app.main - INFO - Registering API routes
+2025-01-14 17:28:52,866 - app.main - INFO - API routes registered successfully
+2025-01-14 17:29:30,081 - app.api.v1.endpoints.auth - INFO - Received registration request: email='139@123.com' username='Tony' password='123456'
+2025-01-14 17:29:30,114 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 17:30:50,158 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:30:50,158 - app.main - INFO - Registering API routes
+2025-01-14 17:30:50,158 - app.main - INFO - API routes registered successfully
+2025-01-14 17:30:54,516 - app.api.v1.endpoints.auth - INFO - Received registration request: email='139@123.com' username='Tony' password='123456'
+2025-01-14 17:30:54,533 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 17:32:45,938 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:32:45,938 - app.main - INFO - Registering API routes
+2025-01-14 17:32:45,942 - app.main - INFO - API routes registered successfully
+2025-01-14 17:32:45,989 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:32:45,990 - app.main - INFO - Registering API routes
+2025-01-14 17:32:45,997 - app.main - INFO - API routes registered successfully
+2025-01-14 17:32:46,180 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:32:46,180 - app.main - INFO - Registering API routes
+2025-01-14 17:32:46,186 - app.main - INFO - API routes registered successfully
+2025-01-14 17:32:46,197 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:32:46,197 - app.main - INFO - Registering API routes
+2025-01-14 17:32:46,202 - app.main - INFO - API routes registered successfully
+2025-01-14 17:32:46,238 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:32:46,238 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:32:46,238 - app.main - INFO - Registering API routes
+2025-01-14 17:32:46,238 - app.main - INFO - Registering API routes
+2025-01-14 17:32:46,242 - app.main - INFO - API routes registered successfully
+2025-01-14 17:32:46,242 - app.main - INFO - API routes registered successfully
+2025-01-14 17:33:31,776 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:33:31,776 - app.main - INFO - Registering API routes
+2025-01-14 17:33:31,776 - app.main - INFO - API routes registered successfully
+2025-01-14 17:33:56,873 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:33:56,873 - app.main - INFO - Registering API routes
+2025-01-14 17:33:56,877 - app.main - INFO - API routes registered successfully
+2025-01-14 17:34:22,338 - app.api.v1.endpoints.auth - INFO - Received registration request: email='139@123.com' username='Tony' password='123456'
+2025-01-14 17:34:22,348 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 17:35:11,924 - app.main - INFO - Starting FastAPI application
+2025-01-14 17:35:11,924 - app.main - INFO - Registering API routes
+2025-01-14 17:35:11,929 - app.main - INFO - API routes registered successfully
+2025-01-14 17:35:49,768 - app.api.v1.endpoints.auth - INFO - Received registration request: email='123@abc.com' username='Tony' password='123456'
+2025-01-14 17:35:49,788 - app.api.v1.endpoints.auth - ERROR - Error during registration: (pymysql.err.OperationalError) (1045, "Access denied for user 'agent_user'@'172.19.0.1' (using password: YES)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-01-14 20:17:29,216 - app.main - INFO - Starting FastAPI application
+2025-01-14 20:17:29,216 - app.main - INFO - Registering API routes
+2025-01-14 20:17:29,220 - app.main - INFO - API routes registered successfully
+2025-01-14 20:29:37,839 - app.main - INFO - Starting FastAPI application
+2025-01-14 20:29:37,839 - app.main - INFO - Registering API routes
+2025-01-14 20:29:37,839 - app.main - INFO - API routes registered successfully
+2025-01-14 20:57:36,289 - app.api.v1.endpoints.auth - INFO - Received registration request: email='13910634577@139.com' username='Tony' password='123456'
+2025-01-14 20:57:36,328 - app.api.v1.endpoints.auth - INFO - User created successfully: 13910634577@139.com

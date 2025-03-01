@@ -1,0 +1,377 @@
+# 方案设计智能体 (Solution Design Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 方案设计智能体
+类型: Completion
+模型: GPT-4
+用途: A7-A8阶段解决方案设计
+Temperature: 0.6 (平衡创造性和严谨性)
+
+### 1.2 RAG配置
+- 开启知识库功能
+- 向量数据库: 使用Dify默认配置
+- 分块大小: 1200
+- 重叠大小: 200
+- 相似度阈值: 0.7
+- 最大支持文件大小: 50MB
+- 预置知识库: 技术方案库、架构设计模式库
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个专业的解决方案架构师。你的主要职责是整合前期所有分析结果，设计完整的解决方案。
+
+方案设计要求：
+1. 整合所有前期分析结果
+2. 设计完整的技术架构
+3. 规划实施路径
+4. 评估资源需求
+5. 制定风险应对策略
+
+设计维度：
+1. 系统架构：整体架构设计
+2. 技术选型：具体技术方案
+3. 实施规划：分期实施计划
+4. 资源评估：所需资源规划
+5. 风险控制：风险管理方案
+
+输出格式要求：
+{
+    "solution_overview": {
+        "name": "方案名称",
+        "version": "版本号",
+        "description": "方案概述",
+        "key_features": ["特性1", "特性2"],
+        "target_objectives": ["目标1", "目标2"]
+    },
+    "architecture_design": {
+        "system_architecture": {
+            "overview": "架构概述",
+            "layers": [
+                {
+                    "name": "层级名称",
+                    "components": ["组件1", "组件2"],
+                    "responsibilities": ["职责1", "职责2"]
+                }
+            ],
+            "key_technologies": [
+                {
+                    "name": "技术名称",
+                    "purpose": "使用目的",
+                    "advantages": ["优势1", "优势2"]
+                }
+            ]
+        },
+        "data_architecture": {
+            "data_models": ["模型1", "模型2"],
+            "data_flows": ["流程1", "流程2"],
+            "storage_solutions": ["存储方案1", "存储方案2"]
+        },
+        "integration_points": [
+            {
+                "name": "集成点名称",
+                "type": "集成类型",
+                "description": "详细描述"
+            }
+        ]
+    },
+    "implementation_plan": {
+        "phases": [
+            {
+                "phase": "阶段名称",
+                "duration": "预计周期",
+                "deliverables": ["交付物1", "交付物2"],
+                "milestones": ["里程碑1", "里程碑2"]
+            }
+        ],
+        "dependencies": [
+            {
+                "source": "前置任务",
+                "target": "后置任务",
+                "type": "依赖类型"
+            }
+        ],
+        "critical_path": ["关键路径任务列表"]
+    },
+    "resource_requirements": {
+        "human_resources": [
+            {
+                "role": "角色名称",
+                "skills": ["技能1", "技能2"],
+                "quantity": "所需人数",
+                "duration": "所需时间"
+            }
+        ],
+        "technical_resources": [
+            {
+                "category": "资源类别",
+                "items": ["项目1", "项目2"],
+                "specifications": "规格说明"
+            }
+        ],
+        "budget_estimation": {
+            "categories": ["预算类别1", "预算类别2"],
+            "amounts": ["金额1", "金额2"],
+            "total": "总预算"
+        }
+    },
+    "risk_management": {
+        "technical_risks": [
+            {
+                "risk": "风险描述",
+                "probability": "发生概率(1-5)",
+                "impact": "影响程度(1-5)",
+                "mitigation": "缓解策略"
+            }
+        ],
+        "business_risks": [
+            {
+                "risk": "风险描述",
+                "probability": "发生概率(1-5)",
+                "impact": "影响程度(1-5)",
+                "mitigation": "缓解策略"
+            }
+        ],
+        "contingency_plans": [
+            {
+                "scenario": "场景描述",
+                "response": "应对方案",
+                "resources": ["所需资源1", "所需资源2"]
+            }
+        ]
+    },
+    "quality_assurance": {
+        "quality_objectives": ["目标1", "目标2"],
+        "metrics": [
+            {
+                "name": "指标名称",
+                "description": "指标描述",
+                "target_value": "目标值"
+            }
+        ],
+        "testing_strategy": {
+            "approaches": ["方法1", "方法2"],
+            "tools": ["工具1", "工具2"],
+            "coverage": "测试覆盖要求"
+        }
+    }
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下分析结果设计完整的解决方案：
+
+前序分析：
+{{context}}
+
+设计要求：
+1. 整合所有分析结果
+2. 提供完整技术方案
+3. 详细实施计划
+4. 资源需求评估
+5. 风险管理策略
+
+请按照规定的JSON格式输出方案设计。
+"""
+
+### 2.3 跟进提示词模板
+FOLLOW_UP_TEMPLATE = """
+基于之前的方案设计，请针对以下方面进行优化：
+
+优化方向：{{focus_area}}
+补充信息：{{additional_context}}
+
+请重点关注：
+1. 方案可行性完善
+2. 实施计划细化
+3. 资源评估优化
+4. 风险控制加强
+
+请以增量更新的方式输出优化方案。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifySolutionDesignAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_solution_design_app_id"
+        
+    async def design_solution(self, context: Dict, previous_design: Optional[Dict] = None) -> Dict:
+        """执行方案设计"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": "请基于分析结果设计解决方案"
+                }
+            ]
+            
+            if previous_design:
+                messages.append({
+                    "role": "assistant",
+                    "content": json.dumps(previous_design)
+                })
+            
+            async with session.post(
+                f"{self.api_base}/completion-messages",
+                headers=headers,
+                json={
+                    "messages": messages,
+                    "query": "设计解决方案",
+                    "context": json.dumps(context),
+                    "temperature": 0.6
+                }
+            ) as response:
+                result = await response.json()
+                return json.loads(result['answer'])
+
+### 3.2 错误处理实现
+class SolutionDesignError(Enum):
+    DESIGN_FAILED = "DESIGN_FAILED"
+    CONTEXT_INVALID = "CONTEXT_INVALID"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+    MODEL_ERROR = "MODEL_ERROR"
+    INVALID_RESPONSE = "INVALID_RESPONSE"
+    INTEGRATION_ERROR = "INTEGRATION_ERROR"
+
+class SolutionDesignException(Exception):
+    def __init__(self, error_type: SolutionDesignError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class SolutionDesignErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            SolutionDesignError.API_RATE_LIMIT: {"max_retries": 5, "delay": 10},
+            SolutionDesignError.MODEL_ERROR: {"max_retries": 3, "delay": 15}
+        }
+
+    async def handle_error(self, error: SolutionDesignException) -> Dict[str, Any]:
+        """处理设计过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class SolutionDesignOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=4)
+        self.cache_ttl = 14400  # 4小时缓存
+        
+    async def optimize_design_process(self, context: Dict, background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化方案设计流程"""
+        
+        # 1. 缓存检查
+        cache_key = self._generate_cache_key(context)
+        cached_result = await self._get_cached_result(cache_key)
+        if cached_result:
+            return cached_result
+            
+        # 2. 上下文处理
+        processed_context = self._preprocess_context(context)
+        
+        # 3. 异步处理
+        design_task = background_tasks.add_task(
+            self._process_solution_design,
+            processed_context,
+            cache_key
+        )
+        
+        return {
+            "status": "processing",
+            "task_id": str(design_task),
+            "estimated_time": self._estimate_processing_time(context)
+        }
+
+## 4. API接口定义
+
+### 4.1 方案设计接口
+@app.post("/api/solution-design/design")
+async def design_solution(
+    context: Dict = Body(...),
+    background_tasks: BackgroundTasks = None
+):
+    """方案设计接口"""
+    try:
+        # 初始化设计优化器
+        optimizer = SolutionDesignOptimizer()
+        
+        # 异步处理方案设计
+        result = await optimizer.optimize_design_process(
+            context,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = SolutionDesignErrorHandler()
+        return await error_handler.handle_error(
+            SolutionDesignException(
+                SolutionDesignError.DESIGN_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取设计结果接口
+@app.get("/api/solution-design/{task_id}")
+async def get_solution_design(task_id: str):
+    """获取方案设计结果接口"""
+    try:
+        optimizer = SolutionDesignOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = SolutionDesignErrorHandler()
+        return await error_handler.handle_error(
+            SolutionDesignException(
+                SolutionDesignError.DESIGN_FAILED,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 输入要求
+- 上下文数据格式：JSON
+- 最大输入大小：5MB
+- 需包含所有前序分析结果
+- 支持方案迭代优化
+
+### 5.2 API调用限制
+- 并发请求数：最大3个
+- 调用频率：每分钟15次
+- 设计超时：单次最长10分钟
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录设计过程日志
+- 支持方案版本控制
+- 提供详细错误信息
+
+### 5.4 性能优化建议
+- 使用上下文哈希缓存
+- 实现异步设计队列
+- 优化方案评估算法
+- 定期更新知识库 

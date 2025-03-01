@@ -1,0 +1,1 @@
+const defaultAvatar = '/avatar-default.svg'  // 或者 '../assets/avatar-default.svg' 

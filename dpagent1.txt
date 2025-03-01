@@ -1,0 +1,314 @@
+# 文档分析智能体 (Document Analysis Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 文档分析智能体
+类型: Assistant
+模型: GPT-4
+用途: A1-A2阶段产品文档分析
+
+### 1.2 RAG配置
+- 开启知识库功能
+- 向量数据库: 使用Dify默认配置
+- 分块大小: 500
+- 重叠大小: 50
+- 相似度阈值: 0.7
+- 最大支持文件大小: 50MB
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个专业的产品文档分析专家。你的主要职责是分析产品文档并提取关键信息。
+
+分析要求：
+1. 保持客观专业，基于文档事实进行分析
+2. 重点关注产品的功能特性、技术规格和市场定位
+3. 识别功能之间的依赖关系和关联性
+4. 对功能进行重要性评级(1-5分)
+5. 生成结构化的分析报告
+
+分析维度：
+1. 核心功能：产品的主要功能点
+2. 技术特性：关键技术指标和规格
+3. 功能关系：功能间的依赖和关联
+4. 创新点：产品的独特价值主张
+5. 市场洞察：产品的竞争优势
+
+输出格式要求：
+{
+    "core_features": [
+        {
+            "name": "功能名称",
+            "description": "详细描述",
+            "importance": "重要性评分(1-5)",
+            "category": "功能类别",
+            "technical_specs": ["技术规格1", "技术规格2"],
+            "innovation_points": ["创新点1", "创新点2"]
+        }
+    ],
+    "feature_relations": [
+        {
+            "source": "功能A",
+            "target": "功能B",
+            "relation_type": "依赖/关联/互斥",
+            "description": "关系说明"
+        }
+    ],
+    "key_insights": [
+        {
+            "category": "洞察类别",
+            "content": "洞察内容",
+            "confidence": "可信度(1-5)"
+        }
+    ],
+    "market_analysis": {
+        "target_market": ["目标市场1", "目标市场2"],
+        "competitive_advantages": ["优势1", "优势2"],
+        "potential_challenges": ["挑战1", "挑战2"]
+    }
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下文档内容进行全面分析：
+
+文档内容：
+{{context}}
+
+分析要求：
+1. 提取所有核心功能特性
+2. 分析功能间的关系
+3. 识别产品创新点
+4. 评估市场竞争优势
+
+请按照规定的JSON格式输出分析结果。
+"""
+
+### 2.3 跟进提示词模板
+FOLLOW_UP_TEMPLATE = """
+基于之前的分析结果，请进一步深入分析以下方面：
+
+关注点：{{focus_area}}
+补充文档：{{additional_context}}
+
+请重点关注：
+1. 与已有分析的关联性
+2. 新发现的见解
+3. 可能的矛盾点
+
+请以增量更新的方式输出分析结果。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifyDocAnalysisAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_dify_app_id"
+        
+    async def upload_files(self, files: List[str]) -> List[str]:
+        """上传文件到Dify知识库"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "multipart/form-data"
+            }
+            
+            file_ids = []
+            for file_path in files:
+                data = aiohttp.FormData()
+                data.add_field('file', 
+                             open(file_path, 'rb'),
+                             filename=file_path.split('/')[-1])
+                
+                async with session.post(
+                    f"{self.api_base}/knowledge-bases/{self.app_id}/files",
+                    headers=headers,
+                    data=data
+                ) as response:
+                    result = await response.json()
+                    file_ids.append(result['id'])
+                    
+            return file_ids
+            
+    async def analyze_documents(self, file_ids: List[str]) -> Dict:
+        """调用Dify进行文档分析"""
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": "请分析这些文档中的产品功能特性"
+                }
+            ]
+            
+            async with session.post(
+                f"{self.api_base}/chat-messages",
+                headers=headers,
+                json={
+                    "messages": messages,
+                    "query": "分析产品功能",
+                    "knowledge_base_ids": file_ids
+                }
+            ) as response:
+                result = await response.json()
+                return json.loads(result['answer'])
+
+### 3.2 错误处理实现
+class AnalysisError(Enum):
+    FILE_UPLOAD_FAILED = "FILE_UPLOAD_FAILED"
+    PROCESSING_TIMEOUT = "PROCESSING_TIMEOUT"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+    MODEL_TIMEOUT = "MODEL_TIMEOUT"
+    INVALID_RESPONSE = "INVALID_RESPONSE"
+    KNOWLEDGE_BASE_ERROR = "KNOWLEDGE_BASE_ERROR"
+
+class AnalysisException(Exception):
+    def __init__(self, error_type: AnalysisError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class DocumentAnalysisErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            AnalysisError.FILE_UPLOAD_FAILED: {"max_retries": 3, "delay": 5},
+            AnalysisError.API_RATE_LIMIT: {"max_retries": 5, "delay": 10},
+            AnalysisError.MODEL_TIMEOUT: {"max_retries": 2, "delay": 15}
+        }
+
+    async def handle_error(self, error: AnalysisException) -> Dict[str, Any]:
+        """处理分析过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class DocumentAnalysisOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=0)
+        self.batch_size = 5
+        self.cache_ttl = 3600  # 1小时缓存
+        
+    async def optimize_analysis_process(self, file_paths: List[str], background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化文档分析流程"""
+        
+        # 1. 缓存检查
+        cache_key = self._generate_cache_key(file_paths)
+        cached_result = await self._get_cached_result(cache_key)
+        if cached_result:
+            return cached_result
+            
+        # 2. 文件批处理
+        file_batches = self._create_file_batches(file_paths)
+        
+        # 3. 异步处理
+        analysis_task = background_tasks.add_task(
+            self._process_file_batches,
+            file_batches,
+            cache_key
+        )
+        
+        return {
+            "status": "processing",
+            "task_id": str(analysis_task),
+            "estimated_time": self._estimate_processing_time(file_paths)
+        }
+
+## 4. API接口定义
+
+### 4.1 文件上传接口
+@app.post("/api/document-analysis/upload")
+async def upload_documents(
+    files: List[UploadFile] = File(...),
+    background_tasks: BackgroundTasks = None
+):
+    """上传文档接口"""
+    try:
+        # 保存上传的文件
+        file_paths = []
+        for file in files:
+            file_path = f"temp/{file.filename}"
+            with open(file_path, "wb") as buffer:
+                content = await file.read()
+                buffer.write(content)
+            file_paths.append(file_path)
+        
+        # 初始化分析优化器
+        optimizer = DocumentAnalysisOptimizer()
+        
+        # 异步处理文件
+        result = await optimizer.optimize_analysis_process(
+            file_paths,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = DocumentAnalysisErrorHandler()
+        return await error_handler.handle_error(
+            AnalysisException(
+                AnalysisError.FILE_UPLOAD_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取分析结果接口
+@app.get("/api/document-analysis/{task_id}")
+async def get_analysis_result(task_id: str):
+    """获取分析结果接口"""
+    try:
+        optimizer = DocumentAnalysisOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = DocumentAnalysisErrorHandler()
+        return await error_handler.handle_error(
+            AnalysisException(
+                AnalysisError.PROCESSING_TIMEOUT,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 文件处理限制
+- 支持格式：PDF、Word、TXT、Excel、PPT
+- 单文件大小：最大50MB
+- 批量上传：单次最多10个文件
+- 总大小限制：单次上传总大小不超过200MB
+
+### 5.2 API调用限制
+- 并发请求数：最大10个
+- 调用频率：每分钟60次
+- 超时设置：单次分析最长5分钟
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录详细的错误日志
+- 提供友好的错误提示
+- 支持断点续传
+
+### 5.4 性能优化建议
+- 使用文件哈希做缓存
+- 实现异步处理队列
+- 采用分批处理策略
+- 定期清理临时文件 

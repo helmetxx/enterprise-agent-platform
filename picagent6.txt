@@ -1,0 +1,313 @@
+# 图片创意智能体 (Picture Generation Agent) 详细设计
+
+## 1. Dify应用配置
+
+### 1.1 基础配置
+应用名称: 图片创意智能体
+类型: Image
+模型: DALL-E 3 / Stable Diffusion
+用途: A7阶段创意图片生成
+Temperature: 0.7 (平衡创造性和一致性)
+
+### 1.2 存储配置
+- 图片存储: AWS S3/阿里云OSS
+- CDN加速: 启用
+- 图片格式: PNG/JPEG
+- 最大分辨率: 1024x1024
+- 存储期限: 30天
+- 图片水印: 可选
+
+## 2. 提示词模板设计
+
+### 2.1 系统提示词
+SYSTEM_PROMPT = """你是一个专业的产品创意图片生成专家。你的主要职责是将文字创意转化为视觉设计。
+
+图片生成要求：
+1. 准确理解文字创意意图
+2. 转化为清晰的图片提示词
+3. 控制图片风格一致性
+4. 确保视觉效果专业
+5. 生成多个备选方案
+
+设计维度：
+1. 视觉风格：整体设计风格
+2. 关键元素：核心内容展示
+3. 色彩方案：配色体系
+4. 构图布局：画面安排
+5. 细节处理：细节表现
+
+输出格式要求：
+{
+    "image_generation_prompt": {
+        "main_prompt": "主要提示词",
+        "negative_prompt": "负面提示词",
+        "style_settings": {
+            "style": "风格类型",
+            "mood": "氛围设定",
+            "lighting": "光线效果",
+            "color_scheme": "配色方案"
+        },
+        "composition": {
+            "layout": "布局方式",
+            "focus_point": "焦点位置",
+            "perspective": "视角设定"
+        },
+        "technical_params": {
+            "resolution": "图片分辨率",
+            "aspect_ratio": "宽高比",
+            "quality_settings": "质量参数"
+        }
+    },
+    "generation_variations": [
+        {
+            "variation_id": "变体ID",
+            "prompt_adjustments": {
+                "emphasis": "强调内容",
+                "modifications": ["修改点1", "修改点2"]
+            },
+            "style_variations": {
+                "style_shift": "风格变化",
+                "mood_adjustment": "氛围调整"
+            }
+        }
+    ],
+    "output_requirements": {
+        "file_format": "文件格式",
+        "size_specs": {
+            "width": "宽度",
+            "height": "高度"
+        },
+        "quality_requirements": {
+            "min_quality_score": "最低质量分",
+            "required_elements": ["必需元素1", "必需元素2"]
+        }
+    }
+}
+"""
+
+### 2.2 用户提示词模板
+USER_PROMPT_TEMPLATE = """
+请基于以下创意描述生成图片：
+
+创意描述：
+{{context}}
+
+图片要求：
+1. 风格：{{style}}
+2. 色调：{{color_scheme}}
+3. 重点：{{focus}}
+4. 场景：{{scene}}
+5. 效果：{{effect}}
+
+请生成对应的图片生成提示词。
+"""
+
+### 2.3 图片评估提示词
+EVALUATION_PROMPT = """
+请评估生成的图片是否符合要求：
+
+原始创意：{{original_idea}}
+生成图片：{{generated_image}}
+
+评估维度：
+1. 创意还原度
+2. 视觉效果
+3. 专业水准
+4. 细节表现
+5. 整体一致性
+
+请提供评估结果和优化建议。
+"""
+
+## 3. 后端集成实现
+
+### 3.1 基础服务类
+class DifyPictureGenerationAgent:
+    def __init__(self, api_key: str):
+        self.api_base = "https://api.dify.ai/v1"
+        self.api_key = api_key
+        self.app_id = "your_picture_generation_app_id"
+        self.image_storage = S3ImageStorage()  # 或其他存储服务
+        self.cdn_service = CDNService()
+        
+    async def generate_pictures(self, text_idea: Dict, style_config: Dict) -> List[Dict]:
+        """生成创意图片"""
+        # 1. 生成提示词
+        prompt = await self._generate_image_prompt(text_idea)
+        
+        # 2. 调用图片生成API
+        images = await self._call_image_generation_api(prompt)
+        
+        # 3. 处理和优化图片
+        processed_images = await self._process_images(images)
+        
+        # 4. 存储和分发
+        image_urls = await self._store_and_distribute(processed_images)
+        
+        return image_urls
+
+    async def _generate_image_prompt(self, text_idea: Dict) -> Dict:
+        """生成图片提示词"""
+        pass
+
+    async def _call_image_generation_api(self, prompt: Dict) -> List[bytes]:
+        """调用图片生成API"""
+        pass
+
+    async def _process_images(self, images: List[bytes]) -> List[bytes]:
+        """处理和优化图片"""
+        pass
+
+    async def _store_and_distribute(self, images: List[bytes]) -> List[str]:
+        """存储和分发图片"""
+        pass
+
+### 3.2 错误处理实现
+class PictureGenerationError(Enum):
+    PROMPT_GENERATION_FAILED = "PROMPT_GENERATION_FAILED"
+    IMAGE_GENERATION_FAILED = "IMAGE_GENERATION_FAILED"
+    PROCESSING_FAILED = "PROCESSING_FAILED"
+    STORAGE_FAILED = "STORAGE_FAILED"
+    QUALITY_CHECK_FAILED = "QUALITY_CHECK_FAILED"
+    API_RATE_LIMIT = "API_RATE_LIMIT"
+
+class PictureGenerationException(Exception):
+    def __init__(self, error_type: PictureGenerationError, message: str, details: Optional[Dict] = None):
+        self.error_type = error_type
+        self.message = message
+        self.details = details
+        self.timestamp = datetime.utcnow()
+        super().__init__(self.message)
+
+class PictureGenerationErrorHandler:
+    def __init__(self):
+        self.retry_configs = {
+            PictureGenerationError.API_RATE_LIMIT: {"max_retries": 3, "delay": 15},
+            PictureGenerationError.IMAGE_GENERATION_FAILED: {"max_retries": 2, "delay": 10}
+        }
+
+    async def handle_error(self, error: PictureGenerationException) -> Dict[str, Any]:
+        """处理图片生成过程中的错误"""
+        try:
+            if error.error_type in self.retry_configs:
+                return await self._handle_retryable_error(error)
+            return await self._handle_non_retryable_error(error)
+        except Exception as e:
+            return {
+                "status": "error",
+                "error_type": str(error.error_type),
+                "message": str(e),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+### 3.3 性能优化实现
+class PictureGenerationOptimizer:
+    def __init__(self):
+        self.redis_client = Redis(host='localhost', port=6379, db=5)
+        self.cache_ttl = 7200  # 2小时缓存
+        self.image_processor = ImageProcessor()
+        
+    async def optimize_generation_process(self, text_idea: Dict, background_tasks: BackgroundTasks) -> Dict[str, Any]:
+        """优化图片生成流程"""
+        
+        # 1. 提示词缓存检查
+        prompt_cache_key = self._generate_prompt_cache_key(text_idea)
+        cached_prompt = await self._get_cached_prompt(prompt_cache_key)
+        
+        # 2. 图片生成和处理
+        if cached_prompt:
+            generation_task = background_tasks.add_task(
+                self._generate_with_cached_prompt,
+                cached_prompt
+            )
+        else:
+            generation_task = background_tasks.add_task(
+                self._full_generation_process,
+                text_idea,
+                prompt_cache_key
+            )
+        
+        return {
+            "status": "processing",
+            "task_id": str(generation_task),
+            "estimated_time": self._estimate_processing_time(text_idea)
+        }
+
+## 4. API接口定义
+
+### 4.1 图片生成接口
+@app.post("/api/picture-generation/generate")
+async def generate_pictures(
+    text_idea: Dict = Body(...),
+    style_config: Dict = Body(...),
+    background_tasks: BackgroundTasks = None
+):
+    """图片生成接口"""
+    try:
+        # 初始化生成优化器
+        optimizer = PictureGenerationOptimizer()
+        
+        # 异步处理图片生成
+        result = await optimizer.optimize_generation_process(
+            text_idea,
+            background_tasks
+        )
+        
+        return result
+    except Exception as e:
+        error_handler = PictureGenerationErrorHandler()
+        return await error_handler.handle_error(
+            PictureGenerationException(
+                PictureGenerationError.GENERATION_FAILED,
+                str(e)
+            )
+        )
+
+### 4.2 获取生成结果接口
+@app.get("/api/picture-generation/{task_id}")
+async def get_picture_generation(task_id: str):
+    """获取图片生成结果接口"""
+    try:
+        optimizer = PictureGenerationOptimizer()
+        result = await optimizer.get_task_result(task_id)
+        return result
+    except Exception as e:
+        error_handler = PictureGenerationErrorHandler()
+        return await error_handler.handle_error(
+            PictureGenerationException(
+                PictureGenerationError.GENERATION_FAILED,
+                str(e)
+            )
+        )
+
+## 5. 使用注意事项
+
+### 5.1 输入要求
+- 文字创意格式：JSON
+- 最大文字长度：2000字
+- 风格配置：必填
+- 支持批量生成：单次最多5张
+
+### 5.2 API调用限制
+- 并发请求数：最大2个
+- 调用频率：每分钟10次
+- 生成超时：单次最长30秒
+- 每日配额：1000张图片
+
+### 5.3 错误处理建议
+- 实现完整的错误重试机制
+- 记录生成过程日志
+- 支持图片质量检查
+- 提供详细错误信息
+
+### 5.4 性能优化建议
+- 使用提示词缓存
+- 实现异步生成队列
+- 优化图片处理流程
+- CDN分发加速
+
+### 5.5 图片质量控制
+- 分辨率要求：最低1024x1024
+- 图片格式：PNG优先
+- 质量评分：最低4.0分
+- 违规内容过滤 
