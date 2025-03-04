@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { ChatMessage, ChatSession } from '@/types'
 import { api } from '@/utils/api'
+import { config } from '@/config'
 
 export const useChatStore = defineStore('chat', () => {
   const messages = ref<ChatMessage[]>([])
@@ -11,8 +12,7 @@ export const useChatStore = defineStore('chat', () => {
   const isConnected = computed(() => ws.value?.readyState === WebSocket.OPEN)
   
   function initializeWebSocket() {
-    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws'
-    ws.value = new WebSocket(wsUrl)
+    ws.value = new WebSocket(config.wsUrl)
     
     ws.value.onmessage = (event) => {
       const message = JSON.parse(event.data)

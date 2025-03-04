@@ -1,10 +1,10 @@
 export const config = {
-  apiBaseUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
-  wsUrl: import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws',
+  apiBaseUrl: import.meta.env.VITE_API_BASE_URL || '/api/v1',
+  wsUrl: import.meta.env.VITE_WS_URL || `ws://${window.location.host}/ws`,
   pageSize: 20,
   uploadMaxSize: 5 * 1024 * 1024, // 5MB
   supportedFileTypes: ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'],
-  defaultAvatar: '/assets/default-avatar.png',
+  defaultAvatar: '/assets/default-avatar.svg',
   defaultAgentIcon: '/assets/default-agent-icon.png'
 }
 

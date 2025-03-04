@@ -2,10 +2,11 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { config } from '@/config'
 
 // 创建 axios 实例
 export const api = axios.create({
-  baseURL: 'http://localhost:8000/api/v1',  // 改回直接访问后端地址
+  baseURL: config.apiBaseUrl,  // 这里应该使用配置
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json'

@@ -36,7 +36,7 @@
       <div class="header-right">
         <el-dropdown @command="handleCommand">
           <div class="user-profile">
-            <el-avatar :size="32" :src="defaultAvatar" />
+            <common-avatar :src="userStore.user?.avatar" :size="32" />
             <span class="username">{{ userFullName }}</span>
             <el-icon><CaretBottom /></el-icon>
           </div>
@@ -66,6 +66,9 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useAuthStore } from '@/stores/auth'
+import { useUserStore } from '@/stores/user'
+import { config } from '@/config'
+import CommonAvatar from '@/components/common/Avatar.vue'
 import { 
   Monitor, 
   Collection, 
@@ -79,10 +82,9 @@ import {
 
 const router = useRouter()
 const authStore = useAuthStore()
+const userStore = useUserStore()
 
 const activeMenu = computed(() => router.currentRoute.value.path)
-// 使用默认头像图片
-const defaultAvatar = ref('/avatar-default.png') // 确保public目录下有这个默认头像图片
 // 从 authStore 获取用户全名
 const userFullName = computed(() => authStore.user?.fullname || '')
 
