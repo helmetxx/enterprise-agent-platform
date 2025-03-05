@@ -1,8 +1,16 @@
 from typing import Any, Dict, List, Optional, Union
-from pydantic import BaseSettings, validator, AnyHttpUrl
+# 修改导入语句，兼容 pydantic v1 和 v2
+try:
+    # 尝试从 pydantic_settings 导入 (pydantic v2)
+    from pydantic_settings import BaseSettings
+except ImportError:
+    # 如果失败，从 pydantic 导入 (pydantic v1)
+    from pydantic import BaseSettings
+from pydantic import validator, AnyHttpUrl, EmailStr, HttpUrl, PostgresDsn
 import secrets
 import logging
 import os
+import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -41,14 +49,14 @@ class Settings(BaseSettings):
         return f"mysql+pymysql://{values.get('DB_USER')}:{values.get('DB_PASSWORD')}@{values.get('DB_HOST')}:{values.get('DB_PORT')}/{values.get('DB_NAME')}"
     
     # Redis
-    REDIS_HOST: str
-    REDIS_PORT: int
+    REDIS_HOST: str = "redis"
+    REDIS_PORT: int = 6379
     
     # CORS
     BACKEND_CORS_ORIGINS: list = ["*"]
     
     # JWT
-    JWT_SECRET: str
+    JWT_SECRET: str = "your-secret-key"
     
     # 文件上传配置
     UPLOAD_DIR: str = "uploads"  # 相对于项目根目录的路径
@@ -58,10 +66,23 @@ class Settings(BaseSettings):
     DIFY_API_BASE_URL: str = "https://api.dify.ai/v1"
     DIFY_API_KEY: str = "dataset-EDHGw4D7Yug1r3H1FBwOQnuS"
 
+    # 外部报表系统配置
+    REPORT_API_BASE_URL: str = "https://test.ihotel.cn"
+    REPORT_API_PATH: str = "/inn-report/report/export"
+    REPORT_API_AUTH_TOKEN: str = "eyJhbGciOiJIUzUxMiJ9.eyJkZXZpY2VUeXBlIjoiQ09NUFVURVIiLCJtYWluQXBwQ29kZSI6IlNTTyIsIm9yZ0NvZGUiOiJHQ0lOTjAwMSIsInVjU2VydmVyVXJsIjoiaHR0cHM6Ly90ZXN0Lmlob3RlbC5jbi91Yy13ZWIvIiwiYXBwQ29kZSI6IklOTiIsInVzZXJUeXBlIjoiU1VQRVIiLCJsb2dpbkF0IjoxNzQxMDY1MDI0MDAwLCJwcmluY2lwYWxVc2VyQ29kZSI6IkdDSU5OMDAxX0FETUlOIiwiZXhwIjozMjUwMzY1MTIwMCwidXNlckNvZGUiOiJVQ0FETUlOIn0.Iof-gwRa-M1BUebO9NJ92fHwz114cZh5JSqK6CET35q4Mu1ZUiMFTBlwYPJO6hlQAMmHzsSHrvLqb0QyoLAmXA"
+    REPORT_API_LANGUAGE: str = "zh-CN"
+    REPORT_TEMP_DIR: str = os.path.join(tempfile.gettempdir(), "reports")
+
+    # 修改报表文件存储相关配置
+    REPORT_STORAGE_DIR: str = "reports"  # 报表文件存储目录（物理路径，相对于项目根目录）
+    REPORT_URL_BASE: str = "/reports"  # 报表文件访问的URL基础路径
+    SERVER_HOST: str = "http://localhost:8000"  # 服务器主机名和端口
+
     class Config:
         case_sensitive = True
         env_file = ".env"
 
 settings = Settings()
 logger.info(f"Initialized settings with DB_USER: {settings.DB_USER}")
-logger.info(f"Database URI: {settings.SQLALCHEMY_DATABASE_URI}") 
+logger.info(f"Database URI: {settings.SQLALCHEMY_DATABASE_URI}")
+logger.info(f"Report temp directory: {settings.REPORT_TEMP_DIR}") 

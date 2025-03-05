@@ -1,9 +1,11 @@
 from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from typing import List
 import logging
 import time
+import os
 
 from app.core.config import settings
 from app.api.v1.api import api_router
@@ -27,10 +29,16 @@ app.add_middleware(
 )
 
 # 注册路由
-app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(api_router, prefix="/api")
 
 # 创建数据库表
 Base.metadata.create_all(bind=engine)
+
+# 确保报表存储目录存在
+os.makedirs(settings.REPORT_STORAGE_DIR, exist_ok=True)
+
+# 挂载静态文件服务，用于访问报表文件
+app.mount("/reports", StaticFiles(directory=settings.REPORT_STORAGE_DIR), name="reports")
 
 logger = logging.getLogger(__name__)
 

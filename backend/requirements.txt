@@ -36,4 +36,7 @@ httpx==0.25.2
 # PDF生成
 reportlab==4.0.8
 Pillow==10.2.0  # 用于处理图片
-requests==2.31.0  # 用于下载图片 
+requests==2.31.0  # 用于下载图片
+
+# 添加新的依赖
+pydantic-settings>=2.0.0 

@@ -16896,3 +16896,866 @@ FROM agents) AS anon_1
 2025-03-02 11:52:26,480 - sqlalchemy.engine.Engine - INFO - [cached since 0.01189s ago] {}
 2025-03-02 11:52:26,482 - main - INFO - Method: GET, Path: /api/v1/agents/, Duration: 0.010s, Status: 200
 2025-03-02 11:52:26,483 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:41:06,730 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-04 03:41:06,740 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-04 03:41:06,792 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-04 03:41:07,663 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-04 03:41:07,664 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 03:41:07,665 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-04 03:41:07,666 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 03:41:07,666 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-04 03:41:07,666 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 03:41:07,667 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:41:07,668 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,668 - sqlalchemy.engine.Engine - INFO - [generated in 0.00035s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-04 03:41:07,670 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,671 - sqlalchemy.engine.Engine - INFO - [cached since 0.003025s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-04 03:41:07,672 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,672 - sqlalchemy.engine.Engine - INFO - [cached since 0.004566s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-04 03:41:07,673 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,674 - sqlalchemy.engine.Engine - INFO - [cached since 0.00605s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-04 03:41:07,675 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,675 - sqlalchemy.engine.Engine - INFO - [cached since 0.007192s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-04 03:41:07,676 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,676 - sqlalchemy.engine.Engine - INFO - [cached since 0.008201s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-04 03:41:07,677 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,677 - sqlalchemy.engine.Engine - INFO - [cached since 0.009265s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-04 03:41:07,678 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,678 - sqlalchemy.engine.Engine - INFO - [cached since 0.01026s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-04 03:41:07,679 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,679 - sqlalchemy.engine.Engine - INFO - [cached since 0.0112s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-04 03:41:07,680 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,680 - sqlalchemy.engine.Engine - INFO - [cached since 0.01223s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-04 03:41:07,681 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 03:41:07,681 - sqlalchemy.engine.Engine - INFO - [cached since 0.01329s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-04 03:41:07,682 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-04 03:55:50,265 - app.api.v1.endpoints.auth - INFO - Login attempt for username: 13910634577@139.com
+2025-03-04 03:55:50,265 - app.crud.crud_user - INFO - Attempting authentication for email: 13910634577@139.com
+2025-03-04 03:55:50,266 - app.crud.crud_user - INFO - Executing SQL query for email: 13910634577@139.com
+2025-03-04 03:55:50,280 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:55:50,282 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.email = %(email_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:55:50,283 - sqlalchemy.engine.Engine - INFO - [generated in 0.00071s] {'email_1': '13910634577@139.com', 'param_1': 1}
+2025-03-04 03:55:50,294 - app.crud.crud_user - INFO - SQL query result: <app.models.user.User object at 0x7f890b5dff50>
+2025-03-04 03:55:50,295 - app.crud.crud_user - INFO - User query result: <app.models.user.User object at 0x7f890b5dff50>
+2025-03-04 03:55:50,295 - app.core.security - INFO - Verifying password...
+2025-03-04 03:55:50,454 - app.core.security - INFO - Password verification result: True
+2025-03-04 03:55:50,454 - app.crud.crud_user - INFO - Authentication successful for user: 13910634577@139.com
+2025-03-04 03:55:50,455 - app.api.v1.endpoints.auth - INFO - User authenticated successfully: 13910634577@139.com
+2025-03-04 03:55:50,458 - main - INFO - Method: POST, Path: /api/v1/auth/login, Duration: 0.196s, Status: 200
+2025-03-04 03:55:50,460 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:55:50,785 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.000s, Status: 200
+2025-03-04 03:55:50,787 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.000s, Status: 200
+2025-03-04 03:55:50,789 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:55:50,790 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:55:50,790 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:55:50,791 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:55:50,791 - sqlalchemy.engine.Engine - INFO - [generated in 0.00028s] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:55:50,795 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 03:55:50,795 - sqlalchemy.engine.Engine - INFO - [generated in 0.00030s] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 03:55:50,795 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:55:50,796 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:55:50,798 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:55:50,798 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:55:50,798 - sqlalchemy.engine.Engine - INFO - [cached since 0.007198s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:55:50,799 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 03:55:50,800 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.012s, Status: 200
+2025-03-04 03:55:50,800 - sqlalchemy.engine.Engine - INFO - [cached since 0.005472s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 03:55:50,801 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:55:50,802 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.010s, Status: 200
+2025-03-04 03:55:50,803 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 03:55:50,803 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:55:50,806 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:55:50,807 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:55:50,807 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:55:50,808 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:55:50,808 - sqlalchemy.engine.Engine - INFO - [cached since 0.01695s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:55:50,809 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 03:55:50,810 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 03:55:50,811 - sqlalchemy.engine.Engine - INFO - [generated in 0.00082s] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 03:55:50,812 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:55:50,813 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:55:50,814 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:55:50,814 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:55:50,815 - sqlalchemy.engine.Engine - INFO - [cached since 0.02341s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:55:50,816 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 03:55:50,817 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.011s, Status: 200
+2025-03-04 03:55:50,817 - sqlalchemy.engine.Engine - INFO - [cached since 0.006399s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 03:55:50,818 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:55:50,820 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.008s, Status: 200
+2025-03-04 03:55:50,821 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:56:06,253 - main - INFO - Method: OPTIONS, Path: /api/v1/knowledge, Duration: 0.000s, Status: 200
+2025-03-04 03:56:06,254 - main - INFO - Method: OPTIONS, Path: /api/v1/knowledge, Duration: 0.000s, Status: 200
+2025-03-04 03:56:06,255 - main - INFO - Method: GET, Path: /api/v1/knowledge, Duration: 0.000s, Status: 307
+2025-03-04 03:56:06,256 - main - INFO - Method: GET, Path: /api/v1/knowledge, Duration: 0.000s, Status: 307
+2025-03-04 03:56:06,258 - main - INFO - Method: OPTIONS, Path: /api/v1/knowledge/, Duration: 0.000s, Status: 200
+2025-03-04 03:56:06,258 - main - INFO - Method: OPTIONS, Path: /api/v1/knowledge/, Duration: 0.000s, Status: 200
+2025-03-04 03:56:06,260 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:56:06,261 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:56:06,261 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:56:06,262 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:56:06,262 - sqlalchemy.engine.Engine - INFO - [cached since 15.47s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:56:06,264 - sqlalchemy.engine.Engine - INFO - SELECT knowledge_bases.id AS knowledge_bases_id, knowledge_bases.name AS knowledge_bases_name, knowledge_bases.description AS knowledge_bases_description, knowledge_bases.dify_kb_id AS knowledge_bases_dify_kb_id, knowledge_bases.dify_sync_status AS knowledge_bases_dify_sync_status, knowledge_bases.dify_error_detail AS knowledge_bases_dify_error_detail, knowledge_bases.created_by AS knowledge_bases_created_by, knowledge_bases.created_at AS knowledge_bases_created_at, knowledge_bases.updated_at AS knowledge_bases_updated_at 
+FROM knowledge_bases 
+WHERE knowledge_bases.created_by = %(created_by_1)s 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 03:56:06,265 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:56:06,265 - sqlalchemy.engine.Engine - INFO - [generated in 0.00052s] {'created_by_1': 1, 'param_1': 0, 'param_2': 100}
+2025-03-04 03:56:06,265 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:56:06,266 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:56:06,266 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:56:06,267 - sqlalchemy.engine.Engine - INFO - [cached since 15.48s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:56:06,269 - sqlalchemy.engine.Engine - INFO - SELECT knowledge_bases.id AS knowledge_bases_id, knowledge_bases.name AS knowledge_bases_name, knowledge_bases.description AS knowledge_bases_description, knowledge_bases.dify_kb_id AS knowledge_bases_dify_kb_id, knowledge_bases.dify_sync_status AS knowledge_bases_dify_sync_status, knowledge_bases.dify_error_detail AS knowledge_bases_dify_error_detail, knowledge_bases.created_by AS knowledge_bases_created_by, knowledge_bases.created_at AS knowledge_bases_created_at, knowledge_bases.updated_at AS knowledge_bases_updated_at 
+FROM knowledge_bases 
+WHERE knowledge_bases.created_by = %(created_by_1)s 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 03:56:06,269 - main - INFO - Method: GET, Path: /api/v1/knowledge/, Duration: 0.010s, Status: 200
+2025-03-04 03:56:06,270 - sqlalchemy.engine.Engine - INFO - [cached since 0.005346s ago] {'created_by_1': 1, 'param_1': 0, 'param_2': 100}
+2025-03-04 03:56:06,271 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:56:06,272 - main - INFO - Method: GET, Path: /api/v1/knowledge/, Duration: 0.009s, Status: 200
+2025-03-04 03:56:06,274 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:56:07,799 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.000s, Status: 200
+2025-03-04 03:56:07,800 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.001s, Status: 200
+2025-03-04 03:56:07,803 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:56:07,804 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:56:07,805 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:56:07,806 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:56:07,807 - sqlalchemy.engine.Engine - INFO - [cached since 17.02s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:56:07,808 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:56:07,809 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:56:07,810 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:56:07,811 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:56:07,811 - sqlalchemy.engine.Engine - INFO - [cached since 17.02s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:56:07,813 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 03:56:07,813 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 03:56:07,814 - sqlalchemy.engine.Engine - INFO - [cached since 17.02s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 03:56:07,815 - sqlalchemy.engine.Engine - INFO - [cached since 17.02s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 03:56:07,816 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.013s, Status: 200
+2025-03-04 03:56:07,817 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:56:07,818 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.015s, Status: 200
+2025-03-04 03:56:07,819 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:56:07,820 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 03:56:07,821 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 03:56:07,822 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:56:07,823 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:56:07,824 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:56:07,825 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:56:07,825 - sqlalchemy.engine.Engine - INFO - [cached since 17.04s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:56:07,827 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:56:07,827 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 03:56:07,828 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:56:07,829 - sqlalchemy.engine.Engine - INFO - [cached since 17.02s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 03:56:07,829 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:56:07,830 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:56:07,831 - sqlalchemy.engine.Engine - INFO - [cached since 17.04s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:56:07,833 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 03:56:07,834 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.012s, Status: 200
+2025-03-04 03:56:07,834 - sqlalchemy.engine.Engine - INFO - [cached since 17.03s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 03:56:07,835 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:56:07,837 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.010s, Status: 200
+2025-03-04 03:56:07,838 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:56:08,418 - main - INFO - Method: OPTIONS, Path: /api/v1/knowledge, Duration: 0.000s, Status: 200
+2025-03-04 03:56:08,418 - main - INFO - Method: OPTIONS, Path: /api/v1/knowledge, Duration: 0.001s, Status: 200
+2025-03-04 03:56:08,421 - main - INFO - Method: GET, Path: /api/v1/knowledge, Duration: 0.000s, Status: 307
+2025-03-04 03:56:08,422 - main - INFO - Method: GET, Path: /api/v1/knowledge, Duration: 0.001s, Status: 307
+2025-03-04 03:56:08,424 - main - INFO - Method: OPTIONS, Path: /api/v1/knowledge/, Duration: 0.000s, Status: 200
+2025-03-04 03:56:08,425 - main - INFO - Method: OPTIONS, Path: /api/v1/knowledge/, Duration: 0.000s, Status: 200
+2025-03-04 03:56:08,426 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:56:08,427 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:56:08,428 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:56:08,428 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:56:08,429 - sqlalchemy.engine.Engine - INFO - [cached since 17.64s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:56:08,431 - sqlalchemy.engine.Engine - INFO - SELECT knowledge_bases.id AS knowledge_bases_id, knowledge_bases.name AS knowledge_bases_name, knowledge_bases.description AS knowledge_bases_description, knowledge_bases.dify_kb_id AS knowledge_bases_dify_kb_id, knowledge_bases.dify_sync_status AS knowledge_bases_dify_sync_status, knowledge_bases.dify_error_detail AS knowledge_bases_dify_error_detail, knowledge_bases.created_by AS knowledge_bases_created_by, knowledge_bases.created_at AS knowledge_bases_created_at, knowledge_bases.updated_at AS knowledge_bases_updated_at 
+FROM knowledge_bases 
+WHERE knowledge_bases.created_by = %(created_by_1)s 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 03:56:08,431 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 03:56:08,431 - sqlalchemy.engine.Engine - INFO - [cached since 2.167s ago] {'created_by_1': 1, 'param_1': 0, 'param_2': 100}
+2025-03-04 03:56:08,432 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 03:56:08,433 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 03:56:08,434 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 03:56:08,434 - sqlalchemy.engine.Engine - INFO - [cached since 17.65s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 03:56:08,436 - sqlalchemy.engine.Engine - INFO - SELECT knowledge_bases.id AS knowledge_bases_id, knowledge_bases.name AS knowledge_bases_name, knowledge_bases.description AS knowledge_bases_description, knowledge_bases.dify_kb_id AS knowledge_bases_dify_kb_id, knowledge_bases.dify_sync_status AS knowledge_bases_dify_sync_status, knowledge_bases.dify_error_detail AS knowledge_bases_dify_error_detail, knowledge_bases.created_by AS knowledge_bases_created_by, knowledge_bases.created_at AS knowledge_bases_created_at, knowledge_bases.updated_at AS knowledge_bases_updated_at 
+FROM knowledge_bases 
+WHERE knowledge_bases.created_by = %(created_by_1)s 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 03:56:08,436 - main - INFO - Method: GET, Path: /api/v1/knowledge/, Duration: 0.011s, Status: 200
+2025-03-04 03:56:08,436 - sqlalchemy.engine.Engine - INFO - [cached since 2.172s ago] {'created_by_1': 1, 'param_1': 0, 'param_2': 100}
+2025-03-04 03:56:08,437 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 03:56:08,439 - main - INFO - Method: GET, Path: /api/v1/knowledge/, Duration: 0.009s, Status: 200
+2025-03-04 03:56:08,440 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:11:24,688 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.001s, Status: 200
+2025-03-04 04:11:24,691 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 04:11:24,692 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:11:24,694 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:11:24,694 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:11:24,695 - sqlalchemy.engine.Engine - INFO - [cached since 934s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:11:24,697 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 04:11:24,697 - sqlalchemy.engine.Engine - INFO - [cached since 934s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 04:11:24,698 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.008s, Status: 200
+2025-03-04 04:11:24,699 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:11:24,701 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 04:11:24,703 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUxNzUwfQ.TCE_jlTgG-ZBVrxVhb2U6QmgCTZ1cwnH4KB0nAWQw74
+2025-03-04 04:11:24,704 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:11:24,704 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:11:24,705 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:11:24,705 - sqlalchemy.engine.Engine - INFO - [cached since 934s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:11:24,706 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 04:11:24,706 - sqlalchemy.engine.Engine - INFO - [cached since 934s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 04:11:24,708 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.005s, Status: 200
+2025-03-04 04:11:24,709 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:12:02,007 - app.api.v1.endpoints.auth - INFO - Login attempt for username: 13910634577@139.com
+2025-03-04 04:12:02,007 - app.crud.crud_user - INFO - Attempting authentication for email: 13910634577@139.com
+2025-03-04 04:12:02,008 - app.crud.crud_user - INFO - Executing SQL query for email: 13910634577@139.com
+2025-03-04 04:12:02,009 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:12:02,010 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.email = %(email_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:12:02,010 - sqlalchemy.engine.Engine - INFO - [cached since 971.8s ago] {'email_1': '13910634577@139.com', 'param_1': 1}
+2025-03-04 04:12:02,011 - app.crud.crud_user - INFO - SQL query result: <app.models.user.User object at 0x7f890b10b850>
+2025-03-04 04:12:02,012 - app.crud.crud_user - INFO - User query result: <app.models.user.User object at 0x7f890b10b850>
+2025-03-04 04:12:02,012 - app.core.security - INFO - Verifying password...
+2025-03-04 04:12:02,159 - app.core.security - INFO - Password verification result: True
+2025-03-04 04:12:02,160 - app.crud.crud_user - INFO - Authentication successful for user: 13910634577@139.com
+2025-03-04 04:12:02,160 - app.api.v1.endpoints.auth - INFO - User authenticated successfully: 13910634577@139.com
+2025-03-04 04:12:02,161 - main - INFO - Method: POST, Path: /api/v1/auth/login, Duration: 0.155s, Status: 200
+2025-03-04 04:12:02,162 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:12:02,378 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.000s, Status: 200
+2025-03-04 04:12:02,379 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.000s, Status: 200
+2025-03-04 04:12:02,381 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUyNzIyfQ.r2_zYIjJnrFZKf65cCmqHHc_hKpBH1WAr2-rIb53EyQ
+2025-03-04 04:12:02,382 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:12:02,386 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:12:02,388 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:12:02,388 - sqlalchemy.engine.Engine - INFO - [cached since 971.7s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:12:02,390 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 04:12:02,390 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUyNzIyfQ.r2_zYIjJnrFZKf65cCmqHHc_hKpBH1WAr2-rIb53EyQ
+2025-03-04 04:12:02,392 - sqlalchemy.engine.Engine - INFO - [cached since 971.7s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 04:12:02,392 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:12:02,400 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:12:02,406 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:12:02,422 - sqlalchemy.engine.Engine - INFO - [cached since 971.7s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:12:02,433 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 04:12:02,433 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.053s, Status: 200
+2025-03-04 04:12:02,434 - sqlalchemy.engine.Engine - INFO - [cached since 971.7s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 04:12:02,436 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:12:02,439 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 04:12:02,444 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.055s, Status: 200
+2025-03-04 04:12:02,453 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUyNzIyfQ.r2_zYIjJnrFZKf65cCmqHHc_hKpBH1WAr2-rIb53EyQ
+2025-03-04 04:12:02,453 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:12:02,454 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:12:02,455 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:12:02,456 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:12:02,457 - sqlalchemy.engine.Engine - INFO - [cached since 971.8s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:12:02,458 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 04:12:02,458 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 04:12:02,459 - sqlalchemy.engine.Engine - INFO - [cached since 971.7s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 04:12:02,460 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUyNzIyfQ.r2_zYIjJnrFZKf65cCmqHHc_hKpBH1WAr2-rIb53EyQ
+2025-03-04 04:12:02,462 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:12:02,462 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:12:02,463 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:12:02,463 - sqlalchemy.engine.Engine - INFO - [cached since 971.8s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:12:02,464 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 04:12:02,465 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.013s, Status: 200
+2025-03-04 04:12:02,465 - sqlalchemy.engine.Engine - INFO - [cached since 971.7s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 04:12:02,466 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:12:02,468 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.008s, Status: 200
+2025-03-04 04:12:02,471 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:48:12,723 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.001s, Status: 200
+2025-03-04 04:48:12,729 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUyNzIyfQ.r2_zYIjJnrFZKf65cCmqHHc_hKpBH1WAr2-rIb53EyQ
+2025-03-04 04:48:12,732 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:48:12,736 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:48:12,738 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:48:12,739 - sqlalchemy.engine.Engine - INFO - [cached since 3109s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:48:12,743 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 04:48:12,744 - sqlalchemy.engine.Engine - INFO - [cached since 3109s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 04:48:12,746 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.020s, Status: 200
+2025-03-04 04:48:12,747 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:48:12,753 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 04:48:12,756 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzUyNzIyfQ.r2_zYIjJnrFZKf65cCmqHHc_hKpBH1WAr2-rIb53EyQ
+2025-03-04 04:48:12,756 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:48:12,761 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:48:12,762 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:48:12,763 - sqlalchemy.engine.Engine - INFO - [cached since 3109s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:48:12,765 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 04:48:12,766 - sqlalchemy.engine.Engine - INFO - [cached since 3109s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 04:48:12,769 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.013s, Status: 200
+2025-03-04 04:48:12,771 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:48:35,228 - app.api.v1.endpoints.auth - INFO - Login attempt for username: 13910634577@139.com
+2025-03-04 04:48:35,229 - app.crud.crud_user - INFO - Attempting authentication for email: 13910634577@139.com
+2025-03-04 04:48:35,230 - app.crud.crud_user - INFO - Executing SQL query for email: 13910634577@139.com
+2025-03-04 04:48:35,231 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:48:35,232 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.email = %(email_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:48:35,233 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'email_1': '13910634577@139.com', 'param_1': 1}
+2025-03-04 04:48:35,235 - app.crud.crud_user - INFO - SQL query result: <app.models.user.User object at 0x7f890a33f950>
+2025-03-04 04:48:35,236 - app.crud.crud_user - INFO - User query result: <app.models.user.User object at 0x7f890a33f950>
+2025-03-04 04:48:35,236 - app.core.security - INFO - Verifying password...
+2025-03-04 04:48:35,380 - app.core.security - INFO - Password verification result: True
+2025-03-04 04:48:35,380 - app.crud.crud_user - INFO - Authentication successful for user: 13910634577@139.com
+2025-03-04 04:48:35,381 - app.api.v1.endpoints.auth - INFO - User authenticated successfully: 13910634577@139.com
+2025-03-04 04:48:35,382 - main - INFO - Method: POST, Path: /api/v1/auth/login, Duration: 0.154s, Status: 200
+2025-03-04 04:48:35,383 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:48:35,402 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.000s, Status: 200
+2025-03-04 04:48:35,407 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recent-usage, Duration: 0.000s, Status: 200
+2025-03-04 04:48:35,407 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzU0OTE1fQ.ya0OEu9himyaU9IEdHLaEEP9H736mB3IcrjapEbjUOY
+2025-03-04 04:48:35,408 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:48:35,409 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:48:35,410 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:48:35,410 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:48:35,413 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 04:48:35,413 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzU0OTE1fQ.ya0OEu9himyaU9IEdHLaEEP9H736mB3IcrjapEbjUOY
+2025-03-04 04:48:35,413 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 04:48:35,414 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:48:35,414 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:48:35,415 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:48:35,415 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:48:35,416 - sqlalchemy.engine.Engine - INFO - SELECT agent_usage_records.id AS agent_usage_records_id, agent_usage_records.user_id AS agent_usage_records_user_id, agent_usage_records.agent_id AS agent_usage_records_agent_id, agent_usage_records.status AS agent_usage_records_status, agent_usage_records.created_at AS agent_usage_records_created_at 
+FROM agent_usage_records 
+WHERE agent_usage_records.user_id = %(user_id_1)s ORDER BY agent_usage_records.created_at DESC 
+ LIMIT %(param_1)s
+2025-03-04 04:48:35,416 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.010s, Status: 200
+2025-03-04 04:48:35,416 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'user_id_1': 1, 'param_1': 6}
+2025-03-04 04:48:35,417 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:48:35,418 - main - INFO - Method: GET, Path: /api/v1/agents/recent-usage, Duration: 0.006s, Status: 200
+2025-03-04 04:48:35,421 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 04:48:35,421 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:48:35,423 - main - INFO - Method: OPTIONS, Path: /api/v1/agents/recommended, Duration: 0.000s, Status: 200
+2025-03-04 04:48:35,424 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzU0OTE1fQ.ya0OEu9himyaU9IEdHLaEEP9H736mB3IcrjapEbjUOY
+2025-03-04 04:48:35,424 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:48:35,425 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:48:35,425 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:48:35,426 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:48:35,427 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 04:48:35,427 - app.api.deps - INFO - Received token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzQxNzU0OTE1fQ.ya0OEu9himyaU9IEdHLaEEP9H736mB3IcrjapEbjUOY
+2025-03-04 04:48:35,428 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 04:48:35,428 - app.api.deps - INFO - Verified user_id: 1
+2025-03-04 04:48:35,429 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 04:48:35,429 - sqlalchemy.engine.Engine - INFO - SELECT users.id AS users_id, users.email AS users_email, users.full_name AS users_full_name, users.hashed_password AS users_hashed_password, users.is_active AS users_is_active, users.is_superuser AS users_is_superuser 
+FROM users 
+WHERE users.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-03-04 04:48:35,430 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'id_1': 1, 'param_1': 1}
+2025-03-04 04:48:35,431 - sqlalchemy.engine.Engine - INFO - SELECT agents.id AS agents_id, agents.name AS agents_name, agents.description AS agents_description, agents.icon AS agents_icon, agents.category AS agents_category, agents.capabilities AS agents_capabilities, agents.status AS agents_status, agents.version AS agents_version, agents.sort_order AS agents_sort_order, agents.created_by AS agents_created_by, agents.created_at AS agents_created_at, agents.updated_at AS agents_updated_at 
+FROM agents 
+WHERE agents.status = %(status_1)s ORDER BY agents.sort_order DESC 
+ LIMIT %(param_1)s, %(param_2)s
+2025-03-04 04:48:35,432 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.008s, Status: 200
+2025-03-04 04:48:35,432 - sqlalchemy.engine.Engine - INFO - [cached since 3132s ago] {'status_1': 'active', 'param_1': 0, 'param_2': 6}
+2025-03-04 04:48:35,433 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 04:48:35,435 - main - INFO - Method: GET, Path: /api/v1/agents/recommended, Duration: 0.008s, Status: 200
+2025-03-04 04:48:35,435 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-03-04 17:13:25,550 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-04 17:13:25,550 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-04 17:13:25,550 - app.core.config - INFO - Report temp directory: C:\Users\LENOVO\AppData\Local\Temp\reports
+2025-03-04 17:13:25,550 - __main__ - DEBUG - 调试模式已启用
+2025-03-04 17:13:25,550 - __main__ - INFO - 导出报表: MRCWBG, 格式: PDF
+2025-03-04 17:13:25,550 - __main__ - INFO - 参数: {'bizDate': '2025-03-02'}
+2025-03-04 17:13:25,550 - __main__ - INFO - 输出文件: report.pdf
+2025-03-04 17:13:25,550 - __main__ - INFO - 报表 API URL: https://test.ihotel.cn/inn-report/report/export
+2025-03-04 17:13:25,550 - __main__ - INFO - 开始导出报表...
+2025-03-04 17:13:25,550 - app.services.report_service - INFO - Calling external report API: https://test.ihotel.cn/inn-report/report/export
+2025-03-04 17:13:25,550 - app.services.report_service - DEBUG - Report request payload: {'appCode': 'INN', 'identity': 'MRCWBG', 'format': 'PDF', 'parameters': {'bizDate': '2025-03-02'}}
+2025-03-04 17:13:25,554 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): test.ihotel.cn:443
+2025-03-04 17:13:33,401 - urllib3.connectionpool - DEBUG - https://test.ihotel.cn:443 "POST /inn-report/report/export HTTP/1.1" 200 None
+2025-03-04 17:13:33,402 - app.services.report_service - INFO - Report generated successfully, size: 2944 bytes
+2025-03-04 17:13:33,402 - app.services.report_service - INFO - Report saved to report.pdf
+2025-03-04 17:13:33,404 - __main__ - INFO - 报表导出成功，大小: 2944 字节
+2025-03-04 17:13:33,405 - __main__ - INFO - 已保存到: report.pdf
+2025-03-04 09:37:27,815 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-04 09:37:27,815 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-04 09:37:27,815 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-04 09:37:27,897 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-04 09:37:28,700 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-04 09:37:28,701 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 09:37:28,705 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-04 09:37:28,705 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 09:37:28,706 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-04 09:37:28,707 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 09:37:28,709 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 09:37:28,710 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,711 - sqlalchemy.engine.Engine - INFO - [generated in 0.00067s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-04 09:37:28,722 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,723 - sqlalchemy.engine.Engine - INFO - [cached since 0.0129s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-04 09:37:28,725 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,725 - sqlalchemy.engine.Engine - INFO - [cached since 0.01474s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-04 09:37:28,726 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,726 - sqlalchemy.engine.Engine - INFO - [cached since 0.01624s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-04 09:37:28,728 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,728 - sqlalchemy.engine.Engine - INFO - [cached since 0.01803s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-04 09:37:28,730 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,730 - sqlalchemy.engine.Engine - INFO - [cached since 0.02016s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-04 09:37:28,732 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,732 - sqlalchemy.engine.Engine - INFO - [cached since 0.02218s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-04 09:37:28,734 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,734 - sqlalchemy.engine.Engine - INFO - [cached since 0.02353s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-04 09:37:28,735 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,735 - sqlalchemy.engine.Engine - INFO - [cached since 0.0248s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-04 09:37:28,736 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,737 - sqlalchemy.engine.Engine - INFO - [cached since 0.02637s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-04 09:37:28,738 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:37:28,738 - sqlalchemy.engine.Engine - INFO - [cached since 0.0277s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-04 09:37:28,739 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-04 09:43:50,107 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-04 09:43:50,108 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-04 09:43:50,108 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-04 09:43:50,198 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-04 09:43:50,768 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-04 09:43:50,769 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 09:43:50,770 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-04 09:43:50,771 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 09:43:50,773 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-04 09:43:50,773 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-04 09:43:50,774 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-04 09:43:50,775 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,776 - sqlalchemy.engine.Engine - INFO - [generated in 0.00062s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-04 09:43:50,781 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,782 - sqlalchemy.engine.Engine - INFO - [cached since 0.00669s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-04 09:43:50,783 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,784 - sqlalchemy.engine.Engine - INFO - [cached since 0.008868s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-04 09:43:50,787 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,788 - sqlalchemy.engine.Engine - INFO - [cached since 0.01239s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-04 09:43:50,789 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,790 - sqlalchemy.engine.Engine - INFO - [cached since 0.01516s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-04 09:43:50,792 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,794 - sqlalchemy.engine.Engine - INFO - [cached since 0.01924s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-04 09:43:50,796 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,798 - sqlalchemy.engine.Engine - INFO - [cached since 0.02317s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-04 09:43:50,801 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,803 - sqlalchemy.engine.Engine - INFO - [cached since 0.02767s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-04 09:43:50,804 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,805 - sqlalchemy.engine.Engine - INFO - [cached since 0.02953s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-04 09:43:50,809 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,810 - sqlalchemy.engine.Engine - INFO - [cached since 0.03523s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-04 09:43:50,811 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-04 09:43:50,814 - sqlalchemy.engine.Engine - INFO - [cached since 0.03913s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-04 09:43:50,815 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-05 01:54:47,325 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-05 01:54:47,326 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 01:54:47,326 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-05 01:54:47,403 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 01:54:48,382 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-05 01:54:48,383 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 01:54:48,385 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-05 01:54:48,385 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 01:54:48,386 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-05 01:54:48,386 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 01:54:48,387 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-05 01:54:48,388 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,388 - sqlalchemy.engine.Engine - INFO - [generated in 0.00060s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-05 01:54:48,392 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,392 - sqlalchemy.engine.Engine - INFO - [cached since 0.004344s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-05 01:54:48,393 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,393 - sqlalchemy.engine.Engine - INFO - [cached since 0.005718s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-05 01:54:48,394 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,395 - sqlalchemy.engine.Engine - INFO - [cached since 0.006849s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-05 01:54:48,395 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,396 - sqlalchemy.engine.Engine - INFO - [cached since 0.008042s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-05 01:54:48,397 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,397 - sqlalchemy.engine.Engine - INFO - [cached since 0.00937s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-05 01:54:48,398 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,398 - sqlalchemy.engine.Engine - INFO - [cached since 0.01055s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-05 01:54:48,399 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,399 - sqlalchemy.engine.Engine - INFO - [cached since 0.01164s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-05 01:54:48,400 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,400 - sqlalchemy.engine.Engine - INFO - [cached since 0.01263s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-05 01:54:48,401 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,401 - sqlalchemy.engine.Engine - INFO - [cached since 0.01365s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-05 01:54:48,402 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 01:54:48,402 - sqlalchemy.engine.Engine - INFO - [cached since 0.0147s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-05 01:54:48,403 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-05 02:09:01,142 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 0.000s, Status: 404
+2025-03-05 02:40:34,918 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-05 02:40:34,918 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 02:40:34,919 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-05 02:40:35,191 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 02:40:35,856 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-05 02:40:35,857 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:40:35,858 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-05 02:40:35,861 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:40:35,872 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-05 02:40:35,872 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:40:35,873 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-05 02:40:35,874 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,875 - sqlalchemy.engine.Engine - INFO - [generated in 0.00067s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-05 02:40:35,878 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,878 - sqlalchemy.engine.Engine - INFO - [cached since 0.004299s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-05 02:40:35,888 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,894 - sqlalchemy.engine.Engine - INFO - [cached since 0.02039s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-05 02:40:35,896 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,896 - sqlalchemy.engine.Engine - INFO - [cached since 0.02217s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-05 02:40:35,897 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,897 - sqlalchemy.engine.Engine - INFO - [cached since 0.02352s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-05 02:40:35,898 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,899 - sqlalchemy.engine.Engine - INFO - [cached since 0.02457s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-05 02:40:35,899 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,900 - sqlalchemy.engine.Engine - INFO - [cached since 0.0257s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-05 02:40:35,901 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,901 - sqlalchemy.engine.Engine - INFO - [cached since 0.02683s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-05 02:40:35,902 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,902 - sqlalchemy.engine.Engine - INFO - [cached since 0.02788s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-05 02:40:35,903 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,903 - sqlalchemy.engine.Engine - INFO - [cached since 0.029s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-05 02:40:35,904 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:40:35,904 - sqlalchemy.engine.Engine - INFO - [cached since 0.03019s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-05 02:40:35,905 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-05 02:41:14,879 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 0.001s, Status: 404
+2025-03-05 02:42:00,301 - main - INFO - Method: POST, Path: /api/reports/export_report, Duration: 0.001s, Status: 404
+2025-03-05 02:46:59,504 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-05 02:46:59,505 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 02:46:59,505 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-05 02:46:59,647 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 02:47:00,369 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-05 02:47:00,370 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:47:00,371 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-05 02:47:00,372 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:47:00,373 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-05 02:47:00,373 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:47:00,374 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-05 02:47:00,375 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,375 - sqlalchemy.engine.Engine - INFO - [generated in 0.00054s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-05 02:47:00,378 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,379 - sqlalchemy.engine.Engine - INFO - [cached since 0.004044s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-05 02:47:00,380 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,381 - sqlalchemy.engine.Engine - INFO - [cached since 0.006063s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-05 02:47:00,387 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,387 - sqlalchemy.engine.Engine - INFO - [cached since 0.01283s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-05 02:47:00,388 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,389 - sqlalchemy.engine.Engine - INFO - [cached since 0.01433s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-05 02:47:00,390 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,395 - sqlalchemy.engine.Engine - INFO - [cached since 0.02003s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-05 02:47:00,395 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,403 - sqlalchemy.engine.Engine - INFO - [cached since 0.02882s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-05 02:47:00,411 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,412 - sqlalchemy.engine.Engine - INFO - [cached since 0.0374s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-05 02:47:00,415 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,418 - sqlalchemy.engine.Engine - INFO - [cached since 0.04339s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-05 02:47:00,419 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,421 - sqlalchemy.engine.Engine - INFO - [cached since 0.04669s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-05 02:47:00,425 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:47:00,425 - sqlalchemy.engine.Engine - INFO - [cached since 0.0506s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-05 02:47:00,426 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-05 02:47:08,473 - main - INFO - Method: POST, Path: /api/reports/export_report, Duration: 0.001s, Status: 404
+2025-03-05 02:48:01,612 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 0.000s, Status: 404
+2025-03-05 02:53:00,641 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-05 02:53:00,641 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 02:53:00,642 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-05 02:53:00,718 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 02:53:01,308 - app.api.v1.endpoints.reports - INFO - Ensuring report temp directory exists: /tmp/reports
+2025-03-05 02:53:01,352 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-05 02:53:01,352 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:53:01,353 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-05 02:53:01,354 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:53:01,360 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-05 02:53:01,361 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:53:01,362 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-05 02:53:01,362 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,362 - sqlalchemy.engine.Engine - INFO - [generated in 0.00023s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-05 02:53:01,365 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,366 - sqlalchemy.engine.Engine - INFO - [cached since 0.003407s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-05 02:53:01,367 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,367 - sqlalchemy.engine.Engine - INFO - [cached since 0.004796s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-05 02:53:01,368 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,368 - sqlalchemy.engine.Engine - INFO - [cached since 0.005928s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-05 02:53:01,369 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,369 - sqlalchemy.engine.Engine - INFO - [cached since 0.007087s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-05 02:53:01,370 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,371 - sqlalchemy.engine.Engine - INFO - [cached since 0.008407s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-05 02:53:01,372 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,372 - sqlalchemy.engine.Engine - INFO - [cached since 0.009481s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-05 02:53:01,373 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,373 - sqlalchemy.engine.Engine - INFO - [cached since 0.01049s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-05 02:53:01,374 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,374 - sqlalchemy.engine.Engine - INFO - [cached since 0.0116s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-05 02:53:01,375 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,375 - sqlalchemy.engine.Engine - INFO - [cached since 0.0128s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-05 02:53:01,376 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:53:01,376 - sqlalchemy.engine.Engine - INFO - [cached since 0.01385s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-05 02:53:01,377 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-05 02:53:13,152 - main - INFO - Method: GET, Path: /api/reports/test, Duration: 0.000s, Status: 200
+2025-03-05 02:53:26,676 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 0.001s, Status: 422
+2025-03-05 02:57:21,882 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-05 02:57:21,882 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 02:57:21,882 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-05 02:57:21,944 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 02:57:22,556 - app.api.v1.endpoints.reports - INFO - Ensuring report temp directory exists: /tmp/reports
+2025-03-05 02:57:22,599 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-05 02:57:22,600 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:57:22,601 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-05 02:57:22,601 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:57:22,601 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-05 02:57:22,603 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 02:57:22,604 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-05 02:57:22,605 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,605 - sqlalchemy.engine.Engine - INFO - [generated in 0.00042s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-05 02:57:22,608 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,608 - sqlalchemy.engine.Engine - INFO - [cached since 0.003422s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-05 02:57:22,609 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,610 - sqlalchemy.engine.Engine - INFO - [cached since 0.005615s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-05 02:57:22,611 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,612 - sqlalchemy.engine.Engine - INFO - [cached since 0.007043s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-05 02:57:22,613 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,613 - sqlalchemy.engine.Engine - INFO - [cached since 0.008559s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-05 02:57:22,614 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,614 - sqlalchemy.engine.Engine - INFO - [cached since 0.009691s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-05 02:57:22,615 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,616 - sqlalchemy.engine.Engine - INFO - [cached since 0.01094s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-05 02:57:22,617 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,617 - sqlalchemy.engine.Engine - INFO - [cached since 0.0122s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-05 02:57:22,618 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,618 - sqlalchemy.engine.Engine - INFO - [cached since 0.01353s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-05 02:57:22,619 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,619 - sqlalchemy.engine.Engine - INFO - [cached since 0.01477s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-05 02:57:22,620 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 02:57:22,621 - sqlalchemy.engine.Engine - INFO - [cached since 0.01598s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-05 02:57:22,622 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-05 02:57:34,774 - app.api.v1.endpoints.reports - INFO - [Simple Export] Exporting report MRCWBG in PDF format
+2025-03-05 02:57:34,775 - app.api.v1.endpoints.reports - INFO - [Simple Export] Temporary file path: /tmp/reports/tmpnbhwljx6.pdf
+2025-03-05 02:57:34,775 - app.services.report_service - INFO - Calling external report API: https://test.ihotel.cn/inn-report/report/export
+2025-03-05 02:57:38,433 - app.services.report_service - INFO - Report generated successfully, size: 2944 bytes
+2025-03-05 02:57:38,435 - app.services.report_service - INFO - Report saved to /tmp/reports/tmpnbhwljx6.pdf
+2025-03-05 02:57:38,437 - app.api.v1.endpoints.reports - INFO - [Simple Export] Returning report file: report_MRCWBG.pdf
+2025-03-05 02:57:38,440 - main - INFO - Method: POST, Path: /api/reports/simple_export, Duration: 3.667s, Status: 200
+2025-03-05 02:59:05,938 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 0.001s, Status: 422
+2025-03-05 02:59:33,579 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 0.001s, Status: 422
+2025-03-05 03:07:51,566 - main - INFO - Method: GET, Path: /docs, Duration: 0.000s, Status: 200
+2025-03-05 03:09:24,283 - main - INFO - Method: GET, Path: /redoc, Duration: 0.000s, Status: 200
+2025-03-05 03:09:59,731 - main - INFO - Method: GET, Path: /docs, Duration: 0.000s, Status: 200
+2025-03-05 03:10:47,080 - main - INFO - Method: GET, Path: /docs, Duration: 0.000s, Status: 200
+2025-03-05 03:10:47,571 - main - INFO - Method: GET, Path: /openapi.json, Duration: 0.018s, Status: 200
+2025-03-05 03:11:23,643 - app.api.v1.endpoints.reports - INFO - Exporting report MRCWBG in ReportFormat.PDF format
+2025-03-05 03:11:23,644 - app.api.v1.endpoints.reports - INFO - Temporary file path: /tmp/reports/tmpxrdpkeic.pdf
+2025-03-05 03:11:23,645 - app.services.report_service - INFO - Calling external report API: https://test.ihotel.cn/inn-report/report/export
+2025-03-05 03:11:28,904 - app.services.report_service - INFO - Report generated successfully, size: 2944 bytes
+2025-03-05 03:11:28,906 - app.services.report_service - INFO - Report saved to /tmp/reports/tmpxrdpkeic.pdf
+2025-03-05 03:11:28,908 - app.api.v1.endpoints.reports - INFO - Returning report file: report_MRCWBG.pdf
+2025-03-05 03:11:28,909 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 5.267s, Status: 200
+2025-03-05 03:15:11,346 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-05 03:15:11,347 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 03:15:11,347 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-05 03:15:11,497 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 03:15:12,352 - app.api.v1.endpoints.reports - INFO - Ensuring report temp directory exists: /tmp/reports
+2025-03-05 03:15:12,404 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-05 03:15:12,405 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 03:15:12,405 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-05 03:15:12,406 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 03:15:12,407 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-05 03:15:12,408 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 03:15:12,409 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-05 03:15:12,410 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,410 - sqlalchemy.engine.Engine - INFO - [generated in 0.00073s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-05 03:15:12,413 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,413 - sqlalchemy.engine.Engine - INFO - [cached since 0.00368s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-05 03:15:12,415 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,415 - sqlalchemy.engine.Engine - INFO - [cached since 0.005464s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-05 03:15:12,416 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,417 - sqlalchemy.engine.Engine - INFO - [cached since 0.007349s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-05 03:15:12,418 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,418 - sqlalchemy.engine.Engine - INFO - [cached since 0.008869s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-05 03:15:12,419 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,420 - sqlalchemy.engine.Engine - INFO - [cached since 0.01027s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-05 03:15:12,421 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,421 - sqlalchemy.engine.Engine - INFO - [cached since 0.0116s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-05 03:15:12,422 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,423 - sqlalchemy.engine.Engine - INFO - [cached since 0.01295s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-05 03:15:12,423 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,424 - sqlalchemy.engine.Engine - INFO - [cached since 0.01408s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-05 03:15:12,425 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,425 - sqlalchemy.engine.Engine - INFO - [cached since 0.01514s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-05 03:15:12,425 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 03:15:12,426 - sqlalchemy.engine.Engine - INFO - [cached since 0.01611s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-05 03:15:12,426 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-05 03:15:17,427 - main - INFO - Method: GET, Path: /docs, Duration: 0.000s, Status: 200
+2025-03-05 03:15:17,519 - main - INFO - Method: GET, Path: /openapi.json, Duration: 0.015s, Status: 200
+2025-03-05 03:15:37,789 - main - INFO - Method: POST, Path: /api/reports/export_info, Duration: 0.001s, Status: 200
+2025-03-05 03:15:45,507 - main - INFO - Method: POST, Path: /api/reports/export_info, Duration: 0.001s, Status: 200
+2025-03-05 03:15:57,531 - app.api.v1.endpoints.reports - INFO - Exporting report MRCWBG in ReportFormat.PDF format
+2025-03-05 03:15:57,532 - app.api.v1.endpoints.reports - INFO - Temporary file path: /tmp/reports/tmp5k1zmkcw.pdf
+2025-03-05 03:15:57,532 - app.services.report_service - INFO - Calling external report API: https://test.ihotel.cn/inn-report/report/export
+2025-03-05 03:16:20,945 - app.services.report_service - INFO - Report generated successfully, size: 2944 bytes
+2025-03-05 03:16:20,947 - app.services.report_service - INFO - Report saved to /tmp/reports/tmp5k1zmkcw.pdf
+2025-03-05 03:16:20,949 - app.api.v1.endpoints.reports - INFO - Returning report file: report_MRCWBG.pdf
+2025-03-05 03:16:20,952 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 23.422s, Status: 200
+2025-03-05 03:54:55,613 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 0.004s, Status: 422
+2025-03-05 03:55:26,250 - main - INFO - Method: GET, Path: /api/reports/test, Duration: 0.001s, Status: 200
+2025-03-05 03:59:55,070 - app.api.v1.endpoints.reports - INFO - [Simple Export] Exporting report MRCWBG in XLS format
+2025-03-05 03:59:55,071 - app.api.v1.endpoints.reports - INFO - [Simple Export] Temporary file path: /tmp/reports/tmp9vbzv_go.xls
+2025-03-05 03:59:55,072 - app.services.report_service - INFO - Calling external report API: https://test.ihotel.cn/inn-report/report/export
+2025-03-05 03:59:58,834 - app.services.report_service - INFO - Report generated successfully, size: 8192 bytes
+2025-03-05 03:59:58,835 - app.services.report_service - INFO - Report saved to /tmp/reports/tmp9vbzv_go.xls
+2025-03-05 03:59:58,836 - app.api.v1.endpoints.reports - INFO - [Simple Export] Returning report file: my_custom_report.xls
+2025-03-05 03:59:58,838 - main - INFO - Method: POST, Path: /api/reports/simple_export, Duration: 3.770s, Status: 200
+2025-03-05 05:43:52,034 - app.core.config - INFO - Initialized settings with DB_USER: root
+2025-03-05 05:43:52,035 - app.core.config - INFO - Database URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 05:43:52,035 - app.core.config - INFO - Report temp directory: /tmp/reports
+2025-03-05 05:43:52,110 - app.db.session - INFO - Creating database engine with URI: mysql+pymysql://root:123456@mysql:3306/agent_platform
+2025-03-05 05:43:52,937 - app.api.v1.endpoints.reports - INFO - Ensuring report temp directory exists: /tmp/reports
+2025-03-05 05:43:52,943 - app.api.v1.endpoints.reports - INFO - Ensuring report storage directory exists: backend/reports
+2025-03-05 05:43:52,996 - sqlalchemy.engine.Engine - INFO - SELECT DATABASE()
+2025-03-05 05:43:52,996 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 05:43:52,997 - sqlalchemy.engine.Engine - INFO - SELECT @@sql_mode
+2025-03-05 05:43:52,998 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 05:43:52,998 - sqlalchemy.engine.Engine - INFO - SELECT @@lower_case_table_names
+2025-03-05 05:43:52,999 - sqlalchemy.engine.Engine - INFO - [raw sql] {}
+2025-03-05 05:43:53,000 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-03-05 05:43:53,000 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,001 - sqlalchemy.engine.Engine - INFO - [generated in 0.00034s] {'table_schema': 'agent_platform', 'table_name': 'users'}
+2025-03-05 05:43:53,011 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,011 - sqlalchemy.engine.Engine - INFO - [cached since 0.01106s ago] {'table_schema': 'agent_platform', 'table_name': 'creative_projects'}
+2025-03-05 05:43:53,013 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,013 - sqlalchemy.engine.Engine - INFO - [cached since 0.01283s ago] {'table_schema': 'agent_platform', 'table_name': 'document_analysis'}
+2025-03-05 05:43:53,014 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,014 - sqlalchemy.engine.Engine - INFO - [cached since 0.01419s ago] {'table_schema': 'agent_platform', 'table_name': 'market_analysis'}
+2025-03-05 05:43:53,016 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,016 - sqlalchemy.engine.Engine - INFO - [cached since 0.01546s ago] {'table_schema': 'agent_platform', 'table_name': 'idea_generations'}
+2025-03-05 05:43:53,017 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,017 - sqlalchemy.engine.Engine - INFO - [cached since 0.01663s ago] {'table_schema': 'agent_platform', 'table_name': 'generated_images'}
+2025-03-05 05:43:53,018 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,018 - sqlalchemy.engine.Engine - INFO - [cached since 0.01769s ago] {'table_schema': 'agent_platform', 'table_name': 'solution_designs'}
+2025-03-05 05:43:53,019 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,019 - sqlalchemy.engine.Engine - INFO - [cached since 0.01895s ago] {'table_schema': 'agent_platform', 'table_name': 'agents'}
+2025-03-05 05:43:53,020 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,020 - sqlalchemy.engine.Engine - INFO - [cached since 0.01996s ago] {'table_schema': 'agent_platform', 'table_name': 'agent_usage_records'}
+2025-03-05 05:43:53,021 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,021 - sqlalchemy.engine.Engine - INFO - [cached since 0.02092s ago] {'table_schema': 'agent_platform', 'table_name': 'knowledge_bases'}
+2025-03-05 05:43:53,022 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2025-03-05 05:43:53,022 - sqlalchemy.engine.Engine - INFO - [cached since 0.02209s ago] {'table_schema': 'agent_platform', 'table_name': 'documents'}
+2025-03-05 05:43:53,023 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-03-05 05:44:30,160 - main - INFO - Method: GET, Path: /docs, Duration: 0.001s, Status: 200
+2025-03-05 05:44:30,243 - main - INFO - Method: GET, Path: /openapi.json, Duration: 0.018s, Status: 200
+2025-03-05 05:45:09,694 - app.api.v1.endpoints.reports - INFO - Exporting report MRCWBG in ReportFormat.PDF format
+2025-03-05 05:45:09,694 - app.api.v1.endpoints.reports - INFO - Temporary file path: /tmp/reports/tmp9e3bhvh8.pdf
+2025-03-05 05:45:09,695 - app.services.report_service - INFO - Calling external report API: https://test.ihotel.cn/inn-report/report/export
+2025-03-05 05:45:13,827 - app.services.report_service - INFO - Report generated successfully, size: 2944 bytes
+2025-03-05 05:45:13,831 - app.services.report_service - INFO - Report saved to /tmp/reports/tmp9e3bhvh8.pdf
+2025-03-05 05:45:13,843 - app.api.v1.endpoints.reports - INFO - Moved report to storage location: backend/reports/MRCWBG_REPORT_20250305054509.pdf
+2025-03-05 05:45:13,844 - main - INFO - Method: POST, Path: /api/reports/export, Duration: 4.151s, Status: 200
+2025-03-05 05:46:48,064 - main - INFO - Method: GET, Path: /reports/MRCWBG_REPORT_20250305054509.pdf, Duration: 0.016s, Status: 200
+2025-03-05 05:46:48,089 - main - INFO - Method: GET, Path: /favicon.ico, Duration: 0.000s, Status: 404
